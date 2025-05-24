@@ -1,0 +1,829 @@
+:root {
+    --primary: #27ae60; /* Verde para botones principales */
+    --primary-hover: #2ecc71;
+    --primary-dark: #3f7a1a;
+    --secondary: #2c3e50;
+    --success: #27ae60;
+    --info: #3498db;
+    --danger: #e74c3c;
+    --text-color: #333;
+    --bg-gradient-start: #a8e063;
+    --bg-gradient-end: #56ab2f;
+}
+
+/* Base global */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background: url('../images/fondo-granja.png') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+h1 {
+    font-size: 2em;
+    color: var(--secondary);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #4a7c2b;
+}
+
+/* Inputs y Selects */
+select,
+input[type="number"],
+input[type="text"] {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 2px solid var(--bg-gradient-end);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+select:focus,
+input[type="number"]:focus,
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--bg-gradient-start);
+    box-shadow: 0 0 8px var(--bg-gradient-start);
+}
+
+/* Contenido Principal y Layouts */
+.fondo {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    position: relative;
+}
+
+.contenido {
+    flex-grow: 1;
+    overflow-x: auto; /* Mantener para carrusel */
+    padding: 1rem;
+}
+
+.mensaje-vacio {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin-top: 80px;
+    user-select: none;
+}
+
+/* --- */
+
+/* Menú y Configuracion */
+.menu-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.menu-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    animation: float 3s ease-in-out infinite;
+    max-width: 400px;
+    width: 100%;
+    z-index: 10;
+}
+
+.subtitulo {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #34495e;
+}
+
+/* Form configuracion */
+.config-form {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    animation: fadeInDown 0.8s ease forwards;
+    z-index: 10;
+}
+
+.config-form h2 {
+    margin-bottom: 25px;
+    font-weight: 600;
+    color: #2f6f26;
+}
+
+/* --- */
+
+/* Botones Generales */
+.btn {
+    border: none;
+    cursor: pointer;
+    background: var(--info); /* Color por defecto si no es específico */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+    background: #1d6fa5;
+    transform: scale(1.05); /* Escala para todos los botones hover */
+}
+
+/* Botones específicos de menú */
+.botones .btn {
+    display: block;
+    margin: 10px auto;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    border-radius: 12px;
+    text-decoration: none;
+    background-color: var(--primary);
+    box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+}
+
+.botones .btn:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn.salir {
+    background-color: var(--danger);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+.btn.salir:hover {
+    background-color: #c0392b;
+}
+
+/* Botón de música */
+#toggle-music {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary);
+    border: none;
+    color: white;
+    font-size: 24px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(86, 171, 47, 0.5);
+    transition: background-color 0.3s ease;
+    z-index: 20;
+    padding: 0; /* Asegura que el icono esté centrado si hay padding */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#toggle-music:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Botón volver (fijo) */
+.btn.volver {
+    display: inline-block;
+    margin: 40px auto 0 auto;
+    padding: 12px 30px;
+    background: #2980b9;
+    color: white;
+    font-weight: 600;
+    border-radius: 25px;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease;
+    user-select: none;
+    position: fixed; 
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 16px;
+    /* border-radius: 50%;  */
+    font-size: 18px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn.volver:hover {
+    background: #3498db;
+}
+
+/* Botones de acción circular para el modal de detalle */
+.acciones-circulares button {
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    display: flex; /* Para centrar contenido si es un icono */
+    justify-content: center;
+    align-items: center;
+}
+
+.acciones-circulares button:hover {
+    background: #ddd;
+    transform: scale(1.1);
+}
+
+/* Botones de acciones avanzadas en el modal (ver Historial, Perfil) */
+.acciones-avanzadas button {
+    background: #f0f0f0;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.acciones-avanzadas button:hover {
+    background: #e0e0e0;
+    transform: scale(1.05);
+}
+
+.btn-editar {
+    background-color: #ffdd57;
+}
+
+.btn-eliminar {
+    background-color: #ff4b5c;
+}
+
+/* --- */
+
+/* Animales (Antiguas clases '.animal' removidas, ahora solo se usa '.tarjeta-animal') */
+/* .animal {} y sus hijos eliminados por duplicidad con .tarjeta-animal */
+
+/* Carrusel y Tarjetas de Animales */
+.contenedor-carrusel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 1rem 2rem; /* Aumenta padding horizontal para botones de carrusel */
+    background-color: #f8f8f8; /* Agregado para el fondo del carrusel */
+    border-radius: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.grid-animales-responsivo {
+    display: flex; /* Cambiado de grid a flex para el carrusel */
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1rem 0; /* Padding vertical para el scroll */
+    scrollbar-width: none; /* Oculta scrollbar para Firefox */
+}
+
+.grid-animales-responsivo::-webkit-scrollbar {
+    display: none; /* Oculta scrollbar para Webkit (Chrome, Safari) */
+}
+
+/* Estilos de scrollbar personalizados si necesitas uno */
+.grid-animales-responsivo::-webkit-scrollbar {
+    height: 8px;
+}
+.grid-animales-responsivo::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+.grid-animales-responsivo::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+.btn-carrusel {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #f0f0f0;
+    border: none;
+    font-size: 2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    color: #444; /* Color de flecha */
+    transition: background-color 0.3s, color 0.2s;
+}
+.btn-carrusel:hover {
+    background-color: #ddd;
+    color: #000;
+}
+.btn-carrusel.izquierda { left: 0; }
+.btn-carrusel.derecha { right: 0; }
+
+/* Tarjetas de animales */
+.tarjeta-animal {
+    min-width: 250px;
+    max-width: 300px; /* Asegura un tamaño consistente */
+    background: #fff;
+    border-radius: 20px; /* Consolidado a 20px */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Consolidado a 6px */
+    padding: 15px 20px 30px; /* Consolidado a 15px 20px 30px */
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer; /* Lo hacemos clickeable */
+    user-select: none;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.tarjeta-animal:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+.animal-info {
+    text-align: center;
+    position: relative;
+}
+
+.imagen-animal {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 50%;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Animación al pasar mouse */
+.imagen-animal:hover {
+    transform: scale(1.15) rotate(5deg);
+    animation: parpadeo 4s infinite;
+}
+
+.estado-emoji {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2.2rem;
+    pointer-events: none;
+    user-select: none;
+    animation: bounce 2s infinite;
+    filter: drop-shadow(0 0 2px #444);
+}
+
+.nombre-animal {
+    margin-top: 12px;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #34495e;
+}
+
+/* Barras de Progreso */
+.estado {
+    margin-top: 20px;
+}
+
+.barra-progreso {
+    position: relative;
+    height: 22px;
+    /* background: #eee; */
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    /* padding-left: 36px; */
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #555;
+    user-select: none;
+}
+
+.barra-progreso label {
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    left: 10px;
+    font-size: 1.3rem;
+    user-select: none;
+    z-index: 2;
+}
+
+.barra {
+    flex-grow: 1;
+    height: 100%;
+    background: #eee; /* EL FONDO GRIS AHORA VA AQUÍ */
+    border-radius: 12px;
+    overflow: hidden;
+    margin-left: 36px; /* Deja espacio para la etiqueta */
+    position: relative;
+}
+
+.progreso {
+    height: 100%;
+    border-radius: 12px; /* Asegura los bordes redondeados de la barra de color */
+    transition: width 0.6s ease;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center; /* O flex-end si prefieres el texto a la derecha */
+    padding-right: 0px; /* CRUCIAL: ELIMINA EL ESPACIO EXTRA */
+    color: white;
+    font-weight: 700;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+    user-select: none;
+    box-sizing: border-box; /* ASEGÚRATE DE QUE ESTÉ PRESENTE */
+    white-space: nowrap; /* ASEGÚRATE DE QUE ESTÉ PRESENTE */
+}
+
+.progreso.verde {
+    background: linear-gradient(90deg, #4caf50, #81c784);
+    box-shadow: 0 0 12px #4caf50;
+}
+
+.progreso.azul {
+    background: linear-gradient(90deg, #2196f3, #64b5f6);
+    box-shadow: 0 0 12px #2196f3;
+}
+
+.progreso.rojo {
+    background: linear-gradient(90deg, #f44336, #e57373);
+    box-shadow: 0 0 12px #f44336;
+}
+
+.produccion {
+    margin-top: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    color: #34495e;
+    user-select: none;
+}
+
+/* Acciones en la tarjeta (si aplica, parece que se usan más en el modal ahora) */
+.acciones {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn-juego {
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.6rem;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    user-select: none;
+    display: flex; /* Para centrar icono */
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-juego:hover {
+    background: #34495e;
+    transform: scale(1.15);
+}
+
+.btn-juego:active {
+    transform: scale(1);
+}
+
+/* -Modal Confirmacion eliminar- */
+
+/* Overlay y centrado del modal */
+#modal-confirmacion.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Fondo oscuro */
+    z-index: 1050;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenido de la caja blanca del modal */
+#modal-confirmacion .modal-contenido {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Título */
+#modal-confirmacion h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Párrafo */
+#modal-confirmacion p {
+    color: #555;
+    margin-bottom: 25px;
+}
+
+/* Contenedor de botones */
+#modal-confirmacion .modal-botones {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Estilo base de los botones */
+#modal-confirmacion .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+/* Botón "Sí, eliminar" */
+#modal-confirmacion .btn-confirmar {
+    background-color: #dc3545; /* Rojo */
+    color: white;
+}
+#modal-confirmacion .btn-confirmar:hover {
+    background-color: #c82333;
+}
+
+/* Botón "Cancelar" */
+#modal-confirmacion .btn-cancelar {
+    background-color: #6c757d; /* Gris */
+    color: white;
+}
+#modal-confirmacion .btn-cancelar:hover {
+    background-color: #5a6268;
+}
+
+/* Para mostrar con JS */
+#modal-confirmacion.modal.is-visible {
+    display: flex;
+}
+
+/* Modales */
+.modal-overlay { /* Usado por #modalAnimal */
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7); /* Ligeramente más oscuro que antes */
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    display: none; /* OCULTO POR DEFECTO: CLAVE PARA RESOLVER EL PROBLEMA */
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto; /* Para permitir scroll si el contenido es largo */
+}
+
+/* Clase para mostrar el modal con JS */
+.modal-overlay.is-visible {
+    display: flex;
+}
+
+/* Antiguas clases .modal y #modal-animal eliminadas por ser duplicadas o menos específicas */
+
+.modal-animal-content { /* Contenido interno del modal */
+    background-color: #fff;
+    padding: 2rem; /* Consolidado a 2rem */
+    border-radius: 1rem; /* Consolidado a 1rem */
+    width: 90%;
+    max-width: 600px; /* Consolidado a 600px */
+    position: relative;
+    max-height: 95vh; /* Ajuste para evitar que el modal sea demasiado alto */
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    animation: aparecer 0.3s ease-out; /* Consolidada la animación */
+    text-align: center; /* Consolidado */
+}
+
+.cerrar-modal {
+    position: absolute;
+    top: 0.5rem; /* Consolidado a 0.5rem */
+    right: 1rem; /* Consolidado a 1rem */
+    font-size: 1.5rem; /* Consolidado a 1.5rem */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #aaa; /* Color para el icono de cerrar */
+    font-weight: bold;
+    transition: color 0.2s;
+}
+.cerrar-modal:hover {
+    color: black;
+}
+
+.modal-contenido .estado { 
+    margin: 1rem 0;
+}
+
+.acciones-secundarias { 
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.animal-visual {
+    margin-bottom: 20px;
+}
+
+.imagen-principal-animal {
+    width: 180px;
+    height: auto;
+    border-radius: 50%;
+    animation: bounce 2s infinite; 
+}
+
+.imagen-principal-animal-3d { 
+    width: 300px;
+    height: auto;
+    border-radius: 20px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.animal-3d-container {
+    background: rgba(249, 249, 249, 0.1);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.estado-animal {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    text-align: left;
+}
+
+.estado-animal .estado-columna {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* --- */
+
+/* Escenarios */
+.escenario {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    border-radius: 15px;
+    padding: 20px;
+    background-position: center; /* Asegura que el fondo se vea bien */
+}
+
+.selector-escenario {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    z-index: 10;
+    display: flex; /* Para organizar los botones */
+    gap: 5px; /* Espacio entre botones */
+}
+
+.selector-escenario button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.selector-escenario button:hover {
+    background-color: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+}
+
+.animal-visual {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: idle 3s infinite alternate;
+}
+
+.animal-visual img {
+    height: 200px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.estado-visual {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.8);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* --- */
+
+/* Animaciones */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes parpadeo {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.75;
+    }
+}
+
+@keyframes bounce { /* Consolidado para emoji y animal-visual */
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px); /* Ajuste a -8px para ambos */
+    }
+}
+
+@keyframes aparecer { /* Consolidado para .modal-animal-content */
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+@keyframes idle { /* Para el animal en el escenario */
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* --- */
+
+/* Responsive */
+@media (max-width: 600px) {
+    .tarjeta-animal { /* Ajuste para tarjetas en pantallas pequeñas */
+        max-width: 90%;
+        margin: auto; /* Centrar si hay menos de 2 en una fila */
+    }
+    .modal-animal-content {
+        width: 95%; /* Un poco más de espacio en los bordes */
+        padding: 1rem;
+    }
+    .acciones-avanzadas, .acciones-circulares, .estado-animal {
+        flex-direction: column; /* Apilar botones/estados en móviles */
+        align-items: center;
+    }
+    .acciones-avanzadas button, .acciones-circulares button {
+        width: 100%; /* Botones de acción ocupan todo el ancho */
+        max-width: 200px; /* Limitar el ancho si se apilan */
+    }
+}
