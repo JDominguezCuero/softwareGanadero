@@ -78,20 +78,17 @@ if (isset($_SESSION['respuesta'])) {
                                 </div>
 
                                 <div class="estado">
-                                    <div class="barra-progreso">
-                                        <label>🍽️</label>
+                                    <div class="barra-progreso alimentacion"> <label>🍽️</label>
                                         <div class="barra">
                                             <div class="progreso verde" style="width: <?= $animal['alimentacion'] ?>%"><?= $animal['alimentacion'] ?>%</div>
                                         </div>
                                     </div>
-                                    <div class="barra-progreso">
-                                        <label>🚿</label>
+                                    <div class="barra-progreso higiene"> <label>🚿</label>
                                         <div class="barra">
                                             <div class="progreso azul" style="width: <?= $animal['higiene'] ?>%"><?= $animal['higiene'] ?>%</div>
                                         </div>
                                     </div>
-                                    <div class="barra-progreso">
-                                        <label>💊</label>
+                                    <div class="barra-progreso salud"> <label>💊</label>
                                         <div class="barra">
                                             <div class="progreso rojo" style="width: <?= $animal['salud'] ?>%"><?= $animal['salud'] ?>%</div>
                                         </div>
