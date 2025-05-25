@@ -143,9 +143,46 @@ switch ($action) {
         break;
 
     case 'mostrar':
-        $id_usuario = $_SESSION['id_usuario'];
-        $animales = AnimalModel::obtenerAnimalesPorUsuario($conexion, $id_usuario);
-        include 'views/simulador.php';
+            $id_usuario = $_SESSION['id_usuario'];
+            $animales_originales = AnimalModel::obtenerAnimalesPorUsuario($conexion, $id_usuario); // Obtener los animales con tipo_nombre inicial
+
+            $factor_tiempo = $_SESSION['factor_tiempo'] ?? 1;
+            $animales_finales = []; // Renombramos para mayor claridad
+
+            foreach ($animales_originales as $animal) {
+                // Intentar aplicar decremento
+                $animal_despues_decremento = AnimalModel::aplicarDecrementoPorTiempo($conexion, $animal['id_animal'], $factor_tiempo);
+                
+                if ($animal_despues_decremento === false || !is_array($animal_despues_decremento)) {
+                    error_log("DEBUG: Fallo en aplicarDecrementoPorTiempo para ID " . ($animal['id_animal'] ?? 'desconocido') . ". Usando datos originales.");
+                    $animales_finales[] = $animal; // Usa el animal original si hay un problema
+                } else {
+                    // Si la función devuelve un animal (actualizado o no), lo usamos.
+                    $animales_finales[] = $animal_despues_decremento;
+                }
+            }
+            
+            $animales = $animales_finales;
+
+            include 'views/simulador.php';
+        break;
+
+     case 'set_time_factor':
+            $factor = intval($_POST['factor'] ?? 1);
+            $_SESSION['factor_tiempo'] = max(1, $factor);
+
+            $respuesta = ['success' => true, 'factor' => $_SESSION['factor_tiempo']];
+
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                echo json_encode($respuesta);
+                exit;
+            } else {
+                // Para peticiones no AJAX, redirige a la vista principal
+                $_SESSION['respuesta'] = $respuesta;
+                header("Location: controller.php?action=mostrar");
+                exit;
+            }
         break;
 
     default:

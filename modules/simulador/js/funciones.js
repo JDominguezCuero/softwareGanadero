@@ -18,6 +18,25 @@ document.addEventListener('DOMContentLoaded', function () {
             bar.style.width = width + '%'; // Anima al ancho final
         }, 100); // Pequeño retraso para que el navegador "vea" el 0%
     });
+
+    const botonesAceleracion = document.querySelectorAll('.btn-acelerar-tiempo');
+    botonesAceleracion.forEach(boton => {
+        boton.addEventListener('click', function () {
+            const factor = this.dataset.factor;
+            setAceleracionTiempo(factor);
+            // Llama a la función para actualizar la clase activa inmediatamente
+            // Esto es más visual, aunque la página se recargará después del fetch.
+            actualizarBotonActivo(factor); 
+        });
+    });
+
+    const storedFactor = sessionStorage.getItem('current_time_factor');
+    if (storedFactor) {
+        actualizarBotonActivo(storedFactor);
+    } else {
+        actualizarBotonActivo('1'); 
+    }
+
 });
 
 // --- Funciones de Gestión de Animales (activar/guardar nombre) ---
@@ -403,4 +422,44 @@ function cambiarFondo(escena) {
     }
 
     escenario.style.backgroundImage = `url('${ruta}')`;
+}
+
+// --- NUEVA FUNCIÓN PARA ACELERAR EL TIEMPO ---
+function setAceleracionTiempo(factor) {
+    sessionStorage.setItem('current_time_factor', factor); 
+
+    fetch('controller.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: `action=set_time_factor&factor=${encodeURIComponent(factor)}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            console.log("Factor de tiempo establecido a:", data.factor);
+            location.reload(); 
+        } else {
+            alert('Error al establecer el factor de tiempo: ' + (data.error || 'Error desconocido.'));
+        }
+    })
+    .catch(error => console.error('Error en setAceleracionTiempo:', error));
+}
+
+function actualizarBotonActivo(factorSeleccionado) {
+    document.querySelectorAll('.btn-acelerar-tiempo').forEach(boton => {
+        boton.classList.remove('active'); // Remover 'active' de todos
+        if (boton.dataset.factor === String(factorSeleccionado)) {
+            boton.classList.add('active'); // Añadir 'active' al botón seleccionado
+        }
+    });
+}
+
+function getEstadoEmojiLocal(salud) {
+    if (salud < 30) return '😷';
+    if (salud < 50) return '😟';
+    if (salud < 80) return '😐';
+    return '😊';
 }

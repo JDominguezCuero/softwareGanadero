@@ -53,6 +53,7 @@ if (isset($_SESSION['respuesta'])) {
 
                     <div class="grid-animales-responsivo" id="grid-animales">
                         <?php foreach ($animales as $animal): 
+
                             $emoji_estado = getEstadoEmoji($animal['salud']);
                         ?>
                             <div class="tarjeta-animal" 
@@ -64,7 +65,7 @@ if (isset($_SESSION['respuesta'])) {
                                 data-produccion="<?= $animal['produccion'] ?>" 
                                 onclick="mostrarModal(this)">
                                 <div class="animal-info" style="position: relative;">
-                                    <img class="imagen-animal" src="../../modules/simulador/images/<?= $animal['tipo_nombre'] ?>.png" alt="<?= $animal['tipo_nombre'] ?>">
+                                    <img class="imagen-animal" src="../../modules/simulador/images/<?= htmlspecialchars($animal['tipo_nombre'] ?? 'default') ?>.png" alt="<?= $animal['tipo_nombre'] ?? 'default' ?>">
                                     <div class="estado-emoji"><?= $emoji_estado ?></div>
                                 </div>
 
@@ -123,6 +124,14 @@ if (isset($_SESSION['respuesta'])) {
 
         <div class="botones-container">
             <button id="toggle-music" title="Pausar música 🎵">    🔇</button>
+
+            <div class="aceleracion-tiempo-container">
+                <button class="btn-acelerar-tiempo" data-factor="1" title="Tiempo Normal">1x</button>
+                <button class="btn-acelerar-tiempo" data-factor="2" title="Doble Velocidad">2x</button>
+                <button class="btn-acelerar-tiempo" data-factor="5" title="Quíntuple Velocidad">5x</button>
+                <button class="btn-acelerar-tiempo" data-factor="10" title="Diez Veces Más Rápido">10x</button>
+            </div>
+
             <a href="views/configuracion.php" class="btn volver">← Volver a Configuraciones .......</a>
         </div>                        
 
