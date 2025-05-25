@@ -39,6 +39,9 @@ require_once(__DIR__ . '/../../../config/config.php');
                     <select name="tipo_animal" id="tipo_animal" required style="padding: 10px 15px; margin-bottom: 20px;">
                         <option value="" disabled selected>-- Selecciona un animal --</option>
                         <option value="vaca">Vaca 🐄</option>
+                        <option value="toro">Toro 🐂</option>
+                        <option value="burro">Burro 🫏</option>
+                        <option value="caballo">Caballo 🐴</option>
                         <option value="cerdo">Cerdo 🐖</option>
                         <option value="cabra">Cabra 🐐</option>
                         <option value="gallina">Gallina 🐔</option>

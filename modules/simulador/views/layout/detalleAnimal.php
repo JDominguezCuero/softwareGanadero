@@ -13,14 +13,16 @@
 
             <h2 id="modalNombre" style="text-align: center; margin-bottom: 15px; font-weight: bold; color: white;"></h2>
 
-            <div class="animal-3d-container" style="width: 100%; height: 400px; border-radius: 8px; padding: 10px;">
-                <model-viewer id="modelo3DAnimal"
-                    src="images/vacaAnim.glb"
-                    alt="Modelo 3D Animal"
+            <div class="modelo-3d-container"  style="width: 100%; height: 400px; border-radius: 8px; padding: 10px;">
+                <model-viewer 
+                    id="modelo3DAnimal" 
+                    src=""  alt="Modelo 3D Animal" 
                     auto-rotate
-                    camera-controls
-                    interaction-prompt="none"
-                    animation-name="Idle"  style="width: 100%; height: 100%;">
+                    camera-controls 
+                    interaction-prompt="none" 
+                    animation-name="Idle" 
+                    autoplay 
+                    style="width: 100%; height: 100%;">
                 </model-viewer>
             </div>
 

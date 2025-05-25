@@ -62,7 +62,8 @@ if (isset($_SESSION['respuesta'])) {
                                 data-alimentacion="<?= $animal['alimentacion'] ?>" 
                                 data-higiene="<?= $animal['higiene'] ?>" 
                                 data-salud="<?= $animal['salud'] ?>" 
-                                data-produccion="<?= $animal['produccion'] ?>" 
+                                data-produccion="<?= $animal['produccion'] ?>"
+                                data-tipo-nombre="<?= htmlspecialchars($animal['tipo_nombre']) ?>"
                                 onclick="mostrarModal(this)">
                                 <div class="animal-info" style="position: relative;">
                                     <img class="imagen-animal" src="../../modules/simulador/images/<?= htmlspecialchars($animal['tipo_nombre'] ?? 'default') ?>.png" alt="<?= $animal['tipo_nombre'] ?? 'default' ?>">

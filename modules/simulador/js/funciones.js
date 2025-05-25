@@ -140,15 +140,15 @@ function mostrarModal(elemento) {
         return;
     }
 
-    modalAnimal.style.display = 'flex'; // Asegura que el modal esté visible
+    modalAnimal.style.display = 'flex'; 
 
-    // CRUCIAL: Establece el ID del animal en el dataset del modal de detalle
-    // Este ID se usará para realizar acciones y para actualizar la tarjeta al cerrar.
     modalAnimal.dataset.id_animal = elemento.dataset.id; 
-
-    // Rellena el nombre del animal en el modal de detalle
     document.getElementById('modalNombre').textContent = elemento.dataset.nombre;
 
+    const tipoAnimal = elemento.dataset.tipoNombre
+    console.log("Tipo de animal de la tarjeta:", tipoAnimal);
+
+    cargarModelo3D(tipoAnimal);
     // Crea un objeto con los datos iniciales del animal de la tarjeta
     // Esto se usa para inicializar las barras del modal al abrirlo.
     const animalData = {
@@ -164,15 +164,63 @@ function mostrarModal(elemento) {
     actualizarModalDetalleAnimal(animalData);
 
     // Reinicia la animación del modelo 3D a 'Idle' al abrir el modal
-    const modelViewer = document.getElementById('modelo3DAnimal');
-    if (modelViewer) {
-        modelViewer.animationName = 'Idle';
-        modelViewer.play();
-    } else {
-        console.warn("Elemento <model-viewer> no encontrado al abrir el modal.");
-    }
+    // const modelViewer = document.getElementById('modelo3DAnimal');
+    // if (modelViewer) {
+    //     modelViewer.animationName = 'Idle';
+    //     modelViewer.play();
+    // } else {
+    //     console.warn("Elemento <model-viewer> no encontrado al abrir el modal.");
+    // }
 }
 
+function cargarModelo3D(tipoAnimal) {
+    console.log("--> cargarModelo3D llamada con tipoAnimal:", tipoAnimal);
+    const modelViewer = document.getElementById('modelo3DAnimal');
+    
+    if (!modelViewer) {
+        console.warn("Elemento <model-viewer> no encontrado.");
+        return;
+    }
+
+     let modelFileName = '';
+    const tipoAnimalNormalized = tipoAnimal.toLowerCase(); 
+    const basePath = 'images/'; 
+
+    switch (tipoAnimalNormalized) { 
+        case 'vaca': 
+            modelFileName = 'vacaAnim.glb';
+            break;
+        case 'cerdo': 
+            modelFileName = 'pigAnim.glb'; 
+            break;
+        case 'gallina': 
+            modelFileName = 'gallinaAnim.glb'; 
+            break;
+        case 'cabra': 
+            modelFileName = 'sheepAnim.glb'; 
+            break;
+        case 'toro': 
+            modelFileName = 'bullAnim.glb'; 
+            break;
+        case 'caballo': 
+            modelFileName = 'horseAnim.glb'; 
+            break;
+        case 'burro': 
+            modelFileName = 'donkeyAnim.glb'; 
+            break;
+        default:
+            console.warn(`Modelo 3D no definido para el tipo de animal: ${tipoAnimal}. Usando modelo por defecto.`);
+            modelFileName = 'default_animal.glb'; 
+            break;
+    }
+
+    const finalModelPath = basePath + modelFileName; 
+
+    console.log("Ruta del modelo 3D final a asignar:", finalModelPath); // Para depuración
+    modelViewer.src = finalModelPath; 
+    modelViewer.animationName = 'Idle'; 
+    modelViewer.play();
+}
 
 // --- Función para cerrar el modal de detalle del animal y actualizar la tarjeta principal ---
 function cerrarModal() {
