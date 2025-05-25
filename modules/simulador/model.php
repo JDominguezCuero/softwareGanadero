@@ -142,7 +142,7 @@ class AnimalModel {
         // - Un valor de 2 hará que el efecto de cada factor (X2, X5, X10) sea la mitad de rápido.
         // - Un valor de 3 hará que sea un tercio de rápido, etc.
         // Experimenta con este valor para encontrar la "lentitud" deseada.
-        $divisor_ajuste_velocidad = 20; // Puedes probar con 2, 3, 4, etc.
+        $divisor_ajuste_velocidad = 30; // Puedes probar con 2, 3, 4, etc.
 
         // Aplicamos el factor de tiempo a los minutos pasados para simular aceleración
         // Luego, dividimos por el divisor de ajuste para ralentizar el efecto total.

@@ -105,7 +105,13 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
                     </tbody>
                 </table>
             </div>
-
+            
+            <div style="margin-top: 30px;">
+                <!-- Botón que abre el modal -->
+                <button class="btn btn-success" style="background-color: grey" data-toggle="modalExcel" data-target="#imprimirExcel">
+                    Exportar Excel
+                </button>              
+            </div>
 
         </main>
         

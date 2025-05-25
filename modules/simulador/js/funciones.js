@@ -36,6 +36,32 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(fetchAndRenderAnimals, 5000); 
     fetchAndRenderAnimals(); 
 
+    const modelViewerGlobal = document.getElementById('modelo3DAnimal'); 
+
+    if (modelViewerGlobal) {
+        modelViewerGlobal.addEventListener('load', () => {
+            console.log("Modelo 3D cargado. Intentando acceder a las animaciones...");
+            // VERIFICACIÓN CLAVE AQUÍ
+            if (modelViewerGlobal.model && modelViewerGlobal.model.animations && Array.isArray(modelViewerGlobal.model.animations)) {
+                console.log("Animaciones disponibles:");
+                modelViewerGlobal.model.animations.forEach(animation => {
+                    console.log(`Animación: ${animation.name}, Duración: ${animation.duration} segundos`);
+                });
+            } else {
+                console.log("El modelo 3D cargado no contiene animaciones o no se pudo acceder a ellas.");
+                // Puedes añadir un console.log de modelViewerGlobal.model para ver qué es
+                console.log("Contenido de modelViewerGlobal.model:", modelViewerGlobal.model);
+            }
+        });
+
+        modelViewerGlobal.addEventListener('error', (event) => {
+            console.error("Error al cargar el modelo 3D:", event);
+        });
+
+    } else {
+        console.error("Error: El elemento #modelo3DAnimal no se encontró en el DOM al cargar la página.");
+    }
+
 });
 
 // --- Funciones de Gestión de Animales (activar/guardar nombre) ---
@@ -146,7 +172,6 @@ function mostrarModal(elemento) {
     document.getElementById('modalNombre').textContent = elemento.dataset.nombre;
 
     const tipoAnimal = elemento.dataset.tipoNombre
-    console.log("Tipo de animal de la tarjeta:", tipoAnimal);
 
     cargarModelo3D(tipoAnimal);
     // Crea un objeto con los datos iniciales del animal de la tarjeta
@@ -216,7 +241,6 @@ function cargarModelo3D(tipoAnimal) {
 
     const finalModelPath = basePath + modelFileName; 
 
-    console.log("Ruta del modelo 3D final a asignar:", finalModelPath); // Para depuración
     modelViewer.src = finalModelPath; 
     modelViewer.animationName = 'Idle'; 
     modelViewer.play();
@@ -373,7 +397,6 @@ function actualizarModalDetalleAnimal(animal) {
     }
 }
 
-
 // --- Funciones para Animación del Modelo 3D ---
 
 /**
@@ -381,6 +404,8 @@ function actualizarModalDetalleAnimal(animal) {
  * @param {string} animationName El nombre de la animación a reproducir (ej. 'Eating', 'Walk').
  */
 function playAnimation(animationName) {
+
+
     const modelViewer = document.getElementById('modelo3DAnimal');
     if (modelViewer) {
         modelViewer.animationName = animationName;
@@ -390,6 +415,7 @@ function playAnimation(animationName) {
         // se añade un listener para volver a 'Idle' cuando termine.
         if (animationName !== 'Idle') {
             modelViewer.addEventListener('animation-finished', () => {
+                console.log("¡Animación terminada! Volviendo a Idle.");
                 modelViewer.animationName = 'Idle';
                 modelViewer.play();
             }, { once: true }); // El listener se elimina después de ejecutarse una vez

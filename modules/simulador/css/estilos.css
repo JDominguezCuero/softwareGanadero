@@ -834,7 +834,7 @@ input[type="text"]:focus {
 .aceleracion-tiempo-container {
     display: flex;
     gap: 10px; /* Espacio entre los botones */
-    margin-top: 20px; /* Espacio superior para separarlo de otros elementos */
+    /* margin-top: 20px;  */
     justify-content: center; /* Centrar los botones */
     align-items: center;
 }

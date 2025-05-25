@@ -26,7 +26,7 @@
                 </model-viewer>
             </div>
 
-             <div class="estado">
+            <div class="estado">
                 <div class="barra-progreso">
                     <label>🍽️</label>
                     <div class="barra">
