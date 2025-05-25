@@ -54,10 +54,9 @@ require_once(__DIR__ . '/../../../config/config.php');
                 </form>
             </div>
 
-            <div class="botones-container">
-                <button id="toggle-music" title="Pausar música 🎵">    🔇</button>
-                <a href="menuPrincipal.php" class="btn volver">← Volver al Menu Principal .......</a>
-            </div>
+            <button id="toggle-music" title="Pausar música 🎵">    🔇</button>
+            <a href="menuPrincipal.php" class="btn volver">← Volver al Menu Principal .......</a>
+            
 
 
         </div>

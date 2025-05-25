@@ -40,7 +40,7 @@ class AnimalModel {
     public static function crearAnimal($conexion, $nombre, $id_tipo, $edad, $id_usuario) {
         $stmt = $conexion->prepare("
             INSERT INTO animales (nombre, id_tipo, edad, id_usuario, alimentacion, salud, higiene, produccion, last_updated_at)
-            VALUES (?, ?, ?, ?, 25, 25, 25, 0, NOW())
+            VALUES (?, ?, ?, ?, 100, 100, 100, 0, NOW())
         ");
         return $stmt->execute([$nombre, $id_tipo, $edad, $id_usuario]);
     }
@@ -136,14 +136,42 @@ class AnimalModel {
             return $animal; // No hay decremento que aplicar todavía, devolvemos el animal actual
         }
 
+        // --- AJUSTE PARA RALENTIZAR LA VELOCIDAD ---
+        // Ajusta este valor:
+        // - Un valor de 1 (o no incluirlo) significa velocidad normal (como está ahora).
+        // - Un valor de 2 hará que el efecto de cada factor (X2, X5, X10) sea la mitad de rápido.
+        // - Un valor de 3 hará que sea un tercio de rápido, etc.
+        // Experimenta con este valor para encontrar la "lentitud" deseada.
+        $divisor_ajuste_velocidad = 20; // Puedes probar con 2, 3, 4, etc.
+
         // Aplicamos el factor de tiempo a los minutos pasados para simular aceleración
-        $minutos_simulados = $minutos_pasados * $factor_tiempo;
+        // Luego, dividimos por el divisor de ajuste para ralentizar el efecto total.
+        $minutos_simulados = ($minutos_pasados * $factor_tiempo) / $divisor_ajuste_velocidad;
+
+        // Asegurarse de que $minutos_simulados no sea excesivamente pequeño, aunque el "if ($minutos_pasados < 1)" ya ayuda.
+        // Si el factor_tiempo es 1 y el divisor es 2, se aplicaría un 0.5x, lo que ralentizaría también el 1x.
+        // Si quieres que el 1x sea siempre "normal" y solo los multiplicadores sean afectados:
+        // if ($factor_tiempo > 1) {
+        //     $minutos_simulados = ($minutos_pasados * $factor_tiempo) / $divisor_ajuste_velocidad;
+        // } else {
+        //     $minutos_simulados = $minutos_pasados; // 1x se mantiene sin ralentizar
+        // }
+        // Para tu caso, como X2 te parece rápido, asumir que la ralentización se aplica a todos los factores está bien.
+        // Si $minutos_simulados es muy pequeño debido a la división, podrías redondearlo o establecer un mínimo.
+        $minutos_simulados = max(0, $minutos_simulados);
+
 
         // Calcula los nuevos valores, asegurándose de que no bajen de 0
         $nueva_alimentacion = max(0, $animal['alimentacion'] - ($minutos_simulados * $decremento_por_minuto_alimentacion));
         $nueva_higiene = max(0, $animal['higiene'] - ($minutos_simulados * $decremento_por_minuto_higiene));
         $nueva_salud = max(0, $animal['salud'] - ($minutos_simulados * $decremento_por_minuto_salud));
+        
+        // La producción generalmente aumenta, pero con un decremento aquí, parece que también baja.
+        // Si la producción debe aumentar, cambia el signo de la operación:
+        // $nueva_produccion = min(100, $animal['produccion'] + ($minutos_simulados * $decremento_por_minuto_produccion));
+        // Si es un decremento, entonces está bien como está, pero asegurándose de no bajar de 0.
         $nueva_produccion = max(0, $animal['produccion'] - ($minutos_simulados * $decremento_por_minuto_produccion));
+
 
         // Para evitar actualizaciones a la DB si no hay cambios significativos.
         // Convertimos a int para comparar y luego guardar en la DB.

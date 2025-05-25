@@ -11,12 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Animar carga de barras iniciales (solo al cargar la página)
     document.querySelectorAll('.progreso').forEach(bar => {
-        const width = parseInt(bar.style.width); // Obtiene el ancho inicial del PHP
-        bar.style.width = '0%'; // Lo resetea para la animación
-        setTimeout(() => {
-            bar.style.transition = 'width 1.5s ease-in-out'; // Aplica la transición
-            bar.style.width = width + '%'; // Anima al ancho final
-        }, 100); // Pequeño retraso para que el navegador "vea" el 0%
+        const valor = parseInt(bar.style.width); 
+        animarBarra(bar, valor, true); 
     });
 
     const botonesAceleracion = document.querySelectorAll('.btn-acelerar-tiempo');
@@ -36,6 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         actualizarBotonActivo('1'); 
     }
+
+    setInterval(fetchAndRenderAnimals, 5000); 
+    fetchAndRenderAnimals(); 
 
 });
 
@@ -234,22 +233,29 @@ function realizarAccion(id_animal, accion) {
 
 // --- FUNCIÓN AUXILIAR PARA ANIMAR CUALQUIER BARRA DE PROGRESO ---
 
-function animarBarra(barraElement, valor) {
+function animarBarra(barraElement, valor, isInitialLoad = false) { 
     if (barraElement) {
         const targetWidth = valor;
         
-        // 1. Desactivar transición y resetear width/text para preparar la animación
-        barraElement.style.transition = 'none'; 
-        barraElement.style.width = '0%';       
-        barraElement.textContent = valor + '%'; 
-        
-        // 2. Forzar un reflow (renderizado) para que el navegador "vea" el estado inicial (0%)
-        // antes de aplicar la transición. Sin esto, la animación no se vería.
-        void barraElement.offsetWidth; 
+        if (isInitialLoad) {
+            // Animación desde 0% solo en la carga inicial
+            barraElement.style.transition = 'none'; // Desactiva la transición temporalmente
+            barraElement.style.width = '0%'; // Resetea a 0%
+            barraElement.textContent = valor + '%'; // Muestra el valor final mientras se prepara
 
-        // 3. Reactivar la transición y aplicar el ancho final para iniciar la animación
-        barraElement.style.transition = 'width 1.5s ease-in-out';
-        barraElement.style.width = targetWidth + '%';              
+            // Forzar un reflow para que el navegador "vea" el 0% antes de animar
+            void barraElement.offsetWidth; 
+
+            // Reactivar la transición y animar al ancho final
+            barraElement.style.transition = 'width 1.5s ease-in-out'; // Duración de la animación
+            barraElement.style.width = targetWidth + '%'; 
+
+        } else {
+            // Animación suave desde el valor actual para las actualizaciones posteriores
+            barraElement.style.transition = 'width 1.5s ease-in-out'; // Mantiene la transición
+            barraElement.style.width = targetWidth + '%'; 
+            barraElement.textContent = valor + '%'; // Actualiza el texto inmediatamente
+        }
     }
 }
 
@@ -440,7 +446,8 @@ function setAceleracionTiempo(factor) {
     .then(data => {
         if (data.success) {
             console.log("Factor de tiempo establecido a:", data.factor);
-            location.reload(); 
+            actualizarBotonActivo(data.factor);
+            fetchAndRenderAnimals();
         } else {
             alert('Error al establecer el factor de tiempo: ' + (data.error || 'Error desconocido.'));
         }
@@ -462,4 +469,40 @@ function getEstadoEmojiLocal(salud) {
     if (salud < 50) return '😟';
     if (salud < 80) return '😐';
     return '😊';
+}
+
+function fetchAndRenderAnimals() {
+    fetch('controller.php', { // Asegúrate que tu controller.php pueda manejar esta acción
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: 'action=get_animal_data' // Esta acción ya existe en tu controller.php
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success && Array.isArray(data.animales)) {
+            data.animales.forEach(animalData => {
+                actualizarTarjetaAnimal(animalData);
+            });
+
+            // Si el modal está abierto, asegúrate de que su contenido también refleje los últimos datos
+            const modal = document.getElementById('modalAnimal');
+            if (modal && modal.style.display === 'flex') {
+                const modalId = modal.dataset.id_animal; // Usamos dataset.id_animal, como lo estableces en mostrarModal
+                if (modalId) {
+                    const updatedAnimal = data.animales.find(a => String(a.id_animal) === String(modalId));
+                    if (updatedAnimal) {
+                        actualizarModalDetalleAnimal(updatedAnimal);
+                    }
+                }
+            }
+        } else {
+            console.warn('Advertencia al obtener datos de animales:', data.error || 'Datos no válidos o array no recibido.');
+        }
+    })
+    .catch(error => {
+        console.error('Error en fetchAndRenderAnimals:', error);
+    });
 }

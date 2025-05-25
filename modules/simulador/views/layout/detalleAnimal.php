@@ -24,21 +24,6 @@
                 </model-viewer>
             </div>
 
-            <!-- <div class="estado-animal" style="display: flex; justify-content: space-between; flex-wrap: wrap; font-size: 1.1em; gap: 20px;">
-                <div class="estado-columna" style="flex: 1; min-width: 200px; color: white;">
-                    <p><strong>🍽️ Alimentación:</strong> <span id="modalAlimentacion"></span>%</p>
-                </div>
-                <div class="estado-columna" style="flex: 1; min-width: 200px; color: white;">
-                    <p><strong>🚿 Higiene:</strong> <span id="modalHigiene"></span>%</p>
-                </div>
-                <div class="estado-columna" style="flex: 1; min-width: 200px; color: white;">
-                    <p><strong>💊 Salud:</strong> <span id="modalSalud"></span>%</p>
-                </div>
-                <div class="estado-columna" style="flex: 1; min-width: 200px; color: white;">
-                    <p><strong>🥛 Producción:</strong> <span id="modalProduccion"></span>%</p>
-                </div>
-            </div> -->
-
              <div class="estado">
                 <div class="barra-progreso">
                     <label>🍽️</label>
@@ -68,8 +53,9 @@
                 <button onclick="accionModal('medicar')">💊 Medicar</button>
                 <button onclick="accionModal('dormir')">😴 Dormir</button>
                 <button onclick="accionModal('jugar')">🎾 Jugar</button>
-                <button onclick="verHistorial()">📋 Historial</button>
+                <button class="btn-accion btn-historial" onclick="verHistorial()">Ver Historial</button>
             </div>
+
 
         </div>
     </div>

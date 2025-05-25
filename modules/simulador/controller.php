@@ -185,6 +185,32 @@ switch ($action) {
             }
         break;
 
+    case 'get_animal_data': 
+        $id_usuario = $_SESSION['id_usuario'];
+        $animales_data = [];
+
+        // Obtener los animales originales
+        $animales_originales = AnimalModel::obtenerAnimalesPorUsuario($conexion, $id_usuario);
+
+        // Aplicar el decremento por tiempo a cada animal
+        $factor_tiempo = $_SESSION['factor_tiempo'] ?? 1;
+        foreach ($animales_originales as $animal) {
+            $animal_procesado = AnimalModel::aplicarDecrementoPorTiempo($conexion, $animal['id_animal'], $factor_tiempo);
+            if ($animal_procesado) { // Si la aplicación del decremento fue exitosa o no hubo cambios
+                $animales_data[] = $animal_procesado;
+            } else {
+                // Si hay un error, al menos envía los datos originales para no romper la interfaz
+                error_log("Error al procesar el animal " . $animal['id_animal'] . " para get_animal_data. Enviando datos originales.");
+                $animales_data[] = $animal;
+            }
+        }
+        
+        // Devolver los datos de los animales como JSON
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'animales' => $animales_data]);
+        exit;
+        break;
+
     default:
         header("Location: configuracion.php");
         exit;
