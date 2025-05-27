@@ -108,7 +108,7 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
             
             <div style="margin-top: 30px;">
                 <!-- Botón que abre el modal -->
-                <button class="btn btn-success" style="background-color: grey" data-toggle="modalExcel" data-target="#imprimirExcel">
+                <button class="btn btn-success" data-toggle="modalExcel" onclick="exportarTablaAExcel()" >
                     Exportar Excel
                 </button>              
             </div>
@@ -179,6 +179,35 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
         }
     }
     </script>
+  
+  <script>
+ function exportarTablaAExcel() {
+    // Obtiene la tabla HTML
+    var tabla = document.getElementById("myTable");
+
+    // Crea la hoja de cálculo desde la tabla HTML
+    var hoja = XLSX.utils.table_to_sheet(tabla, { raw: true });
+
+    // Opcional: Remueve la columna de "Acciones" (última columna)
+    const rango = XLSX.utils.decode_range(hoja['!ref']);
+    for (let R = rango.s.r; R <= rango.e.r; ++R) {
+        const celda = XLSX.utils.encode_cell({ r: R, c: rango.e.c });
+        delete hoja[celda];
+    }
+    rango.e.c--; // Disminuye el número total de columnas por 1
+    hoja['!ref'] = XLSX.utils.encode_range(rango);
+
+    // Crea un libro de Excel
+    var libro = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(libro, hoja, "Inventario");
+
+    // Descarga el archivo Excel
+    XLSX.writeFile(libro, "inventario_productos.xlsx", { bookType: "xlsx", type: "binary" });
+ }
+ </script>
+
+
+ <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
 </body>
 
