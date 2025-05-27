@@ -76,7 +76,7 @@ $countStr = str_pad($count, 3, '0', STR_PAD_LEFT);
                 ganaderos, aprendices y
                 estudiantes. Nuestro sistema web combina un simulador interactivo de cuidado animal, tipo juego, con un
                 robusto sistema de
-                inventario ganadero.</p>
+                inventario para ganaderos.</p>
             <p>Podrás aprender sobre alimentación, salud y producción animal mientras administras insumos reales como
                 alimentos,
                 medicinas y herramientas. Automatiza procesos, mejora tus decisiones y conecta el aprendizaje con la
