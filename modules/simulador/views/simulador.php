@@ -119,18 +119,37 @@ if (isset($_SESSION['respuesta'])) {
             <?php endif; ?>
         </div>
 
-        <div class="botones-container">
-            <button id="toggle-music" title="Pausar música 🎵">    🔇</button>
+        <!-- <audio autoplay loop id="bg-music">
+                <source src="<?= BASE_URL ?>/modules/simulador/sounds/granja.mp3" type="audio/mpeg">
+            </audio> -->
 
-            <div class="aceleracion-tiempo-container">
-                <button class="btn-acelerar-tiempo" data-factor="1" title="Tiempo Normal">1x</button>
-                <button class="btn-acelerar-tiempo" data-factor="2" title="Doble Velocidad">2x</button>
-                <button class="btn-acelerar-tiempo" data-factor="5" title="Quíntuple Velocidad">5x</button>
-                <button class="btn-acelerar-tiempo" data-factor="10" title="Diez Veces Más Rápido">10x</button>
-            </div>
+      <div class="botones-container">
+    <button id="toggle-music" title="Pausar música 🎵">🔇</button>
 
-            <a href="views/configuracion.php" class="btn volver">← Volver a Configuraciones .......</a>
-        </div>                        
+    <div class="aceleracion-tiempo-container">
+        <button class="btn-acelerar-tiempo" data-factor="1" title="Tiempo Normal">1x</button>
+        <button class="btn-acelerar-tiempo" data-factor="2" title="Doble Velocidad">2x</button>
+        <button class="btn-acelerar-tiempo" data-factor="5" title="Quíntuple Velocidad">5x</button>
+        <button class="btn-acelerar-tiempo" data-factor="10" title="Diez Veces Más Rápido">10x</button>
+    </div>
+    
+    <a href="views/configuracion.php" class="btn volver">← Volver a Configuraciones</a>
+</div>
+
+        
+        <!-- <script>
+          const music = document.getElementById("bg-music");
+          const toggleBtn = document.getElementById("toggle-music");
+          toggleBtn.addEventListener("click", () => {
+              if (music.paused) {
+                  music.play();
+                  toggleBtn.textContent = "🔇";
+              } else {
+                  music.pause();
+                  toggleBtn.textContent = "🔊";
+              }
+          });
+      </script> -->
 
 </div>
 
