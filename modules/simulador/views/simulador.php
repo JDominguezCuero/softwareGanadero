@@ -36,10 +36,6 @@ if (isset($_SESSION['respuesta'])) {
 </head>
 <body>
 <div class="flex min-h-screen w-full">
-    <?php include '../../public/assets/layout/sidebar.php'; ?>
-    <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full contenido" style="margin: auto;">
-
-
 
         <div class="container">
             <h1 class="titulo">🐾 Simulación en curso </h1>
@@ -136,8 +132,6 @@ if (isset($_SESSION['respuesta'])) {
             <a href="views/configuracion.php" class="btn volver">← Volver a Configuraciones .......</a>
         </div>                        
 
-
-    </main>
 </div>
 
 <!-- Audios -->

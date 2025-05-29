@@ -17,9 +17,6 @@ require_once(__DIR__ . '/../../../config/config.php');
     <link rel="stylesheet" href="<?= BASE_URL ?>/modules/simulador/css/estilos.css">
 </head>
 <body>
-    <div class="flex min-h-screen w-full">
-      <?php include '../../../public/assets/layout/sidebar.php'; ?>
-      <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">
         
         <div class="fondo">
             <!-- Música de fondo -->
@@ -37,7 +34,7 @@ require_once(__DIR__ . '/../../../config/config.php');
                         <a href="<?= BASE_URL ?>/modules/simulador/views/configuracion.php" class="btn">⚙️ Configurar Animales</a>
                         <a href="<?= BASE_URL ?>/modules/inventario/controller.php?accion=listar" class="btn">📦 Ver Inventario</a>
                         <a href="<?= BASE_URL ?>/modules/usuarios/views/perfil.php" class="btn">👤 Mi Perfil</a>
-                        <a href="<?= BASE_URL ?>/public/logout.php" class="btn salir">🚪 Salir</a>
+                        <a href="<?= BASE_URL ?>/modules/inicio/views/bienvenido.php" class="btn salir">🚪 Salir</a>
                     </div>
                 </div>
             </div>
@@ -45,8 +42,6 @@ require_once(__DIR__ . '/../../../config/config.php');
             <!-- Icono para pausar la música -->
             <button id="toggle-music" title="Pausar música 🎵">🔇</button>
         </div>
-      </main>
-    </div>
 
       <script>
           const music = document.getElementById("bg-music");
