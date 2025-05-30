@@ -30,7 +30,7 @@ switch ($accion) {
                     $_SESSION['id_usuario'] = $usuario['id_usuario'];
                     $_SESSION['correo_usuario'] = $usuario['correo_usuario'];
 
-                    header("Location: ../inicio/views/bienvenido.php?login=success");
+                    header("Location: ../inicio/controller.php?accion=listarAnimales");
                     exit;
                 } else {
                     // Usuario no encontrado o contraseña incorrecta

@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 // Verifica si hay sesión iniciada
 if (!isset($_SESSION['usuario'])) {
@@ -23,7 +22,7 @@ if (!isset($_SESSION['usuario'])) {
   <div class="flex min-h-screen w-full">
 
       <!-- Layout Sidebar -->
-      <?php include '../../../public/assets/layout/sidebar.php'; ?>
+      <?php include '../../public/assets/layout/sidebar.php'; ?>
 
       <!-- Main Content -->
       <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">
@@ -43,7 +42,7 @@ if (!isset($_SESSION['usuario'])) {
               </div>
               <div class="bg-white p-6 rounded-lg shadow text-center">
                   <h5 class="text-gray-500">Animales Registrados</h5>
-                  <h2 class="text-2xl font-bold">150</h2>
+                  <h2 class="text-2xl font-bold"><?php echo htmlspecialchars($_animal['cantidadAnimales']); ?></h2>
                   <p class="text-gray-400">Total en inventario</p>
               </div>
               <div class="bg-white p-6 rounded-lg shadow text-center">
@@ -75,7 +74,7 @@ if (!isset($_SESSION['usuario'])) {
           </div>
           
           <!-- Layout Flooter -->
-          <?php include '../../../public/assets/layout/flooter.php'; ?>
+          <?php include '../../public/assets/layout/flooter.php'; ?>
 
       </main>
 

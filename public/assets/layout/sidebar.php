@@ -35,7 +35,7 @@
             </div>
 
             <nav class="mt-10 space-y-4">
-                <a href="<?= BASE_URL ?>/modules/inicio/views/bienvenido.php" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded">
+                <a href="<?= BASE_URL ?>/modules/inicio/controller.php?accion=listarAnimales" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded">
                     <i data-lucide="home"></i>
                     <span id="textInicio">Inicio</span>
                 </a>
