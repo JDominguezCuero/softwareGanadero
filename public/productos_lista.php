@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css">
     <link rel="stylesheet" href="assets/css/principal.css">
+    <link rel="stylesheet" href="assets/css/detalleProducto.css">
 </head>
 <body>
 
@@ -83,6 +84,15 @@
         </div>
     </div>
 
+    <div id="productDetailModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span> <div id="modal-body-content">
+                <div class="product-detail-loading">Cargando detalles del producto...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/product_modal.js"></script> </body>
     <?php include 'assets/layout/flooter.php'; ?>
     <script src="assets/js/tienda_online.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>

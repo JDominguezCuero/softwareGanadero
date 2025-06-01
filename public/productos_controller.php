@@ -9,7 +9,10 @@ session_start();
 
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../modules/productos/model.php';
-require_once __DIR__ . '/includes/render_product_items_function.php'; // Asegúrate de que esta ruta sea correcta para tu función
+// REMOVIDO: Ya no necesitamos incluir el modelo de usuarios por separado,
+// porque la función obtenerProductoPorId ahora trae los datos del vendedor.
+// require_once __DIR__ . '/../modules/usuarios/model.php'; 
+require_once __DIR__ . '/includes/render_product_items_function.php';
 
 global $conexion;
 
@@ -18,7 +21,56 @@ if (!isset($conexion) || !$conexion instanceof PDO) {
     die("Lo sentimos, hay un problema técnico. Por favor, intente más tarde.");
 }
 
-// --- Captura de Variables de Filtro ---
+// --- LÓGICA PARA EL MODAL (SOLICITUD AJAX DE DETALLE DE PRODUCTO) ---
+if (isset($_GET['product_id']) && is_numeric($_GET['product_id'])) {
+    header('Content-Type: application/json'); // La respuesta será JSON
+    $id_producto_modal = (int)$_GET['product_id'];
+    $response = null;
+
+    try {
+        // Obtener detalles del producto, que ahora incluye datos del vendedor
+        // La función obtenerProductoPorId en modules/productos/model.php ya trae el JOIN con Usuarios
+        $producto = obtenerProductoPorId($conexion, $id_producto_modal);
+
+        if ($producto) {
+            // Preparamos los datos para la respuesta JSON.
+            // Los campos 'stock', 'nombre_vendedor', 'email_vendedor', 'telefono_vendedor',
+            // 'direccion_vendedor' ahora se obtienen directamente del array $producto.
+            $response = [
+                'id_producto' => $producto['id_producto'],
+                'nombre_producto' => $producto['nombre_producto'],
+                'descripcion_completa' => $producto['descripcion_producto'], 
+                'precio' => $producto['precio_unitario'], 
+                'stock' => $producto['stock'], // Asegúrate que tu model alias 'cantidad' AS 'stock'
+                'imagen_url' => $producto['imagen_url'],
+                'nombre_categoria' => $producto['nombre_categoria'], 
+                // Información del Vendedor, obtenida directamente del JOIN
+                'nombre_vendedor' => $producto['nombre_usuario'] ?? 'N/A', 
+                'email_vendedor' => $producto['correo_usuario'] ?? 'N/A',
+                'telefono_vendedor' => $producto['telefono_usuario'] ?? 'N/A',
+                'direccion_vendedor' => $producto['direccion_usuario'] ?? 'N/A', // Solo si la tienes en tu tabla Usuarios
+            ];
+
+        } else {
+            http_response_code(404); // Not Found
+            $response = ['error' => 'Producto no encontrado.'];
+        }
+    } catch (PDOException $e) {
+        http_response_code(500); // Internal Server Error
+        $response = ['error' => 'Error de base de datos: ' . $e->getMessage()];
+        error_log("Error AJAX en productos_controller.php: " . $e->getMessage());
+    } catch (Exception $e) {
+        http_response_code(500); // Internal Server Error
+        $response = ['error' => 'Error inesperado: ' . $e->getMessage()];
+        error_log("Error AJAX inesperado en productos_controller.php: " . $e->getMessage());
+    }
+
+    echo json_encode($response); // Envía la respuesta JSON
+    $conexion = null; // Cierra la conexión
+    exit(); // Detiene la ejecución del script aquí
+}
+
+
 $filtro_categoria_id = $_GET['categoria'] ?? null;
 if ($filtro_categoria_id !== null && is_numeric($filtro_categoria_id)) {
     $filtro_categoria_id = (int)$filtro_categoria_id;
@@ -43,23 +95,19 @@ if ($filtro_precio_max !== null && is_numeric($filtro_precio_max)) {
 $filtro_busqueda = trim($_GET['buscar'] ?? '');
 $ordenar_por = $_GET['ordenar_por'] ?? 'fecha_reciente';
 
-// --- Obtener TODAS las categorías disponibles para llenar el select SIEMPRE ---
 $todas_las_categorias = obtenerCategorias($conexion);
 
-// --- Determinar qué categorías mostrar y obtener sus productos ---
 $productos_por_categoria_en_listado = [];
 $categorias_a_mostrar_en_secciones = [];
 
 if ($filtro_categoria_id !== null) {
-    // Si se filtró por una categoría específica, solo muestra esa sección
     foreach ($todas_las_categorias as $cat) {
-        if ($cat['id_categoria'] === $filtro_categoria_id) { // Usa === para comparar el tipo también
+        if ($cat['id_categoria'] === $filtro_categoria_id) {
             $categorias_a_mostrar_en_secciones[] = $cat;
             break;
         }
     }
 } else {
-    // Si no hay filtro de categoría, muestra todas las categorías en secciones separadas
     $categorias_a_mostrar_en_secciones = $todas_las_categorias;
 }
 
@@ -68,7 +116,6 @@ try {
         $id_cat = $categoria['id_categoria'];
         $nombre_cat = $categoria['nombre_categoria'];
 
-        // Obtener productos para la categoría actual, aplicando los filtros relevantes
         $productos_en_esta_categoria = obtenerTodosLosProductosConFiltros(
             $conexion,
             $id_cat,
@@ -78,7 +125,6 @@ try {
             $ordenar_por
         );
 
-        // SOLO agrega la categoría a la lista si tiene productos después de aplicar TODOS los filtros
         if (!empty($productos_en_esta_categoria)) {
             $productos_por_categoria_en_listado[$nombre_cat] = $productos_en_esta_categoria;
         }
@@ -86,6 +132,7 @@ try {
 } catch (Exception $e) {
     error_log("Error al obtener productos por categoría en productos_controller.php: " . $e->getMessage());
 }
+
 include __DIR__ . '/productos_lista.php';
 
 $conexion = null;

@@ -65,33 +65,53 @@ function obtenerProductosPorUsuario($conexion, $id_usuario) {
 }
 
 /**
- * Obtiene un producto por su ID.
- * @param PDO $conexion La conexión a la base de datos.
- * @param int $id El ID del producto.
- * @return array|null El producto encontrado o null si no existe.
+ * Obtiene los detalles completos de un producto por su ID, incluyendo la información del vendedor y la categoría.
+ * @param PDO $conexion Objeto de conexión PDO.
+ * @param int $id El ID del producto a buscar.
+ * @return array|null Un array asociativo con los detalles del producto y del vendedor, o null si no se encuentra.
  */
-function obtenerProductoPorId($conexion, $id) {
+function obtenerProductoPorId(PDO $conexion, int $id): ?array {
     $stmt = $conexion->prepare("
         SELECT
             p.id_producto,
             p.nombre_producto,
-            p.descripcion_producto,
-            p.precio_unitario,
-            p.cantidad,
+            p.descripcion_producto,   -- Nombre de tu columna de descripción completa
+            p.precio_unitario,        -- Nombre de tu columna de precio
+            p.cantidad AS stock,      -- Nombre de tu columna de cantidad, aliased as 'stock' for JS
             p.imagen_url,
-            p.categoria_id,
-            cp.nombre_categoria, -- Agregamos el nombre de la categoría aquí también
+            p.id_usuario,             -- ¡El ID del usuario/vendedor sigue siendo importante aquí!
+            cp.nombre_categoria,
             p.estado_oferta,
-            p.precio_anterior
+            p.precio_anterior,
+            p.fecha_publicacion,      -- Asegúrate de incluir la fecha de publicación si la necesitas
+            u.nombre_usuario,         -- Datos del Vendedor
+            u.telefono_usuario,
+            u.correo_usuario,
+            u.direccion_usuario       -- Si tienes esta columna en tu tabla Usuarios
         FROM
             ProductosGanaderos p
         LEFT JOIN
             CategoriasProducto cp ON p.categoria_id = cp.id_categoria
-        WHERE p.id_producto = :id
+        LEFT JOIN
+            Usuarios u ON p.id_usuario = u.id_usuario -- ¡Aquí está el JOIN a la tabla de Usuarios!
+        WHERE
+            p.id_producto = :id_producto
     ");
-    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->bindValue(':id_producto', $id, PDO::PARAM_INT);
     $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    $producto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Si el producto se encuentra, añade el campo 'es_nuevo' si lo necesitas para otras lógicas
+    if ($producto && isset($producto['fecha_publicacion'])) {
+        $fecha_publicacion = new DateTime($producto['fecha_publicacion']);
+        $fecha_actual = new DateTime();
+        $intervalo = $fecha_publicacion->diff($fecha_actual);
+        $producto['es_nuevo'] = ($intervalo->days <= 30); // 30 días como umbral
+    } else if ($producto) {
+        $producto['es_nuevo'] = false; // Si no hay fecha, no es nuevo
+    }
+
+    return $producto;
 }
 
 /**

@@ -1,0 +1,176 @@
+/* --- Estilos para el Modal de Detalle de Producto --- */
+
+/* Estilo base para el contenedor del modal (inicialmente oculto) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7);
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Estilo para el contenido real del modal (la "caja" blanca/oscura) */
+.modal-content {
+    background-color: #fefefe; 
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Estilos para el botón de cerrar (la 'x') */
+.close-button {
+    color: #aaa;
+    float: right; /* Lo alinea a la derecha */
+    font-size: 38px;
+    font-weight: bold;
+    position: absolute; /* Posicionamiento absoluto respecto a .modal-content */
+    top: 10px;
+    right: 20px;
+    cursor: pointer; /* Cambia el cursor para indicar que es clickable */
+    line-height: 1; /* Ayuda a que la 'x' esté centrada verticalmente */
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000; /* Color oscuro al pasar el ratón */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* --- Estilos del Modal para el MODO OSCURO --- */
+body.dark-mode .modal-content {
+    background-color: var(--oscuro); /* Usa tu variable de color oscuro */
+    color: var(--texto-claro); /* Usa tu variable de color de texto claro */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.6); /* Sombra más oscura para el modo oscuro */
+}
+
+body.dark-mode .close-button {
+    color: #ccc; /* Color más claro para la 'x' en modo oscuro */
+}
+body.dark-mode .close-button:hover,
+body.dark-mode .close-button:focus {
+    color: #fff; /* Blanco al pasar el ratón en modo oscuro */
+}
+
+/* --- Estilos para el Contenido Dinámico del Producto dentro del Modal --- */
+#modal-body-content {
+    display: flex; /* Usamos flexbox para organizar imagen e info */
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    gap: 20px; /* Espacio entre la imagen y la información */
+    margin-top: 20px; /* Espacio debajo del botón de cerrar */
+}
+
+#modal-body-content .product-image-container {
+    flex: 1 1 300px; /* Flex-grow, flex-shrink, flex-basis: flexible pero con un tamaño base de 300px */
+    max-width: 400px; /* Ancho máximo para la imagen */
+    text-align: center;
+}
+
+#modal-body-content .product-image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Bordes redondeados para la imagen */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+}
+
+#modal-body-content .product-info {
+    flex: 2 1 400px; /* La sección de información ocupa más espacio */
+}
+
+#modal-body-content .product-info h2 {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    color: #28a745; /* Color verde distintivo para el título del producto */
+}
+
+body.dark-mode #modal-body-content .product-info h2 {
+    color: #a8e6cf; /* Color de acento para el título en modo oscuro */
+}
+
+#modal-body-content .product-info p {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+#modal-body-content .product-info .price {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #e67e22; /* Color naranja distintivo para el precio */
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+body.dark-mode #modal-body-content .product-info .price {
+    color: #f7dc6f; /* Color de acento para el precio en modo oscuro */
+}
+
+/* Estilos para la sección de detalles del vendedor */
+#modal-body-content .seller-details {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #eee; /* Línea separadora */
+}
+
+body.dark-mode #modal-body-content .seller-details {
+    border-top-color: #444; /* Color de la línea en modo oscuro */
+}
+
+#modal-body-content .seller-details h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #3498db; /* Color azul para el título del vendedor */
+}
+
+body.dark-mode #modal-body-content .seller-details h3 {
+    color: #7abaff; /* Color de acento para el título del vendedor en modo oscuro */
+}
+
+#modal-body-content .seller-details p {
+    margin-bottom: 5px;
+}
+
+/* Estilo para el mensaje de carga */
+.product-detail-loading {
+    text-align: center;
+    padding: 50px;
+    color: #555;
+    font-size: 1.2em;
+    width: 100%; /* Ocupa todo el ancho cuando está solo */
+}
+
+body.dark-mode .product-detail-loading {
+    color: #ccc;
+}
+
+/* Media Queries para Responsividad (ajuste para pantallas pequeñas) */
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 15px; /* Menos padding en móviles */
+        width: 95%; /* Ocupa más ancho en móviles */
+    }
+    #modal-body-content {
+        flex-direction: column; /* Apila imagen e info verticalmente */
+    }
+    #modal-body-content .product-image-container {
+        flex: none; /* Deshabilita flexbox para esta sección */
+        max-width: 100%;
+    }
+    #modal-body-content .product-info {
+        flex: none; /* Deshabilita flexbox para esta sección */
+        width: 100%;
+    }
+}

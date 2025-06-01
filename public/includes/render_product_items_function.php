@@ -15,6 +15,8 @@ function renderProductItems(array $products, bool $show_old_price = false): void
         return;
     }
 
+    echo '<div class="products-grid">'; // Agregué el contenedor de la grilla
+
     foreach ($products as $product) {
         // Asegúrate de que todas las claves existan y sean seguras para HTML
         $id_producto = htmlspecialchars($product['id_producto'] ?? '');
@@ -41,13 +43,13 @@ function renderProductItems(array $products, bool $show_old_price = false): void
         $telefono_usuario = htmlspecialchars($product['telefono_usuario'] ?? '');
         // Asegúrate de que tu modelo devuelva 'correo_usuario' para esta clave
         $email_usuario = htmlspecialchars($product['correo_usuario'] ?? '');
+        // Agrega el campo de dirección si lo estás usando y lo recuperas del modelo
+        $direccion_usuario = htmlspecialchars($product['direccion_usuario'] ?? '');
 
         ?>
-        <div class="product-item">
+        <div class="product-item" data-product-id="<?= $id_producto ?>">
             <div class="p-portada">
-                <a href="detalle_producto.php?id=<?= $id_producto ?>">
-                    <img src="<?= $imagen_url ?>" alt="<?= $nombre_producto ?>">
-                </a>
+                <img src="<?= $imagen_url ?>" alt="<?= $nombre_producto ?>">
                 <?php if ($estado_oferta): ?>
                     <span class="stin stin-oferta">Oferta</span>
                 <?php endif; ?>
@@ -56,9 +58,7 @@ function renderProductItems(array $products, bool $show_old_price = false): void
                 <?php endif; ?> -->
             </div>
             <div class="p-info">
-                <a href="detalle_producto.php?id=<?= $id_producto ?>">
-                    <h3><?= $nombre_producto ?></h3>
-                </a>
+                <h3><?= $nombre_producto ?></h3>
                 <p class="descripcion"><?= $descripcion_corta ?></p>
                 <div class="precio">
                     <span>S/ <?= $precio_unitario ?></span>
@@ -67,15 +67,7 @@ function renderProductItems(array $products, bool $show_old_price = false): void
                     <?php endif; ?>
                 </div>
                 <?php if (isset($product['nombre_usuario']) && !empty($product['nombre_usuario'])): ?>
-                    <p class="seller-info">Vendido por:
-                        <strong><?= $nombre_usuario ?></strong>
-                        <?php if (!empty($telefono_usuario)): ?>
-                            <br>Tel: <a href="tel:<?= $telefono_usuario ?>"><?= $telefono_usuario ?></a>
-                        <?php endif; ?>
-                        <?php if (!empty($email_usuario)): ?>
-                            <br>Email: <a href="mailto:<?= $email_usuario ?>"><?= $email_usuario ?></a>
-                        <?php endif; ?>
-                    </p>
+                    <p class="seller-info">Vendido por: <strong><?= $nombre_usuario ?></strong></p>
                 <?php else: ?>
                     <p class="seller-info">Vendedor no disponible</p>
                 <?php endif; ?>
@@ -84,5 +76,6 @@ function renderProductItems(array $products, bool $show_old_price = false): void
         </div>
         <?php
     }
+    echo '</div>'; // Cierre del contenedor de la grilla
 }
 ?>
