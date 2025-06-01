@@ -39,6 +39,10 @@
                     <i data-lucide="home"></i>
                     <span id="textInicio">Inicio</span>
                 </a>
+                <a href="<?= BASE_URL ?>/modules/productos/controller.php?accion=listar" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded">
+                    <i data-lucide="store"></i>
+                    <span id="textProducto">Productos</span>
+                </a>
                 <a href="<?= BASE_URL ?>/modules/inventario/controller.php?accion=listar" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded">
                     <i data-lucide="box"></i>
                     <span id="textInventario">Inventario</span>
@@ -79,7 +83,7 @@
               userProfile.classList.remove('hidden');
           }
 
-          const texts = ['textInicio', 'textInventario', 'textSimulacion', 'textPerfil', 'textCerrarSesion'];
+          const texts = ['textInicio', 'textProducto', 'textInventario', 'textSimulacion', 'textPerfil', 'textCerrarSesion'];
           texts.forEach(id => {
               const el = document.getElementById(id);
               if (isCollapsed) {

@@ -1,0 +1,28 @@
+/* Custom CSS para centrar modales verticalmente */
+/* Esto asegura que el modal siempre esté centrado, incluso con scroll */
+.modal.fade .modal-dialog {
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  top: 50%;
+  margin: 0 auto;
+  min-height: calc(100vh - 60px); /* Ajusta si tienes un header fijo o footer */
+  display: flex;
+  align-items: center; /* Centra el contenido del modal-dialog */
+}
+
+/* Opcional: si el modal es muy grande, permite que el contenido interno tenga scroll */
+.modal-content {
+  max-height: calc(100vh - 60px); /* Limita la altura del contenido */
+  overflow-y: auto; /* Permite scroll vertical */
+}
+
+/* Para navegadores específicos que no soportan transform */
+@media (min-width: 576px) {
+  .modal-dialog {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

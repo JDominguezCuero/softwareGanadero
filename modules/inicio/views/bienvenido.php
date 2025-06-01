@@ -74,7 +74,7 @@ if (!isset($_SESSION['usuario'])) {
           </div>
           
           <!-- Layout Flooter -->
-          <?php include '../../public/assets/layout/flooter.php'; ?>
+          <!-- <?php include '../../public/assets/layout/flooter.php'; ?> -->
 
       </main>
 

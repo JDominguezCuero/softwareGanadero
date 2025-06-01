@@ -1,0 +1,103 @@
+/* MODAL: Centrado vertical */
+.modal.fade .modal-dialog {
+  transform: translate(0, -50%);
+  top: 50%;
+  margin: 0 auto;
+  min-height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+}
+
+.modal-content {
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* IMAGENES DE LA TABLA */
+.product-thumbnail {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* TABLA GENERAL */
+#myTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto; /* ← Volver a auto para que se ajuste bien */
+}
+
+/* CABECERA Y CELDAS */
+#myTable th,
+#myTable td {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+/* ESTILO CABECERA */
+#myTable thead {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* ANCHOS ESPECÍFICOS PARA ALINEACIÓN */
+#myTable th:nth-child(1),
+#myTable td:nth-child(1) {
+  width: 70px; /* Imagen */
+}
+
+#myTable th:nth-child(2),
+#myTable td:nth-child(2) {
+  width: 150px; /* Nombre */
+}
+
+#myTable th:nth-child(3),
+#myTable td:nth-child(3),
+#myTable th:nth-child(4),
+#myTable td:nth-child(4),
+#myTable th:nth-child(5),
+#myTable td:nth-child(5),
+#myTable th:nth-child(6),
+#myTable td:nth-child(6) {
+  width: 100px;
+}
+
+
+/* ACCIONES */
+#myTable td.acciones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+#myTable td.acciones a {
+  color: #333;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+#myTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#myTable .acciones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
