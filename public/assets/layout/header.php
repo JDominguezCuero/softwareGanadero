@@ -18,7 +18,7 @@
                     <nav class="hm-menu">
                         <ul>
                             <li><a href="index_controller.php">Productos</a></li>
-                            <li><a href="http://">Campañas</a></li>
+                            <li><a href="productos_controller.php">Catalogo de Productos</a></li>
                             <li><a href="nosotros.php">Nosotros</a></li>
                             <li><a href="contacto.php">Contacto</a></li>
                             <li><a href="../modules/auth/views/autenticacion.php">Ingresar</a></li>
@@ -50,7 +50,7 @@
             <button class="cerrar-menu"><i class="fas fa-times"></i></button>
             <ul>
                 <li><a href="index_controller.php">Productos</a></li>
-                <li><a href="#">Campañas</a></li>
+                <li><a href="productos_controller.php">Catalogo de Productos</a></li>
                 <li><a href="nosotros.php">Nosotros</a></li>
                 <li><a href="contacto.php">Contacto</a></li>
             </ul>

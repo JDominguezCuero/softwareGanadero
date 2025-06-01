@@ -1,6 +1,6 @@
 <?php
 // inventario/model.php
-require_once __DIR__ . '/../../config/config.php'; // Asegúrate de que config.php establezca la conexión PDO
+require_once __DIR__ . '/../../config/config.php';
 
 /**
  * Obtiene todos los alimentos del inventario.
@@ -96,11 +96,6 @@ function actualizarItem($conexion, $id, $nombre, $cantidad, $unidad_medida, $fec
  * @return bool True en caso de éxito, false en caso de fallo.
  */
 function eliminarItem($conexion, $id) {
-    // Si hay otras tablas que dependen de inventarioalimentos, deberías manejar la eliminación en cascada
-    // o eliminar los registros relacionados aquí antes de eliminar el alimento principal.
-    // En este caso, tu ejemplo de inventario no mostraba dependencias como 'VentasProductos',
-    // por lo que asumo que 'inventarioalimentos' es una tabla independiente para este módulo.
-
     $stmt = $conexion->prepare("DELETE FROM inventarioalimentos WHERE id_alimento = :id");
     if (!$stmt) {
         throw new Exception("Error al preparar la consulta para eliminar alimento: " . implode(":", $conexion->errorInfo()));

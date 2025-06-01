@@ -1,57 +1,92 @@
 <?php
-// public/productos.php (ESTE ES EL CONTROLADOR)
+// public/productos_controller.php
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-session_start(); // Si necesitas sesiones para algo en esta página
+session_start();
 
-require_once __DIR__ . '/../config/config.php'; // Para la conexión a la base de datos
-require_once __DIR__ . '/../modules/productos/model.php'; // Tu modelo de productos
-require_once __DIR__ . '/../modules/categorias/model.php'; // Si tienes un modelo para categorías
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../modules/productos/model.php';
+require_once __DIR__ . '/includes/render_product_items_function.php'; // Asegúrate de que esta ruta sea correcta para tu función
 
 global $conexion;
 
 if (!isset($conexion) || !$conexion instanceof PDO) {
-    error_log("Error: La conexión a la base de datos no está disponible en public/productos.php.");
-    die("Lo sentimos, hay un problema técnico con la base de datos.");
+    error_log("Error: La conexión a la base de datos no está disponible. Verifique config.php.");
+    die("Lo sentimos, hay un problema técnico. Por favor, intente más tarde.");
 }
 
-// --- 1. Lógica para filtros y ordenamiento ---
-$filtros = [
-    'buscar' => $_GET['buscar'] ?? null,
-    'categoria_id' => $_GET['categoria'] ?? null,
-    'precio_min' => $_GET['precio_min'] ?? null,
-    'precio_max' => $_GET['precio_max'] ?? null,
-    'ofertas_solo' => isset($_GET['ofertas']) && $_GET['ofertas'] === 'true'
-];
-$orden = $_GET['orden'] ?? 'nombre_asc';
+// --- Captura de Variables de Filtro ---
+$filtro_categoria_id = $_GET['categoria'] ?? null;
+if ($filtro_categoria_id !== null && is_numeric($filtro_categoria_id)) {
+    $filtro_categoria_id = (int)$filtro_categoria_id;
+} else {
+    $filtro_categoria_id = null;
+}
 
-$productos_filtrados = [];
-$categorias_para_filtro = [];
+$filtro_precio_min = $_GET['precio_min'] ?? null;
+if ($filtro_precio_min !== null && is_numeric($filtro_precio_min)) {
+    $filtro_precio_min = (float)$filtro_precio_min;
+} else {
+    $filtro_precio_min = null;
+}
+
+$filtro_precio_max = $_GET['precio_max'] ?? null;
+if ($filtro_precio_max !== null && is_numeric($filtro_precio_max)) {
+    $filtro_precio_max = (float)$filtro_precio_max;
+} else {
+    $filtro_precio_max = null;
+}
+
+$filtro_busqueda = trim($_GET['buscar'] ?? '');
+$ordenar_por = $_GET['ordenar_por'] ?? 'fecha_reciente';
+
+// --- Obtener TODAS las categorías disponibles para llenar el select SIEMPRE ---
+$todas_las_categorias = obtenerCategorias($conexion);
+
+// --- Determinar qué categorías mostrar y obtener sus productos ---
+$productos_por_categoria_en_listado = [];
+$categorias_a_mostrar_en_secciones = [];
+
+if ($filtro_categoria_id !== null) {
+    // Si se filtró por una categoría específica, solo muestra esa sección
+    foreach ($todas_las_categorias as $cat) {
+        if ($cat['id_categoria'] === $filtro_categoria_id) { // Usa === para comparar el tipo también
+            $categorias_a_mostrar_en_secciones[] = $cat;
+            break;
+        }
+    }
+} else {
+    // Si no hay filtro de categoría, muestra todas las categorías en secciones separadas
+    $categorias_a_mostrar_en_secciones = $todas_las_categorias;
+}
 
 try {
-    // 2. Obtener todas las categorías para el filtro
-    $categorias_para_filtro = obtenerCategorias($conexion); // Asegúrate de que esta función existe en tu modelo de categorías
+    foreach ($categorias_a_mostrar_en_secciones as $categoria) {
+        $id_cat = $categoria['id_categoria'];
+        $nombre_cat = $categoria['nombre_categoria'];
 
-    // 3. Obtener los productos aplicando filtros y ordenamiento
-    // Necesitas una función en tu model.php que pueda manejar esto.
-    // Si no la tienes, esta es una buena oportunidad para crearla.
-    // Por ahora, para que empiece a mostrar algo, puedes usar obtenerProductos sin filtros si lo deseas.
-    // Idealmente, deberías tener una función como obtenerProductosConFiltrosYOrden($conexion, $filtros, $orden);
-    // Si no, por el momento, para que aparezcan los productos:
-    $productos_filtrados = obtenerProductos($conexion); // Usa la función obtenerProductos que ya modificaste para incluir datos del vendedor.
+        // Obtener productos para la categoría actual, aplicando los filtros relevantes
+        $productos_en_esta_categoria = obtenerTodosLosProductosConFiltros(
+            $conexion,
+            $id_cat,
+            $filtro_precio_min,
+            $filtro_precio_max,
+            $filtro_busqueda,
+            $ordenar_por
+        );
 
+        // SOLO agrega la categoría a la lista si tiene productos después de aplicar TODOS los filtros
+        if (!empty($productos_en_esta_categoria)) {
+            $productos_por_categoria_en_listado[$nombre_cat] = $productos_en_esta_categoria;
+        }
+    }
 } catch (Exception $e) {
-    error_log("Error en public/productos.php al obtener datos: " . $e->getMessage());
-    // En caso de error, $productos_filtrados se mantiene como un array vacío.
+    error_log("Error al obtener productos por categoría en productos_controller.php: " . $e->getMessage());
 }
+include __DIR__ . '/productos_lista.php';
 
-// --- 4. Incluir la vista ---
-// Ahora incluye la vista que me mostraste
-include __DIR__ . '/views/productos_lista.php';
-
-// Cerrar la conexión si es necesario
 $conexion = null;
 ?>

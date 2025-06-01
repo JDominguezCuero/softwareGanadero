@@ -30,7 +30,6 @@
                                 <select class="form-control" name="categoria_id" id="categoria_id" required>
                                     <option value="">Selecciona una categoría</option>
                                     <?php
-                                    // Asegúrate de que $categorias esté definida (debe venir del controller.php)
                                     if (isset($categorias) && is_array($categorias)) {
                                         foreach ($categorias as $categoria) {
                                             echo '<option value="' . htmlspecialchars($categoria['id_categoria']) . '">' . htmlspecialchars($categoria['nombre_categoria']) . '</option>';

@@ -3,7 +3,7 @@
 require_once(__DIR__ . '../../../../config/config.php');
 
 if (!isset($_SESSION['usuario'])) {
-    header("Location: ../../../public/index.php?login=error&reason=nologin");
+    header("Location: ../../../public/index_controller.php?login=error&reason=nologin");
     exit;
 }
 
@@ -141,8 +141,6 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
         lucide.createIcons();
 
         $(document).ready(function () {
-            // Lógica de los modales ya incluida en los archivos de layout
-            // (La he movido allí para que se encargue cada modal de su JS)
 
             // Limpia la URL después de mostrar el mensaje
             if(window.location.search.includes("msg=") || window.location.search.includes("error=")) {
@@ -160,9 +158,6 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
             for (i = 1; i < tr.length; i++) {
                 let rowContainsFilter = false;
                 const tds = tr[i].getElementsByTagName("td");
-                // Comienza desde la segunda celda (índice 1) para saltar la imagen si quieres
-                // O recorre todas si quieres que la búsqueda incluya el nombre de la imagen.
-                // Aquí recorre desde la segunda columna (Nombre)
                 for (j = 1; j < tds.length - 1; j++) { // Recorre todas las celdas menos la última (acciones)
                     const td = tds[j];
                     if (td) {

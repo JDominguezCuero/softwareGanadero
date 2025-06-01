@@ -1,6 +1,6 @@
 <?php
 // products/model.php
-require_once __DIR__ . '/../../config/config.php'; // Asegúrate de que config.php establezca la conexión PDO
+require_once __DIR__ . '/../../config/config.php';
 
 /**
  * Obtiene todos los productos de la base de datos.
@@ -165,7 +165,6 @@ function actualizarProducto($conexion, $id, $nombre, $descripcion, $precio, $sto
  * @return bool True en caso de éxito, false en caso de fallo.
  */
 function eliminarProducto($conexion, $id) {
-    // Si hay tablas asociadas (ej. VentasProductos), elimínalas primero
     $stmt1 = $conexion->prepare("DELETE FROM VentasProductos WHERE id_producto = :id");
     $stmt1->bindValue(':id', $id, PDO::PARAM_INT);
     $stmt1->execute();
@@ -173,23 +172,6 @@ function eliminarProducto($conexion, $id) {
     $stmt = $conexion->prepare("DELETE FROM ProductosGanaderos WHERE id_producto = :id");
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
     return $stmt->execute();
-}
-
-/**
- * Obtiene todas las categorías de productos de la base de datos.
- * @param PDO $conexion La conexión a la base de datos (PDO).
- * @return array Un array de categorías.
- */
-function obtenerCategorias($conexion) {
-    try {
-        $stmt = $conexion->prepare("SELECT id_categoria, nombre_categoria FROM CategoriasProducto ORDER BY nombre_categoria ASC");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        // En un entorno de producción, podrías loggear el error sin mostrarlo al usuario.
-        // error_log("Error al obtener categorías: " . $e->getMessage());
-        return []; // Retorna un array vacío en caso de error
-    }
 }
 
 function obtenerProductosPorCategoria($conexion, $categoria_id) {
@@ -300,8 +282,6 @@ function obtenerCategoriasMasPopulares(PDO $conexion, int $limit = 3): array {
     $populares_ids = [];
 
     try {
-        // Suponiendo que tienes una tabla de pedidos/ventas que relaciona productos
-        // con categorías. Esta consulta es un EJEMPLO, adáptala a tu esquema de DB.
         $sql = "
             SELECT
                 cp.id_categoria,
@@ -358,9 +338,6 @@ function obtenerProductosPopularesPorCategorias(PDO $conexion, array $category_i
         $cat_nombre = $cat['nombre'];
 
         try {
-            // Selecciona productos de la categoría actual, ordenados por alguna métrica de popularidad
-            // (ej. fecha de publicación, o si tuvieras ventas_acumuladas, etc.)
-            // Incluimos datos del usuario para el renderProductItems
             $sql = "
                 SELECT
                     p.id_producto,
@@ -394,10 +371,135 @@ function obtenerProductosPopularesPorCategorias(PDO $conexion, array $category_i
 
         } catch (PDOException $e) {
             error_log("Error al obtener productos para categoría {$cat_nombre} (ID: {$cat_id}): " . $e->getMessage());
-            $productos_populares_por_categoria[$cat_nombre] = []; // Asegura que la categoría exista pero vacía
+            $productos_populares_por_categoria[$cat_nombre] = [];
         }
     }
 
     return $productos_populares_por_categoria;
+}
+
+/**
+ * Obtiene todas las categorías de productos.
+ * @param PDO $conexion Objeto de conexión a la base de datos.
+ * @return array Lista de categorías.
+ */
+function obtenerCategorias(PDO $conexion): array {
+    try {
+        $stmt = $conexion->query("SELECT id_categoria, nombre_categoria FROM CategoriasProducto ORDER BY nombre_categoria ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Error al obtener categorías: " . $e->getMessage());
+        return [];
+    }
+}
+
+/**
+ * Obtiene todos los productos con opciones de filtrado y ordenación.
+ * @param PDO $conexion La conexión a la base de datos.
+ * @param int|null $id_categoria ID de la categoría a filtrar.
+ * @param float|null $precio_min Precio mínimo.
+ * @param float|null $precio_max Precio máximo.
+ * @param string|null $busqueda Texto para buscar en nombre o descripción.
+ * @param string $ordenar_por Criterio de ordenación (fecha_reciente, precio_asc, precio_desc, nombre_asc).
+ * @return array Lista de productos.
+ */
+function obtenerTodosLosProductosConFiltros(
+    PDO $conexion,
+    ?int $id_categoria = null,
+    ?float $precio_min = null,
+    ?float $precio_max = null,
+    ?string $busqueda = null,
+    string $ordenar_por = 'fecha_reciente'
+): array {
+    $sql = "
+        SELECT
+            p.id_producto,
+            p.nombre_producto,
+            p.descripcion_producto,
+            p.precio_unitario,
+            p.precio_anterior,
+            p.imagen_url,
+            p.estado_oferta,
+            p.fecha_publicacion,
+            u.nombre_usuario,
+            u.telefono_usuario,
+            u.correo_usuario,
+            cp.nombre_categoria
+        FROM
+            productosganaderos p
+        JOIN
+            CategoriasProducto cp ON p.categoria_id = cp.id_categoria
+        LEFT JOIN
+            Usuarios u ON p.id_usuario = u.id_usuario
+        WHERE 1=1 -- Cláusula siempre verdadera para facilitar la adición de condiciones
+    ";
+
+    $params = [];
+
+    // --- Aplicar Filtros ---
+    if ($id_categoria !== null && $id_categoria > 0) {
+        $sql .= " AND p.categoria_id = :id_categoria";
+        $params[':id_categoria'] = $id_categoria;
+    }
+
+    if ($precio_min !== null && $precio_min >= 0) {
+        $sql .= " AND p.precio_unitario >= :precio_min";
+        $params[':precio_min'] = $precio_min;
+    }
+
+    if ($precio_max !== null && $precio_max > 0) {
+        $sql .= " AND p.precio_unitario <= :precio_max";
+        $params[':precio_max'] = $precio_max;
+    }
+
+    if ($busqueda !== null && $busqueda !== '') {
+        $sql .= " AND (p.nombre_producto LIKE :busqueda OR p.descripcion_producto LIKE :busqueda_desc)";
+        $params[':busqueda'] = '%' . $busqueda . '%';
+        $params[':busqueda_desc'] = '%' . $busqueda . '%'; // Para buscar también en descripción
+    }
+
+    // --- Aplicar Ordenación ---
+    switch ($ordenar_por) {
+        case 'precio_asc':
+            $sql .= " ORDER BY p.precio_unitario ASC";
+            break;
+        case 'precio_desc':
+            $sql .= " ORDER BY p.precio_unitario DESC";
+            break;
+        case 'nombre_asc':
+            $sql .= " ORDER BY p.nombre_producto ASC";
+            break;
+        case 'fecha_reciente':
+        default:
+            $sql .= " ORDER BY p.fecha_publicacion DESC";
+            break;
+    }
+
+    try {
+        $stmt = $conexion->prepare($sql);
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+        $stmt->execute();
+        $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Lógica para determinar si es "nuevo" (misma que en renderProductItems)
+        foreach ($productos as &$producto) {
+            if (isset($producto['fecha_publicacion'])) {
+                $fecha_publicacion = new DateTime($producto['fecha_publicacion']);
+                $fecha_actual = new DateTime();
+                $intervalo = $fecha_publicacion->diff($fecha_actual);
+                $producto['es_nuevo'] = ($intervalo->days <= 30); // 30 días como umbral de "nuevo"
+            } else {
+                $producto['es_nuevo'] = false;
+            }
+        }
+
+        return $productos;
+
+    } catch (PDOException $e) {
+        error_log("Error en obtenerTodosLosProductosConFiltros: " . $e->getMessage());
+        return [];
+    }
 }
 ?>

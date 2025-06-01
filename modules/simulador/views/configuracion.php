@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header("Location: ../../public/index.php");
+    header("Location: /../../../public/index_controller.php");
     exit;
 }
 require_once(__DIR__ . '/../../../config/config.php');

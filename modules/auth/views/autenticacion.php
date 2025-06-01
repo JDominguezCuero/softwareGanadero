@@ -100,7 +100,7 @@ if (isset($_GET['enviado']) && $_GET['enviado'] == 2) {
 
                         <div class="login-options">
                             <br>
-                            <a href="../../../public/index.php" style="color: green;" class="btn-small">Volver</a>
+                            <a href="../../../public/index_controller.php" style="color: green;" class="btn-small">Volver</a>
                             <br>
                             <a  href="#" data-toggle="modal" data-target="#modalRestablecer" style="color: green;" class="forgot-password">¿Olvidaste tu contraseña?</a>
                         </div>
@@ -117,7 +117,7 @@ if (isset($_GET['enviado']) && $_GET['enviado'] == 2) {
 
                         <div class="login-options">
                             <br>
-                            <a href="../../../public/index.php" style="color: green;" class="btn-small">Volver</a>
+                            <a href="../../../public/index_controller.php" style="color: green;" class="btn-small">Volver</a>
                         </div>
                     </form>
                 </div>

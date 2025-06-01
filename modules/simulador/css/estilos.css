@@ -192,7 +192,7 @@ input[type="text"]:focus {
     box-shadow: 0 5px 15px rgba(86, 171, 47, 0.5);
     transition: background-color 0.3s ease;
     z-index: 20;
-    padding: 0; /* Asegura que el icono esté centrado si hay padding */
+    padding: 0; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -453,8 +453,8 @@ input[type="text"]:focus {
     font-weight: 700;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
     user-select: none;
-    box-sizing: border-box; /* ASEGÚRATE DE QUE ESTÉ PRESENTE */
-    white-space: nowrap; /* ASEGÚRATE DE QUE ESTÉ PRESENTE */
+    box-sizing: border-box;
+    white-space: nowrap;
 }
 
 .progreso.verde {

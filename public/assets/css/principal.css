@@ -342,45 +342,49 @@ a {
 /* Tienda virtual */
 
 
-:root{
+:root {
     --color-principal: #4CAF50;
-    --color-primary-hover:#39793b;
-    --color-verde:#04A75B;
+    --color-primary-hover: #39793b;
+    --color-verde: #04A75B;
     --color-negro: #444A47;
     --color-fondo: #F7F9FD;
     --color-footer: #151515;
 }
 
-*,::after, ::before{
+*,
+::after,
+::before {
     box-sizing: border-box;
 }
 
-*{
+* {
     padding: 0px;
     margin: 0;
 }
 
-body{
+body {
     font-family: 'Poppins', sans-serif;
 }
 
-.hm-wrapper{
+.hm-wrapper {
     position: relative;
 }
 
-.hm-wrapper, body{
+.hm-wrapper,
+body {
     min-height: 100%;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
-ul,ol{
+ul,
+ol {
     list-style: none;
 }
 
-img{
+img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -388,24 +392,24 @@ img{
     border-style: none;
 }
 
-.bg-fondo{
+.bg-fondo {
     background: var(--color-fondo);
 }
 
-.container{
+.container {
     width: 1122px;
     padding: 0 15px;
     margin: 0 auto;
 }
 
-@media screen and (min-width: 1px){
-    .container{
+@media screen and (min-width: 1px) {
+    .container {
         width: auto;
         max-width: 1122px !important;
     }
 }
 
-.uppercase{
+.uppercase {
 
     text-transform: uppercase !important;
 }
@@ -414,7 +418,7 @@ img{
     ESTILOS: Botones
 ==================================*/
 
-.hm-btn{
+.hm-btn {
     display: inline-block;
     position: relative;
     padding: 12px 25px;
@@ -426,14 +430,14 @@ img{
 
 }
 
-.btn-primary{
+.btn-primary {
     background: var(--color-principal);
     color: #fff;
     border-radius: 25px;
     text-align: center;
 }
 
-.btn-primary:hover{
+.btn-primary:hover {
     background: var(--color-primary-hover);
 }
 
@@ -443,12 +447,12 @@ img{
     ESTILOS: Headerhm
 ==================================*/
 
-.header-menu-movil{
+.header-menu-movil {
     display: none;
 }
 
 
-.hm-header{
+.hm-header {
     position: relative;
     height: 64px;
     background: #fff;
@@ -462,11 +466,12 @@ img{
     margin-bottom: 20px;
     box-sizing: border-box;
 }
-.hm-header .container{
+
+.hm-header .container {
     height: 100%;
 }
 
-.hm-header.header-fixed{
+.hm-header.header-fixed {
     position: fixed;
     width: 100%;
     top: 0;
@@ -477,48 +482,48 @@ img{
     margin-bottom: 0px;
 }
 
-.header-menu{
+.header-menu {
     display: flex;
     height: 100%;
     justify-content: space-between;
     align-items: center;
 }
 
-.header-menu .hm-logo{
+.header-menu .hm-logo {
     width: 202px;
 }
 
-.hm-menu{
+.hm-menu {
     display: flex;
     position: relative;
 }
 
-.hm-menu ul{
+.hm-menu ul {
     display: flex;
 }
 
-.hm-menu ul li a{
+.hm-menu ul li a {
     color: var(--color-negro);
     font-size: 15px;
     margin-right: 30px;
     display: inline-block;
 }
 
-.hm-menu ul li a:hover{
+.hm-menu ul li a:hover {
     color: var(--color-principal);
 }
 
-.hm-menu .hm-icon-cart{
+.hm-menu .hm-icon-cart {
     margin-left: 10px;
 }
 
-.hm-menu .hm-icon-cart a{
+.hm-menu .hm-icon-cart a {
     font-size: 33px;
     color: var(--color-negro);
     position: relative;
 }
 
-.hm-menu .hm-icon-cart a span{
+.hm-menu .hm-icon-cart a span {
     position: absolute;
     width: 20px;
     height: 20px;
@@ -530,13 +535,13 @@ img{
     border-radius: 50%;
     background: var(--color-principal);
     color: #fff;
-    
+
 }
 
 /*=================================
     ESTILOS: banner
 ==================================*/
-.hm-banner{
+.hm-banner {
     position: relative;
     width: 100%;
     height: 600px;
@@ -544,7 +549,7 @@ img{
     overflow: hidden;
 }
 
-.hm-banner a{
+.hm-banner a {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -555,7 +560,7 @@ img{
     z-index: 20;
 }
 
-.hm-banner .img-banner{
+.hm-banner .img-banner {
     height: 100%;
 }
 
@@ -563,16 +568,16 @@ img{
 /*=================================
     ESTILOS: categorias home
 ==================================*/
-.hm-page-block{
+.hm-page-block {
     position: relative;
     padding: 60px 0px;
 }
 
-.header-title{
+.header-title {
     margin-bottom: 50px;
 }
 
-.header-title h1{
+.header-title h1 {
     color: var(--color-negro);
     position: relative;
     text-align: center;
@@ -581,7 +586,7 @@ img{
     padding-bottom: 16px;
 }
 
-.header-title h1::after{
+.header-title h1::after {
     content: '';
     width: 76px;
     height: 5px;
@@ -595,37 +600,37 @@ img{
 }
 
 .hm-grid-category,
-.grid-product{
+.grid-product {
     display: grid;
-    grid-template-columns: repeat(4,calc(25% - 2rem*3/4));
+    grid-template-columns: repeat(4, calc(25% - 2rem*3/4));
     row-gap: 2rem;
     column-gap: 2rem;
     max-width: 1122px;
 }
 
-.hm-grid-category .grid-item{
+.hm-grid-category .grid-item {
     position: relative;
     border-radius: 5px;
     overflow: hidden;
     max-height: 360px;
-    
+
 }
 
 .hm-grid-category .grid-item img,
-.grid-product .product-item .p-portada img{
+.grid-product .product-item .p-portada img {
     transition: all .3s ease-in;
 }
 
 .hm-grid-category .grid-item img:hover,
-.grid-product .product-item .p-portada img:hover{
+.grid-product .product-item .p-portada img:hover {
     transform: scale(1.07);
 }
 
-.hm-grid-category .grid-item:hover .c-info{
+.hm-grid-category .grid-item:hover .c-info {
     transform: translateY(0%);
 }
 
-.hm-grid-category .grid-item .c-info{
+.hm-grid-category .grid-item .c-info {
     position: absolute;
     width: 100%;
     bottom: 0;
@@ -637,7 +642,7 @@ img{
     transition: all .3s ease-in;
 }
 
-.hm-grid-category .grid-item .c-info h3{
+.hm-grid-category .grid-item .c-info h3 {
     font-size: 16px;
     font-weight: 400;
     text-align: center;
@@ -648,7 +653,7 @@ img{
     ESTILOS: Productos destacados
 ==================================*/
 
-.hm-tabs{
+.hm-tabs {
     display: flex;
     justify-content: center;
     align-content: center;
@@ -656,10 +661,10 @@ img{
     flex-direction: row;
 }
 
-.hm-tabs .hm-tab-link{
+.hm-tabs .hm-tab-link {
     margin: 0px 20px;
     background: #fff;
-    border:1px solid #EEF5F9;
+    border: 1px solid #EEF5F9;
     padding: 10px 30px;
     border-radius: 22px;
     color: #7C807E;
@@ -668,46 +673,47 @@ img{
 }
 
 .hm-tabs .hm-tab-link.active,
-.hm-tabs .hm-tab-link:hover{
+.hm-tabs .hm-tab-link:hover {
     background: var(--color-principal);
     color: #fff;
 }
 
-.hm-tabs .hm-tab-link.active .tabs-content{
+.hm-tabs .hm-tab-link.active .tabs-content {
     background: red;
 }
+
 /* CONTENIDO TABs */
-.tabs-content{
+.tabs-content {
     display: none;
     padding-top: 50px;
 }
 
-.tabs-content.tab-active{
+.tabs-content.tab-active {
     display: block;
 }
 
-.grid-product .product-item{
+.grid-product .product-item {
     overflow: hidden;
     background: #fff;
-    border:1px solid #EEF5F9;
+    border: 1px solid #EEF5F9;
     border-radius: 5px;
-    
+
 }
 
-.grid-product .product-item:hover{
+.grid-product .product-item:hover {
     /* box-shadow: 0px 8px 24px rgba(174,172,243,40%); */
-    box-shadow: 0px 8px 24px rgba(220,229,245,63%);
+    box-shadow: 0px 8px 24px rgba(220, 229, 245, 63%);
 }
 
 
-.grid-product .product-item .p-portada{
+.grid-product .product-item .p-portada {
     width: 100%;
     height: 265px;
     position: relative;
     overflow: hidden;
 }
 
-.grid-product .product-item .p-portada .stin{
+.grid-product .product-item .p-portada .stin {
     position: absolute;
     left: 12px;
     bottom: 12px;
@@ -718,17 +724,17 @@ img{
 }
 
 
-.grid-product .product-item .p-portada .stin.stin-new{
+.grid-product .product-item .p-portada .stin.stin-new {
     background: var(--color-verde);
     color: #fff;
 }
 
-.grid-product .product-item .p-portada .stin.stin-oferta{
+.grid-product .product-item .p-portada .stin.stin-oferta {
     background: var(--color-principal);
     color: #fff;
 }
 
-.grid-product .product-item .p-info{
+.grid-product .product-item .p-info {
     padding: 20px 16px;
     display: flex;
     flex-direction: column;
@@ -736,7 +742,7 @@ img{
     height: calc(100% - 265px);
 }
 
-.grid-product .product-item .p-info h3{
+.grid-product .product-item .p-info h3 {
     font-size: 18px;
     font-weight: 600;
     color: var(--color-negro);
@@ -744,20 +750,20 @@ img{
     margin-bottom: 16px;
 }
 
-.grid-product .product-item .p-info .precio{
+.grid-product .product-item .p-info .precio {
     margin-bottom: 30px;
     display: flex;
     align-items: center;
 }
 
-.grid-product .product-item .p-info .precio span{
+.grid-product .product-item .p-info .precio span {
     font-size: 24px;
     font-weight: 700;
     color: var(--color-negro);
 
 }
 
-.grid-product .product-item .p-info .precio span.thash{
+.grid-product .product-item .p-info .precio span.thash {
     font-size: 16px;
     font-weight: 400;
     margin-left: 10px;
@@ -765,7 +771,7 @@ img{
     text-decoration: line-through;
 }
 
-.grid-product .product-item .p-info .hm-btn{
+.grid-product .product-item .p-info .hm-btn {
     width: 100%;
 }
 
@@ -773,29 +779,29 @@ img{
     ESTILOS: Footer
 ==================================*/
 
-footer{
+footer {
     background: #151515;
     padding: 80px 0px;
 }
 
-footer .foo-row{
+footer .foo-row {
     display: flex;
     justify-content: space-between;
 }
 
-footer .foo-row .foo-col{
+footer .foo-row .foo-col {
     width: 50%;
 }
 
-footer .foo-row .foo-col:last-child{
+footer .foo-row .foo-col:last-child {
     margin-left: 50px;
 }
 
-footer .foo-row .foo-col:first-child{
+footer .foo-row .foo-col:first-child {
     margin-right: 50px;
 }
 
-footer .foo-row .foo-col h2{
+footer .foo-row .foo-col h2 {
     color: #E3E3E3;
     line-height: 40px;
 
@@ -804,12 +810,12 @@ footer .foo-row .foo-col h2{
     margin-bottom: 20px;
 }
 
-footer form .f-input{
+footer form .f-input {
     width: 100%;
     position: relative;
 }
 
-footer form .f-input input{
+footer form .f-input input {
     width: 100%;
     display: block;
     padding: 16px 30px;
@@ -822,7 +828,7 @@ footer form .f-input input{
     color: #A7A1A1;
 }
 
-footer form .f-input .hm-btn-round{
+footer form .f-input .hm-btn-round {
     position: absolute;
     right: 0px;
     top: 50%;
@@ -830,40 +836,41 @@ footer form .f-input .hm-btn-round{
     width: 42px;
     height: 42px;
     border: none;
-    font-size: 18px;margin-right: 3px;
+    font-size: 18px;
+    margin-right: 3px;
     cursor: pointer;
 }
 
 
-footer .foo-row .foo-col ul{
+footer .foo-row .foo-col ul {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
-footer .foo-row .foo-col ul li{
+footer .foo-row .foo-col ul li {
     width: 50%;
     margin-bottom: 16px;
 }
 
-footer .foo-row .foo-col ul li a{
+footer .foo-row .foo-col ul li a {
     color: #E3E3E3;
     font-size: 15px;
 }
 
-footer .foo-row .foo-col ul li a:hover{
+footer .foo-row .foo-col ul li a:hover {
     color: var(--color-principal);
     text-decoration: underline;
 }
 
 
-.foo-copy{
+.foo-copy {
     background: #000000;
     padding: 40px 0px;
 }
 
-.foo-copy p{
+.foo-copy p {
     text-align: center;
     color: #E3E3E3;
     font-size: 14px;
@@ -875,69 +882,69 @@ footer .foo-row .foo-col ul li a:hover{
 /*=================================
     ESTILOS: RESPOIVE
 ==================================*/
-@media screen and (max-width: 1024px){
-    .grid-product{
-        grid-template-columns: repeat(3,calc(33.33% - 2rem*2/3));
+@media screen and (max-width: 1024px) {
+    .grid-product {
+        grid-template-columns: repeat(3, calc(33.33% - 2rem*2/3));
         column-gap: 2rem;
         row-gap: 2rem;
     }
 }
 
-.hm-header .icon-menu{
+.hm-header .icon-menu {
     display: none;
 }
 
-@media screen and (max-width: 800px){
-    .hm-banner{
+@media screen and (max-width: 800px) {
+    .hm-banner {
         height: 400px;
         min-height: 400px;
     }
 
     .hm-grid-category,
-    .grid-product{
-        grid-template-columns: repeat(2,calc(50% - 2rem*1/2));
+    .grid-product {
+        grid-template-columns: repeat(2, calc(50% - 2rem*1/2));
         column-gap: 2rem;
         row-gap: 2rem;
     }
 
-    .hm-header .hm-menu ul{
+    .hm-header .hm-menu ul {
         display: none;
     }
 
-    .hm-header .icon-menu{
+    .hm-header .icon-menu {
         display: block;
         margin-left: 20px;
 
     }
 
-    .hm-header .icon-menu button{
+    .hm-header .icon-menu button {
         background: transparent;
         border: none;
         font-size: 22px;
         color: var(--color-negro);
     }
 
-    footer .foo-row{
+    footer .foo-row {
         flex-direction: column;
     }
 
-    footer .foo-row .foo-col{
+    footer .foo-row .foo-col {
         width: 100%;
         margin-left: 0px !important;
         margin-right: 0px !important;
     }
 
-    footer .foo-row .foo-col ul{
+    footer .foo-row .foo-col ul {
         display: none;
     }
 
-    .hm-tabs .hm-tab-link{
+    .hm-tabs .hm-tab-link {
         margin: 0px 10px;
         margin-bottom: 10px;
     }
 
     /* menu */
-    .header-menu-movil{
+    .header-menu-movil {
         background: var(--color-principal);
         position: fixed;
 
@@ -952,11 +959,11 @@ footer .foo-row .foo-col ul li a:hover{
         transform: translate(-100%);
     }
 
-    .header-menu-movil.active{
+    .header-menu-movil.active {
         transform: translate(0%);
     }
 
-    .header-menu-movil .cerrar-menu{
+    .header-menu-movil .cerrar-menu {
         position: absolute;
         top: 15px;
         right: 15px;
@@ -970,42 +977,42 @@ footer .foo-row .foo-col ul li a:hover{
         color: var(--color-negro);
     }
 
-    .header-menu-movil ul li{
+    .header-menu-movil ul li {
         position: relative;
         margin: 10px 0px;
     }
 
-    .header-menu-movil ul li a{
+    .header-menu-movil ul li a {
         display: inline-block;
         color: #fff;
-    
+
     }
 }
 
-@media screen and (max-width: 400px){
-    .hm-banner{
+@media screen and (max-width: 400px) {
+    .hm-banner {
         height: 320px;
         min-height: 320px;
     }
 
-    .hm-grid-category{
-        grid-template-columns: repeat(2,calc(50% - 1rem*1/2));
+    .hm-grid-category {
+        grid-template-columns: repeat(2, calc(50% - 1rem*1/2));
         column-gap: 1rem;
         row-gap: 1rem;
     }
 
     .grid-product {
-        grid-template-columns: repeat(1,100%);
+        grid-template-columns: repeat(1, 100%);
         column-gap: 1rem;
     }
 
 
-    .hm-tabs .hm-tab-link{
+    .hm-tabs .hm-tab-link {
         margin: 0px 10px;
         margin-bottom: 10px;
     }
 
-    
+
 }
 
 
@@ -1014,7 +1021,8 @@ footer .foo-row .foo-col ul li a:hover{
 /* Estilos generales para la sección de contacto */
 .contact-modern {
     padding: 60px 20px;
-    background-color: #f8f8f8; /* Un fondo suave para diferenciar la sección */
+    background-color: #f8f8f8;
+    /* Un fondo suave para diferenciar la sección */
     color: #333;
     font-family: Arial, sans-serif;
     text-align: center;
@@ -1042,7 +1050,8 @@ footer .foo-row .foo-col ul li a:hover{
     bottom: 0;
     width: 60px;
     height: 4px;
-    background-color: #3498db; /* Un color de acento */
+    background-color: #3498db;
+    /* Un color de acento */
     border-radius: 2px;
 }
 
@@ -1056,14 +1065,17 @@ footer .foo-row .foo-col ul li a:hover{
 /* Diseño de la cuadrícula para el formulario y el mapa */
 .contact-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Una columna por defecto */
-    gap: 40px; /* Espacio entre los elementos */
+    grid-template-columns: 1fr;
+    /* Una columna por defecto */
+    gap: 40px;
+    /* Espacio entre los elementos */
     align-items: flex-start;
 }
 
 @media (min-width: 768px) {
     .contact-grid {
-        grid-template-columns: 1fr 1fr; /* Dos columnas en pantallas grandes */
+        grid-template-columns: 1fr 1fr;
+        /* Dos columnas en pantallas grandes */
     }
 }
 
@@ -1090,7 +1102,8 @@ footer .foo-row .foo-col ul li a:hover{
 .contact-form input[type="text"],
 .contact-form input[type="email"],
 .contact-form textarea {
-    width: calc(100% - 20px); /* Ajusta el padding */
+    width: calc(100% - 20px);
+    /* Ajusta el padding */
     padding: 12px 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -1107,7 +1120,8 @@ footer .foo-row .foo-col ul li a:hover{
 }
 
 .contact-form textarea {
-    resize: vertical; /* Permite redimensionar verticalmente */
+    resize: vertical;
+    /* Permite redimensionar verticalmente */
     min-height: 120px;
 }
 
@@ -1160,27 +1174,32 @@ footer .foo-row .foo-col ul li a:hover{
 }
 
 .contact-details p i {
-    color: #4CAF50; /* Color de los iconos */
+    color: #4CAF50;
+    /* Color de los iconos */
     font-size: 1.2em;
 }
 
 .map-container {
     width: 100%;
     border-radius: 8px;
-    overflow: hidden; /* Asegura que el iframe no se salga de los bordes redondeados */
+    overflow: hidden;
+    /* Asegura que el iframe no se salga de los bordes redondeados */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 .map-container iframe {
-    border-radius: 8px; /* Aplica el borde redondeado al iframe */
+    border-radius: 8px;
+    /* Aplica el borde redondeado al iframe */
 }
 
 
 
 /* --- Estilos para el Modo Oscuro --- */
 body.dark-mode {
-    background-color: #1a1a1a; /* Fondo muy oscuro para el body */
-    color: #e0e0e0; /* Texto claro */
+    background-color: #1a1a1a;
+    /* Fondo muy oscuro para el body */
+    color: #e0e0e0;
+    /* Texto claro */
 }
 
 /* Cambia el color de todos los títulos */
@@ -1192,33 +1211,41 @@ body.dark-mode h3 {
 
 /* Estilos específicos para la sección de contacto en modo oscuro */
 body.dark-mode .contact-modern {
-    background-color: #2a2a2a; /* Fondo más oscuro para la sección */
+    background-color: #2a2a2a;
+    /* Fondo más oscuro para la sección */
     color: #e0e0e0;
 }
 
 body.dark-mode .contact-modern p {
-    color: #ccc; /* Texto de párrafo más claro */
+    color: #ccc;
+    /* Texto de párrafo más claro */
 }
 
 /* Fondo y sombra para el formulario y el mapa */
 body.dark-mode .contact-form,
 body.dark-mode .contact-info-map {
-    background-color: #333333; /* Fondo oscuro para los contenedores internos */
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05); /* Sombra más sutil */
+    background-color: #333333;
+    /* Fondo oscuro para los contenedores internos */
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+    /* Sombra más sutil */
 }
 
 /* Estilos para los campos de entrada y textarea */
 body.dark-mode .contact-form input[type="text"],
 body.dark-mode .contact-form input[type="email"],
 body.dark-mode .contact-form textarea {
-    background-color: #444444; /* Fondo oscuro para los campos */
-    color: #e0e0e0; /* Texto claro en los campos */
-    border: 1px solid #555555; /* Borde más visible */
+    background-color: #444444;
+    /* Fondo oscuro para los campos */
+    color: #e0e0e0;
+    /* Texto claro en los campos */
+    border: 1px solid #555555;
+    /* Borde más visible */
 }
 
 /* Estilos para los labels */
 body.dark-mode .contact-form label {
-    color: #e0e0e0; /* Color del texto de las etiquetas */
+    color: #e0e0e0;
+    /* Color del texto de las etiquetas */
 }
 
 /* Iconos de detalles de contacto */
@@ -1227,24 +1254,31 @@ body.dark-mode .contact-details p {
 }
 
 body.dark-mode .contact-details p i {
-    color: #7abaff; /* Un azul claro para los iconos */
+    color: #7abaff;
+    /* Un azul claro para los iconos */
 }
 
 /* Botón de envío */
 body.dark-mode .submit-btn {
-    background-color: #4CAF50; /* Mantiene el color de acento */
+    background-color: #4CAF50;
+    /* Mantiene el color de acento */
     color: #ffffff;
 }
 
 body.dark-mode .submit-btn:hover {
-    background-color: #4CAF50; /* Oscurece un poco al pasar el ratón */
+    background-color: #4CAF50;
+    /* Oscurece un poco al pasar el ratón */
 }
 
 /* Si tu `header` y `footer` también deben cambiar */
-body.dark-mode .hm-wrapper, /* Si tienes un wrapper principal */
-body.dark-mode header, /* Si el header tiene un fondo */
-body.dark-mode footer { /* Si el footer tiene un fondo */
-    background-color: #222222; /* Fondo oscuro para elementos globales */
+body.dark-mode .hm-wrapper,
+/* Si tienes un wrapper principal */
+body.dark-mode header,
+/* Si el header tiene un fondo */
+body.dark-mode footer {
+    /* Si el footer tiene un fondo */
+    background-color: #222222;
+    /* Fondo oscuro para elementos globales */
     color: #e0e0e0;
 }
 
@@ -1256,12 +1290,14 @@ body.dark-mode header p {
 
 /* Banner */
 body.dark-mode .hm-banner {
-    background-color: #2c2c2c; /* Un fondo ligeramente diferente para el banner */
+    background-color: #2c2c2c;
+    /* Un fondo ligeramente diferente para el banner */
 }
 
 /* Bloques de página (Categorías y Productos Populares) */
 body.dark-mode .hm-page-block {
-    background-color: #222222; /* Un fondo oscuro para los bloques de contenido */
+    background-color: #222222;
+    /* Un fondo oscuro para los bloques de contenido */
     color: #e0e0e0;
 }
 
@@ -1270,8 +1306,10 @@ body.dark-mode .header-title h1 {
 }
 
 body.dark-mode .hm-grid-category .grid-item {
-    background-color: #333333; /* Fondo para cada tarjeta de categoría */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+    background-color: #333333;
+    /* Fondo para cada tarjeta de categoría */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    /* Sombra para profundidad */
 }
 
 body.dark-mode .hm-grid-category .grid-item .c-info h3 {
@@ -1281,47 +1319,57 @@ body.dark-mode .hm-grid-category .grid-item .c-info h3 {
 /* Pestañas (Tabs) de productos */
 body.dark-mode .hm-tabs {
     /* background-color: #2c2c2c; */
-    border-color: #444444; /* Borde más oscuro */
+    border-color: #444444;
+    /* Borde más oscuro */
 }
 
 body.dark-mode .hm-tab-link {
-    color: #cccccc; /* Color del texto de las pestañas inactivas */
+    color: #cccccc;
+    /* Color del texto de las pestañas inactivas */
     border-color: #444444;
 }
 
 body.dark-mode .hm-tab-link.active {
-    background-color: #3498db; /* Color de acento para la pestaña activa */
+    background-color: #3498db;
+    /* Color de acento para la pestaña activa */
     color: #ffffff;
     border-color: #3498db;
 }
 
 body.dark-mode .hm-tab-link:hover:not(.active) {
-    background-color: #444444; /* Fondo al pasar el mouse por pestañas inactivas */
+    background-color: #444444;
+    /* Fondo al pasar el mouse por pestañas inactivas */
     color: #ffffff;
 }
 
 /* Contenedor de las pestañas de contenido */
 body.dark-mode .tabs-content {
-    background-color: #222222; /* Mismo fondo que el hm-page-block */
-    padding: 20px; /* Asegura un padding si no lo tiene */
+    background-color: #222222;
+    /* Mismo fondo que el hm-page-block */
+    padding: 20px;
+    /* Asegura un padding si no lo tiene */
 }
 
 /* Ítems individuales de producto */
 body.dark-mode .product-item {
-    background-color: #333333; /* Fondo para cada tarjeta de producto */
+    background-color: #333333;
+    /* Fondo para cada tarjeta de producto */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 body.dark-mode .product-item .p-info h3 {
-    color: #f0f0f0; /* Título del producto */
+    color: #f0f0f0;
+    /* Título del producto */
 }
 
 body.dark-mode .product-item .precio span {
-    color: #f0f0f0; /* Precio normal */
+    color: #f0f0f0;
+    /* Precio normal */
 }
 
 body.dark-mode .product-item .precio .thash {
-    color: #999999; /* Precio tachado (anterior) */
+    color: #999999;
+    /* Precio tachado (anterior) */
 }
 
 /* Botones de "Agregar al Carrito" */
@@ -1336,42 +1384,54 @@ body.dark-mode .hm-btn.btn-primary:hover {
 
 /* Etiquetas de "Nuevo" y "Oferta" */
 body.dark-mode .stin {
-    color: #ffffff; /* Texto de la etiqueta */
+    color: #ffffff;
+    /* Texto de la etiqueta */
 }
 
 .stin {
-    position: absolute; /* Para posicionar sobre la imagen */
-    top: 10px;          /* Ajusta según tu diseño */
-    left: 10px;         /* Ajusta según tu diseño */
+    position: absolute;
+    /* Para posicionar sobre la imagen */
+    top: 10px;
+    /* Ajusta según tu diseño */
+    left: 10px;
+    /* Ajusta según tu diseño */
     padding: 5px 10px;
     font-size: 0.8em;
     font-weight: bold;
-    color: #fff;        /* Color del texto */
+    color: #fff;
+    /* Color del texto */
     border-radius: 3px;
-    z-index: 10;        /* Asegura que esté por encima de otros elementos */
+    z-index: 10;
+    /* Asegura que esté por encima de otros elementos */
 }
 
 .stin-oferta {
-    background-color: #f01818; /* Color de fondo rojo para oferta */
+    background-color: #f01818;
+    /* Color de fondo rojo para oferta */
 }
 
 /* Asegúrate de que el contenedor padre (.p-portada) tenga position: relative; */
 .p-portada {
-    position: relative; /* Crucial para que position: absolute; funcione dentro */
-    overflow: hidden; /* Opcional, para que el contenido no se desborde */
+    position: relative;
+    /* Crucial para que position: absolute; funcione dentro */
+    overflow: hidden;
+    /* Opcional, para que el contenido no se desborde */
 }
 
 body.dark-mode .stin-new {
-    background-color: #27ae60; /* Verde para "Nuevo" */
+    background-color: #27ae60;
+    /* Verde para "Nuevo" */
 }
 
 body.dark-mode .stin-oferta {
-    background-color: #e67e22; /* Naranja para "Oferta" */
+    background-color: #e67e22;
+    /* Naranja para "Oferta" */
 }
 
 /* Footer (si no se está aplicando desde las reglas generales) */
 body.dark-mode footer {
-    background-color: #111111; /* Fondo muy oscuro para el footer */
+    background-color: #111111;
+    /* Fondo muy oscuro para el footer */
     color: #cccccc;
 }
 
@@ -1403,7 +1463,8 @@ body.dark-mode footer ul li a:hover {
 }
 
 body.dark-mode .foo-copy {
-    background-color: #000000; /* Fondo aún más oscuro para el copyright */
+    background-color: #000000;
+    /* Fondo aún más oscuro para el copyright */
     color: #999999;
 }
 
@@ -1418,12 +1479,16 @@ body.dark-mode .dark-toggle:hover {
 }
 
 .imagen-contacto {
-    width: 100%; /* O el tamaño que ya hayas definido */
+    width: 100%;
+    /* O el tamaño que ya hayas definido */
     height: auto;
     display: block;
-    margin-top: -140px; /* Ajusta este valor para subirla más o menos */
-    margin-left: auto; /* Para centrar si es necesario */
-    margin-right: auto; /* Para centrar si es necesario */
+    margin-top: -140px;
+    /* Ajusta este valor para subirla más o menos */
+    margin-left: auto;
+    /* Para centrar si es necesario */
+    margin-right: auto;
+    /* Para centrar si es necesario */
 }
 
 
@@ -1436,22 +1501,32 @@ body.dark-mode .dark-toggle:hover {
 .carousel-container {
     position: relative;
     width: 100%;
-    overflow: hidden; /* Oculta el scrollbar nativo */
+    overflow: hidden;
+    /* Oculta el scrollbar nativo */
     margin-bottom: 30px;
-    padding: 0 50px; /* Espacio para los botones de navegación */
+    padding: 0 50px;
+    /* Espacio para los botones de navegación */
     box-sizing: border-box;
 }
 
 /* Contenedor de los productos que se desplazan */
 .carousel-track {
-    display: flex; /* Para que los items se pongan en línea */
-    overflow-x: scroll; /* Habilitar el scroll horizontal programático */
-    scroll-snap-type: x mandatory; /* Para un scroll más suave y que "encaje" en los items */
-    -webkit-overflow-scrolling: touch; /* Mejorar el scroll en iOS */
-    scrollbar-width: none; /* Ocultar scrollbar para Firefox */
-    -ms-overflow-style: none;  /* Ocultar scrollbar para IE/Edge */
-    gap: 20px; /* Espacio entre los productos */
-    padding-bottom: 20px; /* Espacio para que no se corte la sombra si la hay */
+    display: flex;
+    /* Para que los items se pongan en línea */
+    overflow-x: scroll;
+    /* Habilitar el scroll horizontal programático */
+    scroll-snap-type: x mandatory;
+    /* Para un scroll más suave y que "encaje" en los items */
+    -webkit-overflow-scrolling: touch;
+    /* Mejorar el scroll en iOS */
+    scrollbar-width: none;
+    /* Ocultar scrollbar para Firefox */
+    -ms-overflow-style: none;
+    /* Ocultar scrollbar para IE/Edge */
+    gap: 20px;
+    /* Espacio entre los productos */
+    padding-bottom: 20px;
+    /* Espacio para que no se corte la sombra si la hay */
 }
 
 /* Ocultar scrollbar para Chrome, Safari y Opera */
@@ -1464,7 +1539,8 @@ body.dark-mode .dark-toggle:hover {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo semitransparente */
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -1475,7 +1551,8 @@ body.dark-mode .dark-toggle:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px; /* Para que sean redondos */
+    width: 50px;
+    /* Para que sean redondos */
     height: 50px;
     transition: background-color 0.3s ease;
 }
@@ -1494,27 +1571,32 @@ body.dark-mode .dark-toggle:hover {
 
 /* Estilos para los items de producto dentro del carrusel */
 .product-item {
-    flex: 0 0 auto; /* Asegura que no se encojan y mantengan su tamaño original */
-    width: 280px; /* Ancho fijo para cada producto. AJÚSTALO según tu diseño. */
-    scroll-snap-align: start; /* Para el scroll-snap */
+    flex: 0 0 auto;
+    /* Asegura que no se encojan y mantengan su tamaño original */
+    width: 280px;
+    /* Ancho fijo para cada producto. AJÚSTALO según tu diseño. */
+    scroll-snap-align: start;
+    /* Para el scroll-snap */
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     overflow: hidden;
     background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex; /* Usar flexbox para el contenido interno del item */
+    display: flex;
+    /* Usar flexbox para el contenido interno del item */
     flex-direction: column;
 }
 
 .product-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .product-item .p-portada {
     width: 100%;
-    height: 200px; /* Altura fija para la imagen */
+    height: 200px;
+    /* Altura fija para la imagen */
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid #eee;
@@ -1523,7 +1605,8 @@ body.dark-mode .dark-toggle:hover {
 .product-item .p-portada img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ajusta la imagen sin distorsionarla */
+    object-fit: cover;
+    /* Ajusta la imagen sin distorsionarla */
     display: block;
 }
 
@@ -1531,14 +1614,17 @@ body.dark-mode .dark-toggle:hover {
     padding: 15px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Para que el p-info ocupe el espacio restante */
+    flex-grow: 1;
+    /* Para que el p-info ocupe el espacio restante */
 }
 
 .product-item .p-info h3 {
+    color: black;
     font-size: 1.1em;
     margin-top: 0;
     margin-bottom: 10px;
-    min-height: 40px; /* Para que los títulos tengan una altura consistente */
+    min-height: 40px;
+    /* Para que los títulos tengan una altura consistente */
     line-height: 1.3;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1566,7 +1652,8 @@ body.dark-mode .dark-toggle:hover {
 .product-item .p-info .precio {
     font-size: 1.2em;
     font-weight: 600;
-    color: #28a745; /* Color para el precio principal */
+    color: #28a745;
+    /* Color para el precio principal */
     margin-bottom: 10px;
 }
 
@@ -1583,18 +1670,22 @@ body.dark-mode .dark-toggle:hover {
     color: #666;
     margin-bottom: 10px;
 }
+
 .product-item .seller-info a {
     color: #007bff;
     text-decoration: none;
 }
+
 .product-item .seller-info a:hover {
     text-decoration: underline;
 }
 
 .product-item .hm-btn {
-    margin-top: auto; /* Empuja el botón hacia abajo */
+    margin-top: auto;
+    /* Empuja el botón hacia abajo */
     display: block;
-    width: calc(100% - 30px); /* Ajusta el ancho del botón dentro del padding */
+    width: calc(100% - 30px);
+    /* Ajusta el ancho del botón dentro del padding */
     text-align: center;
     padding: 10px 15px;
     border-radius: 5px;
@@ -1608,13 +1699,15 @@ body.dark-mode .dark-toggle:hover {
     display: inline-flex;
     align-items: center;
     padding: 8px 15px;
-    background-color: #007bff; /* Color azul */
+    background-color: #007bff;
+    /* Color azul */
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
     font-weight: 500;
     transition: background-color 0.3s ease;
-    margin-left: auto; /* Para alinear a la derecha si está dentro de un flexbox */
+    margin-left: auto;
+    /* Para alinear a la derecha si está dentro de un flexbox */
 }
 
 .view-all-btn:hover {
@@ -1633,8 +1726,10 @@ body.dark-mode .dark-toggle:hover {
     align-items: center;
     margin-bottom: 30px;
 }
+
 .header-title h1 {
-    margin-bottom: 0; /* Eliminar margen inferior si es parte de un flexbox */
+    margin-bottom: 0;
+    /* Eliminar margen inferior si es parte de un flexbox */
 }
 
 /* Estilos para texto centrado cuando no hay productos */
@@ -1650,8 +1745,10 @@ body.dark-mode .dark-toggle:hover {
     margin-top: 30px;
     margin-bottom: 15px;
     color: #333;
-    text-align: left; /* Asegura que el título de la categoría esté a la izquierda */
-    padding-left: 50px; /* Alinea con el inicio del carrusel */
+    text-align: left;
+    /* Asegura que el título de la categoría esté a la izquierda */
+    padding-left: 50px;
+    /* Alinea con el inicio del carrusel */
 }
 
 
@@ -1660,23 +1757,28 @@ body.dark-mode .dark-toggle:hover {
     .carousel-container {
         padding: 0 20px;
     }
+
     .carousel-btn {
         width: 40px;
         height: 40px;
         font-size: 20px;
-        padding: 0; /* Eliminar padding para botones más pequeños */
+        padding: 0;
+        /* Eliminar padding para botones más pequeños */
     }
+
     .product-item {
-        width: 250px; /* Un poco más pequeño en pantallas medianas */
+        width: 250px;
+        /* Un poco más pequeño en pantallas medianas */
     }
+
     .product-item .p-info h3,
     .product-item .p-info .descripcion {
-        display: -webkit-box; 
+        display: -webkit-box;
         -webkit-box-orient: vertical;
-        overflow: hidden; 
-        -webkit-line-clamp: 3; 
+        overflow: hidden;
+        -webkit-line-clamp: 3;
         line-clamp: 3;
-        text-overflow: ellipsis; 
+        text-overflow: ellipsis;
         min-height: auto;
     }
 
@@ -1689,25 +1791,210 @@ body.dark-mode .dark-toggle:hover {
     .carousel-container {
         padding: 0 10px;
     }
+
     .carousel-btn {
         width: 35px;
         height: 35px;
         font-size: 18px;
     }
+
     .product-item {
-        width: calc(100% - 20px); /* Ocupa casi todo el ancho de la pantalla */
-        margin: 0 10px; /* Margen para centrar si es necesario */
+        width: calc(100% - 20px);
+        /* Ocupa casi todo el ancho de la pantalla */
+        margin: 0 10px;
+        /* Margen para centrar si es necesario */
     }
+
     .header-title {
         flex-direction: column;
         align-items: flex-start;
     }
+
     .header-title h1 {
         margin-bottom: 15px;
     }
+
     .view-all-btn {
         margin-left: 0;
-        width: 100%; /* El botón ocupa todo el ancho */
+        width: 100%;
+        /* El botón ocupa todo el ancho */
         justify-content: center;
     }
+}
+
+
+
+.product-list-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.filters-sidebar {
+    flex: 0 0 250px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.filters-sidebar h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.filters-sidebar select,
+.filters-sidebar input[type="number"],
+.filters-sidebar input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+
+.filters-sidebar button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.filters-sidebar button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+.main-content {
+    flex-grow: 1;
+}
+
+.category-section {
+    margin-bottom: 40px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.category-section h2 {
+    font-size: 2em;
+    color: #28a745;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* <-- Esto controla el tamaño */
+    gap: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.no-results {
+    text-align: center;
+    padding: 50px;
+    color: #777;
+    font-size: 1.2em;
+}
+
+@media (max-width: 768px) {
+    .product-list-container {
+        flex-direction: column;
+    }
+
+    .filters-sidebar {
+        flex: none;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        /* <-- Esto controla el tamaño en móvil */
+    }
+}
+
+
+body.dark-mode .filters-sidebar {
+    background-color: var(--oscuro);
+    /* Usa tu variable para el fondo oscuro */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    /* Sombra más pronunciada para contraste */
+}
+
+body.dark-mode .filters-sidebar h2 {
+    color: var(--texto-claro);
+    /* Usa tu variable para texto claro */
+}
+
+body.dark-mode .filter-group label {
+    color: var(--texto-claro);
+    /* Color de las etiquetas más claro */
+}
+
+body.dark-mode .filters-sidebar select,
+body.dark-mode .filters-sidebar input[type="number"],
+body.dark-mode .filters-sidebar input[type="text"] {
+    background-color: #3a3a3a;
+    /* Un gris oscuro para los inputs */
+    color: var(--texto-claro);
+    /* Texto claro en los inputs */
+    border-color: #555;
+    /* Borde más visible */
+}
+
+/* Las opciones del select también necesitan un fondo oscuro cuando se despliegan */
+body.dark-mode .filters-sidebar select option {
+    background-color: #3a3a3a;
+    /* Fondo oscuro para las opciones */
+    color: var(--texto-claro);
+    /* Texto claro para las opciones */
+}
+
+
+/* Ajuste para el botón "Aplicar Filtros" */
+body.dark-mode .filters-sidebar button[type="submit"] {
+    background-color: var(--verde);
+    /* Mantén tu verde principal */
+    color: var(--texto-claro);
+}
+
+body.dark-mode .filters-sidebar button[type="submit"]:hover {
+    background-color: var(--color-primary-hover);
+    /* Tu hover de verde */
+}
+
+/* Ajustes adicionales para que todo el texto dentro de la sección de filtros sea claro */
+body.dark-mode .filters-sidebar p,
+body.dark-mode .filters-sidebar a {
+    /* Si hay otros elementos de texto o enlaces */
+    color: var(--texto-claro);
 }

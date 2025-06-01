@@ -14,7 +14,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Launch Chrome against localhost",
-      "url": "http://localhost/LoginADSO/public/index.php",
+      "url": "http://localhost/LoginADSO/public/index_controller.php",
       "webRoot": "${workspaceFolder}"
     }
   ]

@@ -431,7 +431,6 @@ function playAnimation(animationName) {
  */
 function accionModal(accion) {
     const modalAnimal = document.getElementById('modalAnimal');
-    // Asegurarse de obtener el ID del animal del dataset correcto del modal
     const id_animal = modalAnimal ? modalAnimal.dataset.id_animal : null;
 
     if (!id_animal) {
@@ -546,7 +545,7 @@ function getEstadoEmojiLocal(salud) {
 }
 
 function fetchAndRenderAnimals() {
-    fetch('controller.php', { // Asegúrate que tu controller.php pueda manejar esta acción
+    fetch('controller.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -561,7 +560,7 @@ function fetchAndRenderAnimals() {
                 actualizarTarjetaAnimal(animalData);
             });
 
-            // Si el modal está abierto, asegúrate de que su contenido también refleje los últimos datos
+            
             const modal = document.getElementById('modalAnimal');
             if (modal && modal.style.display === 'flex') {
                 const modalId = modal.dataset.id_animal; // Usamos dataset.id_animal, como lo estableces en mostrarModal

@@ -59,7 +59,7 @@
 
             <!-- Botón en la parte de abajo -->
             <div class="mt-auto pt-4">
-                <a href="<?= BASE_URL ?>/public/index.php" class="flex items-center space-x-2 hover:bg-red-700 p-2 rounded bg-red-600">
+                <a href="<?= BASE_URL ?>/public/index_controller.php" class="flex items-center space-x-2 hover:bg-red-700 p-2 rounded bg-red-600">
                     <i data-lucide="log-out"></i>
                     <span id="textCerrarSesion">Cerrar Sesión</span>
                 </a>

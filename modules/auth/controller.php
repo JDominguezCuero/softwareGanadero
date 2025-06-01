@@ -36,7 +36,6 @@ switch ($accion) {
                     // Usuario no encontrado o contraseña incorrecta
                     $mensjError = "Usuario o contraseña incorrecta";
                     throw new Exception($mensjError);
-                    // header("Location: ../../public/index.php?login=error2&reason=credenciales");
                     exit;
                 }   
             }

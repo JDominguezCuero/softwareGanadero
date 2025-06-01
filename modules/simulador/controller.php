@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../config/config.php';
 global $conexion;
 
 if (!isset($_SESSION['usuario'])) {
-    header("Location: ../../public/index.php?login=error&reason=nologin");
+    header("Location: ../../public/index_controller.php?login=error&reason=nologin");
     exit;
 }
 
@@ -115,8 +115,6 @@ switch ($action) {
             echo json_encode($respuesta);
             exit;
         } else {
-            // Aquí podrías pasar $respuesta a una vista o redireccionar
-            // Por ahora, redirigimos y puedes mostrar mensajes en sesiones si lo deseas
             $_SESSION['respuesta'] = $respuesta;
             header("Location: controller.php?action=mostrar");
             exit;

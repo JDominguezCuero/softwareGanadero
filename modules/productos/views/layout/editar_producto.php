@@ -33,12 +33,9 @@
                                 <select class="form-control" name="categoria_id" id="editar_categoria_id" required>
                                     <option value="">Selecciona una categoría</option>
                                     <?php
-                                    // Asegúrate de que $categorias esté definida (debe venir del controller.php)
-                                    // Y $item['categoria_id'] debe ser la categoría actual del producto a editar
                                     if (isset($categorias) && is_array($categorias)) {
                                         foreach ($categorias as $categoria) {
-                                            $selected = '';
-                                            // La variable $item estará disponible si el modal se carga vía JS o si se incluye en la vista principal
+                                            $selected = ''; 
                                             if (isset($item['categoria_id']) && $item['categoria_id'] == $categoria['id_categoria']) {
                                                 $selected = 'selected';
                                             }

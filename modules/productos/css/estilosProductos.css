@@ -36,7 +36,7 @@
 #myTable {
   width: 100%;
   border-collapse: collapse;
-  table-layout: auto; /* ← Volver a auto para que se ajuste bien */
+  table-layout: auto;
 }
 
 /* CABECERA Y CELDAS */

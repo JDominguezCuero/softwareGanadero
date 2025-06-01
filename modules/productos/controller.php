@@ -1,15 +1,13 @@
 <?php
 // products/controller.php
 session_start();
-require_once(__DIR__ . '/model.php'); // Asegúrate de que el modelo esté cargado
-require_once __DIR__ . '/../../config/config.php'; // Asegúrate de que config.php establezca la conexión PDO
+require_once(__DIR__ . '/model.php'); 
+require_once __DIR__ . '/../../config/config.php';
 
-// Directorio donde se guardarán las imágenes
-// Asegúrate de que este directorio exista y tenga permisos de escritura.
 const UPLOAD_DIR = __DIR__ . '/../../public/assets/images/productos/';
 
 if (!isset($_SESSION['usuario'])) {
-    header("Location: ../../public/index.php?login=error&reason=nologin");
+    header("Location: ../../public/index_controller.php?login=error&reason=nologin");
     exit;
 }
 
@@ -21,12 +19,12 @@ try {
         case 'listar':
             global $conexion;
             $id_usuario = $_SESSION['id_usuario'];
-            $productos = obtenerProductosPorUsuario($conexion, $id_usuario); // Asume que tienes esta función en tu model.php
+            $productos = obtenerProductosPorUsuario($conexion, $id_usuario);
             $msg = $_GET['msg'] ?? null;
 
              $categorias = obtenerCategorias($conexion);
 
-            include(__DIR__ . '/views/productos.php'); // La vista principal de productos
+            include(__DIR__ . '/views/productos.php');
             break;
 
         case 'agregar':
@@ -74,11 +72,8 @@ try {
                     exit;
                 }
 
-                // Asegúrate de que la función crearProducto en tu modelo acepte la nueva imagen_url
+                
                 if (!empty($nombre) && $precio > 0 && $stock >= 0 && !empty($categoria_id)) {
-                    // crearProducto($conexion, $nombre, $precio, $stock, $descripcion, $imagen_url, $categoria_id, $estado_oferta, $precio_anterior);
-                    // Actualiza tu modelo para que reciba la imagen_url
-                    // Ejemplo de llamada (ajusta según tu model.php)
                     $resultado = crearProducto($conexion, $nombre, $descripcion, $precio, $stock, $imagen_url, $categoria_id, $estado_oferta, $precio_anterior, $id_usuario);
                     if ($resultado) {
                         $mensaje = "Producto agregado correctamente.";
@@ -144,7 +139,6 @@ try {
                 }
 
                 if (!empty($nombre) && $precio > 0 && $stock >= 0 && !empty($categoria_id)) {
-                    // Actualiza tu modelo para que reciba la imagen_url
                     $resultado = actualizarProducto($conexion, $id, $nombre, $descripcion, $precio, $stock, $imagen_url, $categoria_id, $estado_oferta, $precio_anterior);
                     if ($resultado) {
                         $mensaje = "Producto actualizado correctamente.";
@@ -157,13 +151,12 @@ try {
                     $mensjError = "Faltan datos obligatorios o son inválidos para actualizar el producto.";
                 }
             } else if ($id) {
-                // Si es un GET para cargar el formulario de edición
-                $item = obtenerProductoPorId($conexion, $id); // Asume que tienes esta función en tu model.php
+                $item = obtenerProductoPorId($conexion, $id);
                 if (!$item) {
                     $mensjError = "Producto no encontrado para editar.";
                 }
                 $categorias = obtenerCategorias($conexion);
-                include __DIR__ . '/views/productos.php'; // Se incluye la vista principal que contendrá el modal
+                include __DIR__ . '/views/productos.php'; 
             } else {
                 $mensjError = "ID de producto no proporcionado para editar.";
             }
@@ -178,11 +171,8 @@ try {
             global $conexion;
             if (isset($_GET['id'])) {
                 $id = intval($_GET['id']);
-                // Opcional: Obtener la imagen_url antes de eliminar el producto para luego borrar el archivo
-                // $producto_a_eliminar = obtenerProductoPorId($conexion, $id);
-                $resultado = eliminarProducto($conexion, $id); // Asume que tienes esta función
+                $resultado = eliminarProducto($conexion, $id);
                 if ($resultado) {
-                    // Opcional: unlink(ruta_del_archivo_imagen_antiguo);
                     $mensaje = "Producto eliminado correctamente.";
                     header("Location: controller.php?accion=listar&msg=" . urlencode($mensaje));
                     exit;

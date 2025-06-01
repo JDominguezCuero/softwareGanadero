@@ -19,11 +19,11 @@
 
                     <div class="foo-col">
                         <ul>
-                           <li><a href="index_controller.php">Productos</a></li>
-                           <li><a href="http://">Campañas</a></li>
-                           <li><a href="nosotros.php">Nosotros</a></li>
-                           <li><a href="contacto.php">Contacto</a></li>
-                           <li><a href="../modules/auth/views/autenticacion.php">Ingresar</a></li>
+                            <li><a href="index_controller.php">Productos</a></li>
+                            <li><a href="productos_controller.php">Catalogo de Productos</a></li>
+                            <li><a href="nosotros.php">Nosotros</a></li>
+                            <li><a href="contacto.php">Contacto</a></li>
+                            <li><a href="../modules/auth/views/autenticacion.php">Ingresar</a></li>
                         </ul>
                     </div>
 
