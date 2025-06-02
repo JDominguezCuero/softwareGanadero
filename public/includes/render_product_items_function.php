@@ -15,7 +15,7 @@ function renderProductItems(array $products, bool $show_old_price = false): void
         return;
     }
 
-    echo '<div class="products-grid">'; // Agregué el contenedor de la grilla
+    // echo '<div class="products-grid">';
 
     foreach ($products as $product) {
         // Asegúrate de que todas las claves existan y sean seguras para HTML
@@ -76,6 +76,6 @@ function renderProductItems(array $products, bool $show_old_price = false): void
         </div>
         <?php
     }
-    echo '</div>'; // Cierre del contenedor de la grilla
+    // echo '</div>'; 
 }
 ?>
