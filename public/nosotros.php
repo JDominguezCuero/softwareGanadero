@@ -38,6 +38,7 @@
 
         <?php include 'assets/layout/header.php'; ?>
 
+
         <header>
             <div class="carousel">
                 <img src="assets/images/fondo1.png" alt="Ganadería 1">

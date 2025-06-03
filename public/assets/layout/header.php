@@ -1,4 +1,9 @@
+<?php
 
+require_once(__DIR__ . '../../../../config/config.php')
+
+?>
+        
         <button class="dark-toggle" onclick="toggleDarkMode()">Modo Oscuro</button>
         
 <!-- =================================
@@ -10,18 +15,19 @@
                 <div class="header-menu">
 
                     <div class="hm-logo">
-                        <a href="#">
-                            <img src="assets/images/logo1.png" alt="">
+                        <a href="<?= BASE_URL ?>/public/index_controller.php">
+                            <img src="<?= BASE_URL ?>/public/assets/images/logo1.png" alt="">
                         </a>
                     </div>
 
                     <nav class="hm-menu">
                         <ul>
-                            <li><a href="index_controller.php">Productos</a></li>
-                            <li><a href="productos_controller.php">Catalogo de Productos</a></li>
-                            <li><a href="nosotros.php">Nosotros</a></li>
-                            <li><a href="contacto.php">Contacto</a></li>
-                            <li><a href="../modules/auth/views/autenticacion.php">Ingresar</a></li>
+                            <li><a href="<?= BASE_URL ?>/public/index_controller.php">Productos</a></li>
+                            <li><a href="<?= BASE_URL ?>/public/productos_controller.php">Catalogo de Productos</a></li>
+                            <li><a href="<?= BASE_URL ?>/modules/campanas/controller.php">Campañas</a></li>
+                            <li><a href="<?= BASE_URL ?>/public/nosotros.php">Nosotros</a></li>
+                            <li><a href="<?= BASE_URL ?>/public/contacto.php">Contacto</a></li>
+                            <li><a href="<?= BASE_URL ?>/modules/auth/views/autenticacion.php">Ingresar</a></li>
                         </ul>
 
 
@@ -51,6 +57,7 @@
             <ul>
                 <li><a href="index_controller.php">Productos</a></li>
                 <li><a href="productos_controller.php">Catalogo de Productos</a></li>
+                <li><a href="../modules/campanas/controller.php">Campañas</a></li>
                 <li><a href="nosotros.php">Nosotros</a></li>
                 <li><a href="contacto.php">Contacto</a></li>
             </ul>

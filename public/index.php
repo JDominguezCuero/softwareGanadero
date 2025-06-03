@@ -17,7 +17,7 @@
 
         <?php include 'assets/layout/header.php'; ?>
         <button class="dark-toggle" onclick="toggleDarkMode()">Modo Oscuro</button>
-
+    
         <header>
             <div class="carousel">
                 <img src="assets/images/index1.png" alt="Ganadería 1">
