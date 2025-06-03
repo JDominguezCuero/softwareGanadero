@@ -426,6 +426,7 @@ function obtenerCategorias(PDO $conexion): array {
 function obtenerTodosLosProductosConFiltros(
     PDO $conexion,
     ?int $id_categoria = null,
+    // ?int $estado_oferta = 0,
     ?float $precio_min = null,
     ?float $precio_max = null,
     ?string $busqueda = null,
@@ -461,6 +462,11 @@ function obtenerTodosLosProductosConFiltros(
         $sql .= " AND p.categoria_id = :id_categoria";
         $params[':id_categoria'] = $id_categoria;
     }
+
+    // if ($estado_oferta !== null && $estado_oferta > 0) {
+    //     $sql .= " AND p.estado_oferta = :estado_oferta";
+    //     $params[':estado_oferta'] = (int)$estado_oferta;
+    // }
 
     if ($precio_min !== null && $precio_min >= 0) {
         $sql .= " AND p.precio_unitario >= :precio_min";

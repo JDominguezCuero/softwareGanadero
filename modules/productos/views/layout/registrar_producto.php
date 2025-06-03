@@ -28,7 +28,7 @@
                             <div class="form-group">
                                 <label for="categoria_id">Categoría:</label>
                                 <select class="form-control" name="categoria_id" id="categoria_id" required>
-                                    <option value="">Selecciona una categoría</option>
+                                    <option value="0">Selecciona una categoría</option>
                                     <?php
                                     if (isset($categorias) && is_array($categorias)) {
                                         foreach ($categorias as $categoria) {
@@ -71,10 +71,12 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const estadoOfertaCheckbox = document.getElementById('estado_oferta');
         const precioAnteriorGroup = document.getElementById('precio_anterior_group');
         const precioAnteriorInput = document.getElementById('precio_anterior');
+        const categoriasSelect = document.getElementById('categoria_id');
+        const form = document.getElementById('formRegistroProducto');
 
         const togglePrecioAnterior = () => {
             if (estadoOfertaCheckbox.checked) {
@@ -87,7 +89,31 @@
             }
         };
 
-        estadoOfertaCheckbox.addEventListener('change', togglePrecioAnterior);
-        togglePrecioAnterior(); 
+        estadoOfertaCheckbox.addEventListener('change', function () {
+            togglePrecioAnterior();
+
+            if (estadoOfertaCheckbox.checked) {
+                const opciones = categoriasSelect.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].textContent.trim().toLowerCase() === "ofertas") {
+                        categoriasSelect.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                categoriasSelect.value = "0";
+            }
+        });
+
+        togglePrecioAnterior();
+
+        form.addEventListener('submit', function (e) {
+            if (categoriasSelect.value === "0") {
+                e.preventDefault(); // Evita el envío
+                alert("Por favor, selecciona una categoría válida.");
+                categoriasSelect.focus();
+            }
+        });
     });
+  
 </script>

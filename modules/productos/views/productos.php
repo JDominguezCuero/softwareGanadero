@@ -98,7 +98,7 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
                                     data-precio_anterior="<?= htmlspecialchars($item['precio_anterior']) ?>">
                                     </i>
                                     <span class="mx-1 text-gray-400">|</span>
-                                    <a href="<?= BASE_URL ?>/modules/products/controller.php?accion=eliminar&id=<?= $item['id_producto'] ?>"
+                                    <a href="<?= BASE_URL ?>/modules/productos/controller.php?accion=eliminar&id=<?= $item['id_producto'] ?>"
                                     onclick="return confirm('¿Estás seguro que deseas eliminar este producto?');">
                                         <i data-lucide="trash-2"
                                             class="inline-block text-red-500 hover:text-red-700 cursor-pointer"

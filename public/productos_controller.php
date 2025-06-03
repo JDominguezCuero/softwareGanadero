@@ -9,9 +9,6 @@ session_start();
 
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../modules/productos/model.php';
-// REMOVIDO: Ya no necesitamos incluir el modelo de usuarios por separado,
-// porque la función obtenerProductoPorId ahora trae los datos del vendedor.
-// require_once __DIR__ . '/../modules/usuarios/model.php'; 
 require_once __DIR__ . '/includes/render_product_items_function.php';
 
 global $conexion;

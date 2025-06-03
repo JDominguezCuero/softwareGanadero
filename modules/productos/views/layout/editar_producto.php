@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label for="editar_categoria_id">Categoría:</label>
                                 <select class="form-control" name="categoria_id" id="editar_categoria_id" required>
-                                    <option value="">Selecciona una categoría</option>
+                                    <option value="0">Selecciona una categoría</option>
                                     <?php
                                     if (isset($categorias) && is_array($categorias)) {
                                         foreach ($categorias as $categoria) {
@@ -85,6 +85,8 @@
         const editarEstadoOfertaCheckbox = document.getElementById('editar_estado_oferta');
         const editarPrecioAnteriorGroup = document.getElementById('editar_precio_anterior_group');
         const editarPrecioAnteriorInput = document.getElementById('editar_precio_anterior');
+        const categoriaSelect = document.getElementById('editar_categoria_id');
+        const formEditar = document.getElementById('formEditarProducto');
 
         const togglePrecioAnterior = () => {
             if (editarEstadoOfertaCheckbox.checked) {
@@ -97,7 +99,21 @@
             }
         };
 
-        editarEstadoOfertaCheckbox.addEventListener('change', togglePrecioAnterior);
+        editarEstadoOfertaCheckbox.addEventListener('change', function () {
+            togglePrecioAnterior();
+
+            if (editarEstadoOfertaCheckbox.checked) {
+                const opciones = categoriaSelect.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].textContent.trim().toLowerCase() === "ofertas") {
+                        categoriaSelect.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                categoriaSelect.value = "0";
+            }
+        });
 
         $('#modalEditarProducto').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
@@ -106,7 +122,7 @@
             var descripcion = button.data('descripcion');
             var precio = button.data('precio');
             var stock = button.data('stock');
-            var imagen_url = button.data('imagen_url'); // La URL actual de la imagen
+            var imagen_url = button.data('imagen_url');
             var categoria_id = button.data('categoria_id');
             var estado_oferta = button.data('estado_oferta');
             var precio_anterior = button.data('precio_anterior');
@@ -117,10 +133,8 @@
             modal.find('#editar_descripcion').val(descripcion);
             modal.find('#editar_precio').val(precio);
             modal.find('#editar_stock').val(stock);
-            // Guarda la URL actual en un campo oculto
             modal.find('#editar_imagen_url_actual').val(imagen_url);
 
-            // Muestra la imagen actual en el preview
             var imgPreview = modal.find('#imagen_preview_editar');
             if (imagen_url) {
                 imgPreview.attr('src', imagen_url).show();
@@ -138,6 +152,15 @@
             }
 
             togglePrecioAnterior();
+        });
+
+        // ✅ Validación antes de enviar el formulario
+        formEditar.addEventListener('submit', function(e) {
+            if (categoriaSelect.value === "0") {
+                e.preventDefault(); // Detiene el envío del formulario
+                alert("Por favor, selecciona una categoría válida.");
+                categoriaSelect.focus();
+            }
         });
     });
 </script>

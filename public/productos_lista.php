@@ -24,7 +24,8 @@
             <div class="product-list-container">
                 <aside class="filters-sidebar" data-aos="fade-right">
                     <h2>Filtros</h2>
-                    <form action="productos_controller.php" method="GET"> <div class="filter-group">
+                    <form action="productos_controller.php" method="GET"> 
+                        <div class="filter-group">
                             <label for="categoria">Categoría:</label>
                             <select name="categoria" id="categoria" onchange="this.form.submit()">
                                 <option value="" <?= ($filtro_categoria_id === null) ? 'selected' : '' ?>>Todas las Categorías</option>
