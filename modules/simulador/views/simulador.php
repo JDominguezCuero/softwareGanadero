@@ -133,6 +133,9 @@ if (isset($_SESSION['respuesta'])) {
         <button class="btn-acelerar-tiempo" data-factor="10" title="Diez Veces Más Rápido">10x</button>
     </div>
     
+    <button id="toggle-music" title="Pausar música 🎵">    🔇</button>
+            <a href="views/menuPrincipal.php" class="btn volver">← Volver al Menu Principal .......</a>
+
     <a href="views/configuracion.php" class="btn volver">← Volver a Configuraciones</a>
 </div>
 
