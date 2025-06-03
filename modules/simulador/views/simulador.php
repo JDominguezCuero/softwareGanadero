@@ -123,8 +123,8 @@ if (isset($_SESSION['respuesta'])) {
                 <source src="<?= BASE_URL ?>/modules/simulador/sounds/granja.mp3" type="audio/mpeg">
             </audio> -->
 
-      <div class="botones-container">
-    <button id="toggle-music" title="Pausar música 🎵">🔇</button>
+  <div class="botones-container">   
+
 
     <div class="aceleracion-tiempo-container">
         <button class="btn-acelerar-tiempo" data-factor="1" title="Tiempo Normal">1x</button>
@@ -133,12 +133,35 @@ if (isset($_SESSION['respuesta'])) {
         <button class="btn-acelerar-tiempo" data-factor="10" title="Diez Veces Más Rápido">10x</button>
     </div>
     
-    <button id="toggle-music" title="Pausar música 🎵">    🔇</button>
-            <a href="views/menuPrincipal.php" class="btn volver">← Volver al Menu Principal .......</a>
+  </div>
 
-    <a href="views/configuracion.php" class="btn volver">← Volver a Configuraciones</a>
-</div>
+    <div class="botones-simulador">
+  <button id="menu-toggle">☰ Menú</button>
 
+  <div id="menu-content" class="menu-hidden">
+    <button id="toggle-music" title="Pausar música 🎵">🔇</button>
+    <a href="views/menuPrincipal.php" class="btvolver1">← Volver al Menu Principal</a>
+    <a href="views/configuracion.php" class="btvolver1">← Volver a Configuraciones</a>
+  </div>
+  </div>
+
+    <script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuContent = document.getElementById('menu-content');
+
+  menuToggle.addEventListener('click', () => {
+    menuContent.classList.toggle('menu-visible');
+
+    // Cambiar texto del botón
+    if (menuContent.classList.contains('menu-visible')) {
+      menuToggle.textContent = '✖ Cerrar';
+    } else {
+      menuToggle.textContent = '☰ Menú';
+    }
+  });
+</script>
+
+       
         
         <!-- <script>
           const music = document.getElementById("bg-music");
