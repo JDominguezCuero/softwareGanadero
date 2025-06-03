@@ -289,7 +289,7 @@ input[type="text"]:focus {
     padding: 1rem 2rem; /* Aumenta padding horizontal para botones de carrusel */
     background-color: #f8f8f8; /* Agregado para el fondo del carrusel */
     border-radius: 1rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background: rgb(255 255 255 /0%);
 }
 
 .grid-animales-responsivo {
@@ -873,5 +873,61 @@ input[type="text"]:focus {
     padding: 20px;
     background-color: #f0f0f0; /* Un fondo sutil para el contenedor */
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background: rgb(255 255 255 /0%);
+}
+
+.btvolver1 {
+  padding: 12px 30px;
+  background: #2980b9;
+  color: white;
+  font-weight: 600;
+  border-radius: 25px;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transition: filter 0.3s ease; /* Cambiado a 'filter' para un mejor efecto */
+  user-select: none;
+  font-size: 18px;
+  display: inline-block;
+}
+
+.btvolver1:hover {
+  filter: brightness(85%);
+}
+
+.botones-simulador {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  display: flex;
+  flex-direction: column; /* ahora se apila de arriba hacia abajo */
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 10;
+}
+
+#menu-toggle {
+  padding: 10px 20px;
+  margin-top: -1%;
+  background: #27ae60;
+  color: white;
+  border: 2px solid white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: filter 0.3s ease;
+}
+
+#menu-toggle:hover {
+  filter: brightness(85%);
+}
+
+#menu-content {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#menu-content.menu-visible {
+  display: flex;
 }

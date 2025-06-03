@@ -36,10 +36,6 @@ if (isset($_SESSION['respuesta'])) {
 </head>
 <body>
 <div class="flex min-h-screen w-full">
-    <?php include '../../public/assets/layout/sidebar.php'; ?>
-    <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full contenido" style="margin: auto;">
-
-
 
         <div class="container">
             <h1 class="titulo">🐾 Simulación en curso </h1>
@@ -123,21 +119,64 @@ if (isset($_SESSION['respuesta'])) {
             <?php endif; ?>
         </div>
 
-        <div class="botones-container">
-            <button id="toggle-music" title="Pausar música 🎵">    🔇</button>
+        <!-- <audio autoplay loop id="bg-music">
+                <source src="<?= BASE_URL ?>/modules/simulador/sounds/granja.mp3" type="audio/mpeg">
+            </audio> -->
 
-            <div class="aceleracion-tiempo-container">
-                <button class="btn-acelerar-tiempo" data-factor="1" title="Tiempo Normal">1x</button>
-                <button class="btn-acelerar-tiempo" data-factor="2" title="Doble Velocidad">2x</button>
-                <button class="btn-acelerar-tiempo" data-factor="5" title="Quíntuple Velocidad">5x</button>
-                <button class="btn-acelerar-tiempo" data-factor="10" title="Diez Veces Más Rápido">10x</button>
-            </div>
-
-            <a href="views/configuracion.php" class="btn volver">← Volver a Configuraciones .......</a>
-        </div>                        
+  <div class="botones-container">   
 
 
-    </main>
+    <div class="aceleracion-tiempo-container">
+        <button class="btn-acelerar-tiempo" data-factor="1" title="Tiempo Normal">1x</button>
+        <button class="btn-acelerar-tiempo" data-factor="2" title="Doble Velocidad">2x</button>
+        <button class="btn-acelerar-tiempo" data-factor="5" title="Quíntuple Velocidad">5x</button>
+        <button class="btn-acelerar-tiempo" data-factor="10" title="Diez Veces Más Rápido">10x</button>
+    </div>
+    
+  </div>
+
+    <div class="botones-simulador">
+  <button id="menu-toggle">☰ Menú</button>
+
+  <div id="menu-content" class="menu-hidden">
+    <button id="toggle-music" title="Pausar música 🎵">🔇</button>
+    <a href="views/menuPrincipal.php" class="btvolver1">← Volver al Menu Principal</a>
+    <a href="views/configuracion.php" class="btvolver1">← Volver a Configuraciones</a>
+  </div>
+  </div>
+
+    <script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuContent = document.getElementById('menu-content');
+
+  menuToggle.addEventListener('click', () => {
+    menuContent.classList.toggle('menu-visible');
+
+    // Cambiar texto del botón
+    if (menuContent.classList.contains('menu-visible')) {
+      menuToggle.textContent = '✖ Cerrar';
+    } else {
+      menuToggle.textContent = '☰ Menú';
+    }
+  });
+</script>
+
+       
+        
+        <!-- <script>
+          const music = document.getElementById("bg-music");
+          const toggleBtn = document.getElementById("toggle-music");
+          toggleBtn.addEventListener("click", () => {
+              if (music.paused) {
+                  music.play();
+                  toggleBtn.textContent = "🔇";
+              } else {
+                  music.pause();
+                  toggleBtn.textContent = "🔊";
+              }
+          });
+      </script> -->
+
 </div>
 
 <!-- Audios -->

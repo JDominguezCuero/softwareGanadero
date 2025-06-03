@@ -19,8 +19,6 @@ require_once(__DIR__ . '/../../../config/config.php');
 </head>
 <body>
     <div class="flex min-h-screen w-full">
-      <?php include '../../../public/assets/layout/sidebar.php'; ?>
-      <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">
         <div class="fondo">
             <!-- Música de fondo -->
             <audio autoplay loop id="bg-music">
@@ -57,13 +55,12 @@ require_once(__DIR__ . '/../../../config/config.php');
                 </form>
             </div>
 
-            <button id="toggle-music" title="Pausar música 🎵">    🔇</button>
-            <a href="menuPrincipal.php" class="btn volver">← Volver al Menu Principal .......</a>
-            
-
-
+        <div class="botones-simulador">
+        <button id="toggle-music" title="Pausar música 🎵">    🔇</button>
+        <a href="menuPrincipal.php" class="btvolver1">← Volver al Menu Principal</a>
         </div>
-      </main>
+        </div>    
+
     </div>
 
     <script>
