@@ -34,7 +34,7 @@ require_once(__DIR__ . '/../../../config/config.php');
                         <a href="<?= BASE_URL ?>/modules/simulador/views/configuracion.php" class="btn">⚙️ Configurar Animales</a>
                         <a href="<?= BASE_URL ?>/modules/inventario/controller.php?accion=listar" class="btn">📦 Ver Inventario</a>
                         <a href="<?= BASE_URL ?>/modules/usuarios/views/perfil.php" class="btn">👤 Mi Perfil</a>
-                        <a href="<?= BASE_URL ?>/modules/inicio/views/bienvenido.php" class="btn salir">🚪 Salir</a>
+                        <a href="<?= BASE_URL ?>/modules/inicio/controller.php?accion=listarAnimales" class="btn salir">🚪 Salir</a>
                     </div>
                 </div>
             </div>
