@@ -119,9 +119,9 @@ if (isset($_SESSION['respuesta'])) {
             <?php endif; ?>
         </div>
 
-        <!-- <audio autoplay loop id="bg-music">
+        <audio autoplay loop id="bg-music">
                 <source src="<?= BASE_URL ?>/modules/simulador/sounds/granja.mp3" type="audio/mpeg">
-            </audio> -->
+            </audio> 
 
   <div class="botones-container">   
 
@@ -159,23 +159,18 @@ if (isset($_SESSION['respuesta'])) {
       menuToggle.textContent = '☰ Menú';
     }
   });
-</script>
-
-       
-        
-        <!-- <script>
-          const music = document.getElementById("bg-music");
-          const toggleBtn = document.getElementById("toggle-music");
-          toggleBtn.addEventListener("click", () => {
-              if (music.paused) {
+    const music = document.getElementById("bg-music");
+    const toggleBtn = document.getElementById("toggle-music");
+        toggleBtn.addEventListener("click", () => {
+            if (music.paused) {
                   music.play();
                   toggleBtn.textContent = "🔇";
-              } else {
+            } else {
                   music.pause();
                   toggleBtn.textContent = "🔊";
-              }
-          });
-      </script> -->
+            }
+        });
+    </script> 
 
 </div>
 

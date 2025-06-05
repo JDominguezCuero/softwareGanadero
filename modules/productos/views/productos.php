@@ -174,7 +174,7 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
         }
     </script>
 
-    <script>
+    <script> 
  function exportarTablaAExcel() {
     // Obtiene la tabla HTML
     var tabla = document.getElementById("myTable");

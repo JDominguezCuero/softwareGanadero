@@ -9,6 +9,8 @@
                 <button onclick="cambiarFondo('granja')">🌾 Granja</button>
                 <button onclick="cambiarFondo('establo')">🏠 Establo</button>
                 <button onclick="cambiarFondo('noche')">🌙 Noche</button>
+                <button onclick="cambiarFondo('baño')">🛁 Baño</button>
+                <button onclick="cambiarFondo('veterinaria')">💊 Veterinaria</button>
             </div>
 
             <h2 id="modalNombre" style="text-align: center; margin-bottom: 15px; font-weight: bold; color: white;"></h2>
@@ -55,7 +57,14 @@
                 <button onclick="accionModal('medicar')">💊 Medicar</button>
                 <button onclick="accionModal('dormir')">😴 Dormir</button>
                 <button onclick="accionModal('jugar')">🎾 Jugar</button>
-                <button class="btn-accion btn-historial" onclick="verHistorial()">Ver Historial</button>
+                <button class="btn-accion btn-historial" onclick="verHistorial()">📜 Ver Historial</button>
+            </div>
+
+
+            <!-- Panel oculto para mostrar historial -->
+            <div id="panelHistorial" class="historial-panel hidden">
+                <h3>📜 Historial de acciones</h3>
+                <ul id="listaHistorial"></ul>
             </div>
 
 

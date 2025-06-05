@@ -931,3 +931,65 @@ input[type="text"]:focus {
 #menu-content.menu-visible {
   display: flex;
 }
+
+.historial-panel {
+  position: absolute;
+  right: 20px;
+  top: 100px;
+  width: 250px;
+  max-height: 300px;
+  background-color: #fff8dc;
+  border: 2px solid #deb887;
+  border-radius: 10px;
+  padding: 10px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+.hidden {
+  display: none;
+}
+
+.historial-panel h3 {
+  font-size: 16px;
+  margin-top: 0;
+}
+
+/* // --- ESTILO DEL HISTORIAL DE LOS ANIMALES --- */
+
+.historial-panel {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  width: 280px;
+  max-height: 300px;
+  background-color: #fff8e1;
+  border: 2px solid #d4a373;
+  border-radius: 10px;
+  padding: 15px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 10000;
+  font-family: sans-serif;
+}
+
+.historial-panel h3 {
+  margin-top: 0;
+  font-size: 16px;
+  text-align: center;
+}
+
+.historial-panel ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.historial-panel li {
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.hidden {
+  display: none;
+}

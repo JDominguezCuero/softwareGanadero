@@ -444,18 +444,23 @@ function accionModal(accion) {
     switch (accion) {
         case 'alimentar':
             animationToPlay = 'Eating';
+            cambiarFondo('establo');
             break;
         case 'bañar':
             animationToPlay = 'Walk'; // O 'Idle' o alguna animación de movimiento suave si no hay una de "bañar"
+            cambiarFondo('baño');
             break;
         case 'medicar':
             animationToPlay = 'Idle'; // O una animación de estado neutro o interacción
+            cambiarFondo('veterinaria');
             break;
         case 'dormir':
             animationToPlay = 'Death'; // 'Death' a menudo se usa para animales tumbados/relajados en modelos 3D
+            cambiarFondo('noche');
             break;
         case 'jugar':
             animationToPlay = 'Gallop'; // 'Gallop', 'Gallop_Jump', 'Attack_Kick' pueden simular juego/actividad
+            cambiarFondo('granja');
             break;
         default:
             console.log("Acción no reconocida:", accion);
@@ -495,6 +500,12 @@ function cambiarFondo(escena) {
             break;
         case 'noche':
             ruta = '../../modules/simulador/images/escenario-noche.png';
+            break;
+        case 'baño':
+            ruta = '../../modules/simulador/images/escenario-baño.png';
+            break;
+        case 'veterinaria':
+            ruta = '../../modules/simulador/images/escenario-veterinaria.jpg';
             break;
         default:
             ruta = '../../modules/simulador/images/escenario-establo.png'; // Fondo por defecto
@@ -578,4 +589,34 @@ function fetchAndRenderAnimals() {
     .catch(error => {
         console.error('Error en fetchAndRenderAnimals:', error);
     });
+}
+
+// --- FUNCION DEL HISTORIAL ---
+function verHistorial() {
+  const panel = document.getElementById("panelHistorial");
+  panel.classList.toggle("hidden");
+}
+
+function agregarAlHistorial(accion) {
+  const ahora = new Date();
+  const fechaHora = ahora.toLocaleDateString() + ' ' + ahora.toLocaleTimeString();
+  const item = document.createElement("li");
+  item.textContent = `${fechaHora} - ${accion}`;
+  document.getElementById("listaHistorial").prepend(item);
+}
+
+// Esta función ya existe, agrégale las llamadas al historial
+function accionModal(accion) {
+  // Aquí se ejecutaría la lógica que ya tienes para alimentar, bañar, etc.
+
+  // Luego agregamos al historial:
+  let nombreAccion = "";
+  switch (accion) {
+    case 'alimentar': nombreAccion = "Alimentado"; break;
+    case 'bañar': nombreAccion = "Bañado"; break;
+    case 'medicar': nombreAccion = "Medicado"; break;
+    case 'dormir': nombreAccion = "Dormido"; break;
+    case 'jugar': nombreAccion = "Jugado"; break;
+  }
+  agregarAlHistorial(nombreAccion);
 }
