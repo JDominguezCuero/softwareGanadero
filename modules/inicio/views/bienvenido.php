@@ -30,7 +30,7 @@ if (!isset($_SESSION['usuario'])) {
           <div class="flex justify-between items-center mb-8">
               <h2 class="text-2xl font-bold">Bienvenido, <?php echo htmlspecialchars($_SESSION['nombre']); ?> 👋</h2>
               <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                  + Nueva Simulación
+                  🔔 Notificaciones
               </button>
           </div>
 

@@ -445,22 +445,27 @@ function accionModal(accion) {
         case 'alimentar':
             animationToPlay = 'Eating';
             cambiarFondo('establo');
+            nombreAccion = "Alimentado";
             break;
         case 'bañar':
             animationToPlay = 'Walk'; // O 'Idle' o alguna animación de movimiento suave si no hay una de "bañar"
             cambiarFondo('baño');
+            nombreAccion = "Bañado";
             break;
         case 'medicar':
             animationToPlay = 'Idle'; // O una animación de estado neutro o interacción
             cambiarFondo('veterinaria');
+            nombreAccion = "Medicado";
             break;
         case 'dormir':
             animationToPlay = 'Death'; // 'Death' a menudo se usa para animales tumbados/relajados en modelos 3D
             cambiarFondo('noche');
+            nombreAccion = "Dormido";
             break;
         case 'jugar':
             animationToPlay = 'Gallop'; // 'Gallop', 'Gallop_Jump', 'Attack_Kick' pueden simular juego/actividad
             cambiarFondo('granja');
+            nombreAccion = "Ya Jugó";
             break;
         default:
             console.log("Acción no reconocida:", accion);
@@ -472,6 +477,8 @@ function accionModal(accion) {
     playAnimation(animationToPlay);
     // Llama a la función de backend para procesar la acción y actualizar los datos
     realizarAccion(id_animal, accion);
+    // --- FUNCION DEL HISTORIAL ---
+    agregarAlHistorial(nombreAccion);
 }
 
 
@@ -605,18 +612,24 @@ function agregarAlHistorial(accion) {
   document.getElementById("listaHistorial").prepend(item);
 }
 
-// Esta función ya existe, agrégale las llamadas al historial
-function accionModal(accion) {
-  // Aquí se ejecutaría la lógica que ya tienes para alimentar, bañar, etc.
-
-  // Luego agregamos al historial:
-  let nombreAccion = "";
-  switch (accion) {
-    case 'alimentar': nombreAccion = "Alimentado"; break;
-    case 'bañar': nombreAccion = "Bañado"; break;
-    case 'medicar': nombreAccion = "Medicado"; break;
-    case 'dormir': nombreAccion = "Dormido"; break;
-    case 'jugar': nombreAccion = "Jugado"; break;
-  }
-  agregarAlHistorial(nombreAccion);
+// Detectar cambios de tamaño y orientación
+function handleResponsiveChanges() {
+    const isMobile = window.innerWidth <= 576;
+    const isTablet = window.innerWidth > 576 && window.innerWidth <= 992;
+    
+    // Ejemplo: Ajustar cantidad de tarjetas visibles en el carrusel
+    if (isMobile) {
+        document.querySelectorAll('.tarjeta-animal').forEach(card => {
+            card.style.minWidth = '85%';
+        });
+    }
+    
+    // Otros ajustes dinámicos...
 }
+
+// Escuchar eventos de resize y orientation change
+window.addEventListener('resize', handleResponsiveChanges);
+window.addEventListener('orientationchange', handleResponsiveChanges);
+
+// Ejecutar al cargar
+document.addEventListener('DOMContentLoaded', handleResponsiveChanges);

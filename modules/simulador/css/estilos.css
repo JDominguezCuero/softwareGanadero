@@ -906,6 +906,25 @@ input[type="text"]:focus {
   z-index: 10;
 }
 
+.btvolver2 {
+  padding: 12px 30px;
+  background: #c0392b;
+  color: white;
+  font-weight: 600;
+  border-radius: 25px;
+  text-decoration: none;
+  text-align: center;
+  transition: filter 0.3s ease;
+  user-select: none;
+  font-size: 18px;
+  display: inline-block;
+}
+
+.btvolver2:hover {
+  filter: brightness(85%);
+}
+
+
 #menu-toggle {
   padding: 10px 20px;
   margin-top: -1%;
