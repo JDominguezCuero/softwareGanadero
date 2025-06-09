@@ -21,6 +21,13 @@ try {
             include(__DIR__ . '/views/bienvenido.php');
         break;
 
+        case 'logout':
+            session_destroy();
+            header("Location:  ../../public/index_controller.php");
+            exit;
+
+        break;
+
 
         default:
             header("Location: controller.php?accion=listarAnimales");

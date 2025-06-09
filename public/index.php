@@ -13,12 +13,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/principal.css"> 
     <link rel="stylesheet" href="assets/css/detalleProducto.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>    
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/estilos.css">
 </head>
-<body>
+<body class="min-h-screen flex bg-gray-100">
     <div class="flex min-h-screen w-full">
-        <!-- < php include 'assets/layout/sidebar.php'; ?> -->
+        <?php
+            if (isset($_SESSION['usuario'])) {
+                include 'assets/layout/sidebar.php';
+            }
+        ?>
         <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">   
-             
+            
             <div class="hm-wrapper">
                 <?php include 'assets/layout/header.php'; ?>
                 <button class="dark-toggle" onclick="toggleDarkMode()">Modo Oscuro</button>
@@ -91,13 +101,13 @@
                             <div class="carousel-track">
 
                                 <?php
-                                // Solo mostramos una cantidad limitada de productos aquí, el resto en la página "Ver Todos"
-                                $productos_a_mostrar_en_carrusel = array_slice($todos_los_productos, 0, 10); // Mostrar solo 10 productos en el carrusel
-                                if (!empty($productos_a_mostrar_en_carrusel)) {
-                                    renderProductItems($productos_a_mostrar_en_carrusel);
-                                } else {
-                                    echo '<p class="text-center">No hay productos disponibles en este momento.</p>';
-                                }
+                                    // Solo mostramos una cantidad limitada de productos aquí, el resto en la página "Ver Todos"
+                                    $productos_a_mostrar_en_carrusel = array_slice($todos_los_productos, 0, 10); // Mostrar solo 10 productos en el carrusel
+                                    if (!empty($productos_a_mostrar_en_carrusel)) {
+                                        renderProductItems($productos_a_mostrar_en_carrusel);
+                                    } else {
+                                        echo '<p class="text-center">No hay productos disponibles en este momento.</p>';
+                                    }
                                 ?>
                                 
                             </div>

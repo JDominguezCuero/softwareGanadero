@@ -27,7 +27,11 @@ require_once(__DIR__ . '../../../../config/config.php')
                             <li><a href="<?= BASE_URL ?>/modules/campanas/controller.php">Campañas</a></li>
                             <li><a href="<?= BASE_URL ?>/public/nosotros.php">Nosotros</a></li>
                             <li><a href="<?= BASE_URL ?>/public/contacto.php">Contacto</a></li>
-                            <li><a href="<?= BASE_URL ?>/modules/auth/views/autenticacion.php">Ingresar</a></li>
+                            <?php
+                                if (!isset($_SESSION['usuario'])) {
+                                    echo '<li><a href="'. BASE_URL .'/modules/auth/views/autenticacion.php">Ingresar</a></li>';
+                                }
+                            ?>
                         </ul>
 
 
