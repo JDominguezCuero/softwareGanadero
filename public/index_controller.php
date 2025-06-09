@@ -8,6 +8,7 @@ session_start();
 
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../modules/productos/model.php';
+require_once __DIR__ . '/includes/render_product_items_function.php';
 
 global $conexion;
 

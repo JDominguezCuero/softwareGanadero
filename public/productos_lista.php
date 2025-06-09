@@ -63,6 +63,7 @@
                 </aside>
 
                 <main class="main-content" data-aos="fade-left">
+
                     <?php if (!empty($productos_por_categoria_en_listado)): ?>
                         <?php foreach ($productos_por_categoria_en_listado as $nombre_categoria => $productos): ?>
                             <?php if (!empty($productos)): ?>
@@ -80,6 +81,7 @@
                     <?php else: ?>
                         <p class="no-results">No se encontraron productos que coincidan con los filtros aplicados en ninguna categoría.</p>
                     <?php endif; ?>
+                    
                 </main>
             </div>
         </div>
