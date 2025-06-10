@@ -18,7 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>    
-    <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/estilos.css">
+    <link rel="stylesheet" href="assets/css/estilos.css">
 </head>
 <body class="min-h-screen flex bg-gray-100">
     <div class="flex min-h-screen w-full">
