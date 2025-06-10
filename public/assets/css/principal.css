@@ -396,11 +396,11 @@ img {
     background: var(--color-fondo);
 }
 
-.container {
+/* .container {
     width: 1122px;
     padding: 0 15px;
     margin: 0 auto;
-}
+} */
 
 @media screen and (min-width: 1px) {
     .container {
@@ -1478,6 +1478,58 @@ body.dark-mode .dark-toggle:hover {
     background-color: #666;
 }
 
+body.dark-mode .notification-btn {
+    background-color: #555;
+    color: #eee;
+    border-color: #444;
+}
+
+body.dark-mode .notification-btn:hover {
+    background-color: #007bff;
+}
+
+.notification-btn {
+    position: fixed;
+    top: 4.5rem;
+    right: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Estilos de hover para el botón de Notificaciones */
+.notification-btn:hover {
+    background-color: #0056b3; /* Un azul más oscuro al pasar el ratón */
+}
+
+/* Estilos para el contador de notificaciones (burbuja roja) */
+.notification-btn .count {
+    position: absolute;
+    top: -5px; /* Ajusta la posición vertical */
+    right: -5px; /* Ajusta la posición horizontal */
+    background-color: #dc3545; /* Rojo */
+    color: white;
+    font-size: 0.7rem;
+    line-height: 1; /* Asegura que el texto se ajuste bien */
+    border-radius: 50%;
+    padding: 4px; /* Ajusta el padding para el tamaño de la burbuja */
+    min-width: 18px; /* Ancho mínimo para números de 2 dígitos */
+    height: 18px; /* Alto mínimo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
 .imagen-contacto {
     width: 100%;
     /* O el tamaño que ya hayas definido */
@@ -1866,6 +1918,7 @@ body.dark-mode .dark-toggle:hover {
     border-radius: 4px;
     margin-bottom: 5px;
     box-sizing: border-box;
+    color: #9d9393;
 }
 
 .filters-sidebar button[type="submit"] {
@@ -1887,7 +1940,8 @@ body.dark-mode .dark-toggle:hover {
 }
 
 .main-content {
-    flex-grow: 1;
+    flex: 1;
+    min-width: 0;
 }
 
 .category-section {

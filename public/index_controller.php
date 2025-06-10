@@ -8,6 +8,7 @@ session_start();
 
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../modules/productos/model.php';
+require_once __DIR__ . '/includes/render_product_items_function.php';
 
 global $conexion;
 
@@ -23,6 +24,7 @@ $categorias_populares_info = [];
 $productos_populares_tabs = [];
 
 try {
+
     $productos_en_oferta_db = obtenerProductosEnOferta($conexion);
     if (!empty($productos_en_oferta_db)) {
         $ofertas_por_categoria['En Oferta'] = $productos_en_oferta_db;

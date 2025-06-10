@@ -29,8 +29,9 @@ switch ($accion) {
                     $_SESSION['nombre'] = $usuario['nombreCompleto'];
                     $_SESSION['id_usuario'] = $usuario['id_usuario'];
                     $_SESSION['correo_usuario'] = $usuario['correo_usuario'];
+                    $_SESSION['rol'] = $usuario['id_rol'];
 
-                    header("Location: ../inicio/controller.php?accion=listarAnimales");
+                    header("Location: ../../public/index_controller.php");
                     exit;
                 } else {
                     // Usuario no encontrado o contraseña incorrecta

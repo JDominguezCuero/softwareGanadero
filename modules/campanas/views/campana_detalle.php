@@ -13,6 +13,12 @@ require_once(__DIR__ . '../../../../config/config.php');
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/principal.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>    
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/estilos.css">
     <style>
         /* Contenedor principal del detalle */
         .campaign-detail-container {
@@ -191,79 +197,93 @@ require_once(__DIR__ . '../../../../config/config.php');
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex bg-gray-100">
+    <div class="flex min-h-screen w-full">
+        <?php
+            if (isset($_SESSION['usuario'])) {
+                include '../../public/assets/layout/sidebar.php';
+            }
+        ?>
+        <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">   
+            
+            <div class="hm-wrapper">
 
-    <?php include '../../public/assets/layout/header.php'; ?>
-    <button class="dark-toggle" onclick="toggleDarkMode()">Modo Oscuro</button>
+                <?php include '../../public/assets/layout/header.php'; ?>
+                <button class="dark-toggle" onclick="toggleDarkMode()">Modo Oscuro</button>
 
-    <div class="hm-page-block">
-        <div class="container">
-            <?php if ($campana_detalle): ?>
-                <div class="campaign-detail-container" data-aos="fade-up">
-                    <div class="campaign-image">
-                        <img src="<?= htmlspecialchars($campana_detalle['imagen_url'] ?? 'assets/img/placeholder_campana.jpg') ?>" alt="<?= htmlspecialchars($campana_detalle['titulo']) ?>">
-                    </div>
-                    <div class="campaign-info">
-                        <h1><?= htmlspecialchars($campana_detalle['titulo']) ?></h1>
-                        <div class="meta-info">
-                            <p><i class="las la-calendar"></i> Fecha del Evento: <?= (new DateTime($campana_detalle['fecha_evento']))->format('d/m/Y H:i') ?></p>
-                            <p><i class="las la-map-marker"></i> Ubicación: <?= htmlspecialchars($campana_detalle['ubicacion']) ?></p>
-                            <p><i class="las la-clock"></i> Publicado el: <?= (new DateTime($campana_detalle['fecha_publicacion']))->format('d/m/Y') ?></p>
-                            <p><i class="las la-info-circle"></i> Estado:&nbsp;&nbsp;<span style="font-weight: bold; color: <?= $campana_detalle['estado'] === 'activa' ? 'var(--verde)' : 'gray' ?>;"><?= htmlspecialchars(ucfirst($campana_detalle['estado'])) ?></span></p>
-                        </div>
-                        <div class="description-full">
-                            <h2>Descripción Detallada</h2>
-                            <p><?= nl2br(htmlspecialchars($campana_detalle['descripcion'])) ?></p>
-                        </div>
-                    </div>
+                <div class="hm-page-block">
+                     <div class="container">
+                         <?php if ($campana_detalle): ?>
+                              <div class="campaign-detail-container" data-aos="fade-up">
+                                  <div class="campaign-image">
+                                      <img src="<?= htmlspecialchars($campana_detalle['imagen_url'] ?? 'assets/img/placeholder_campana.jpg') ?>" alt="<?= htmlspecialchars($campana_detalle['titulo']) ?>">
+                                 </div>
+                                <div class="campaign-info">
+                                    <h1><?= htmlspecialchars($campana_detalle['titulo']) ?></h1>
+                                     <div class="meta-info">
+                                        <p><i class="las la-calendar"></i> Fecha del Evento: <?= (new DateTime($campana_detalle['fecha_evento']))->format('d/m/Y H:i') ?></p>
+                                        <p><i class="las la-map-marker"></i> Ubicación: <?= htmlspecialchars($campana_detalle['ubicacion']) ?></p>
+                                        <p><i class="las la-clock"></i> Publicado el: <?= (new DateTime($campana_detalle['fecha_publicacion']))->format('d/m/Y') ?></p>
+                                         <p><i class="las la-info-circle"></i> Estado:&nbsp;&nbsp;<span style="font-weight: bold; color: <?= $campana_detalle['estado'] === 'activa' ? 'var(--verde)' : 'gray' ?>;"><?= htmlspecialchars(ucfirst($campana_detalle['estado'])) ?></span></p>
+                                     </div>
+                                     <div class="description-full">
+                                        <h2>Descripción Detallada</h2>
+                                         <p><?= nl2br(htmlspecialchars($campana_detalle['descripcion'])) ?></p>
+                                    </div>
+                                </div>
 
-                    <div class="organizer-info" data-aos="fade-up">
-                        <h2>Contacto del Organizador</h2>
-                        <p><i class="las la-user"></i> Nombre:&nbsp;&nbsp;<?= htmlspecialchars($campana_detalle['nombre_usuario'] ?? 'N/A') ?></p>
-                        <?php if (!empty($campana_detalle['telefono_usuario'])): ?>
-                            <p><i class="las la-phone"></i> Teléfono:&nbsp;&nbsp;<a style="color: black" href="tel:<?= htmlspecialchars($campana_detalle['telefono_usuario']) ?>"><?= htmlspecialchars($campana_detalle['telefono_usuario']) ?></a></p>
-                        <?php endif; ?>
-                        <?php if (!empty($campana_detalle['correo_usuario'])): ?>
-                            <p><i class="las la-envelope"></i> Email:&nbsp;&nbsp;<a style="color: blue" href="mailto:<?= htmlspecialchars($campana_detalle['correo_usuario']) ?>"><?= htmlspecialchars($campana_detalle['correo_usuario']) ?></a></p>
-                        <?php endif; ?>
-                        <?php if (!empty($campana_detalle['direccion_usuario'])): ?>
-                            <p><i class="las la-home"></i> Dirección:&nbsp;&nbsp;<?= htmlspecialchars($campana_detalle['direccion_usuario']) ?></p>
-                        <?php endif; ?>
+                                 <div class="organizer-info" data-aos="fade-up">
+                                    <h2>Contacto del Organizador</h2>
+                                    <p><i class="las la-user"></i> Nombre:&nbsp;&nbsp;<?= htmlspecialchars($campana_detalle['nombre_usuario'] ?? 'N/A') ?></p>
+                                    <?php if (!empty($campana_detalle['telefono_usuario'])): ?>
+                                        <p><i class="las la-phone"></i> Teléfono:&nbsp;&nbsp;<a style="color: black" href="tel:<?= htmlspecialchars($campana_detalle['telefono_usuario']) ?>"><?= htmlspecialchars($campana_detalle['telefono_usuario']) ?></a></p>
+                                     <?php endif; ?>
+                                     <?php if (!empty($campana_detalle['correo_usuario'])): ?>
+                                         <p><i class="las la-envelope"></i> Email:&nbsp;&nbsp;<a style="color: blue" href="mailto:<?= htmlspecialchars($campana_detalle['correo_usuario']) ?>"><?= htmlspecialchars($campana_detalle['correo_usuario']) ?></a></p>
+                                     <?php endif; ?>
+                                    <?php if (!empty($campana_detalle['direccion_usuario'])): ?>
+                                         <p><i class="las la-home"></i> Dirección:&nbsp;&nbsp;<?= htmlspecialchars($campana_detalle['direccion_usuario']) ?></p>
+                                     <?php endif; ?>
 
-                        <div class="organizer-contact-buttons">
-                            <?php if (!empty($campana_detalle['telefono_usuario'])): ?>
-                                <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $campana_detalle['telefono_usuario']) ?>" target="_blank" class="btn-whatsapp">
-                                    <i class="lab la-whatsapp"></i> WhatsApp
+                                     <div class="organizer-contact-buttons">
+                                         <?php if (!empty($campana_detalle['telefono_usuario'])): ?>
+                                              <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $campana_detalle['telefono_usuario']) ?>" target="_blank" class="btn-whatsapp">
+                                                   <i class="lab la-whatsapp"></i> WhatsApp
+                                            </a>
+                                         <?php endif; ?>
+                                         <?php if (!empty($campana_detalle['correo_usuario'])): ?>
+                                               <a href="mailto:<?= htmlspecialchars($campana_detalle['correo_usuario']) ?>" class="btn-email">
+                                                  <i class="las la-envelope"></i> Enviar Email
+                                            </a>
+                                        <?php endif; ?>
+                                     </div>
+                                </div>
+                            </div>
+
+                              <div class="back-button-container" data-aos="fade-up">
+                                 <a href="<?= BASE_URL ?>/modules/campanas/controller.php" class="hm-btn btn-primary uppercase">
+                                     <i class="las la-arrow-left"></i> Volver a Campañas
+                                  </a>
+                             </div>
+
+                         <?php else: ?>
+                            <div class="text-center no-results" data-aos="fade-in">
+                                <h1>Campaña no encontrada</h1>
+                                <p>Lo sentimos, la campaña que buscas no existe o ha sido eliminada.</p>
+                                <a href="<?= BASE_URL ?>/modules/campanas/controller.php" class="hm-btn btn-primary uppercase mt-30">
+                                    <i class="las la-arrow-left"></i> Ver todas las Campañas
                                 </a>
-                            <?php endif; ?>
-                            <?php if (!empty($campana_detalle['correo_usuario'])): ?>
-                                <a href="mailto:<?= htmlspecialchars($campana_detalle['correo_usuario']) ?>" class="btn-email">
-                                    <i class="las la-envelope"></i> Enviar Email
-                                </a>
-                            <?php endif; ?>
-                        </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                <div class="back-button-container" data-aos="fade-up">
-                    <a href="<?= BASE_URL ?>/modules/campanas/controller.php" class="hm-btn btn-primary uppercase">
-                        <i class="las la-arrow-left"></i> Volver a Campañas
-                    </a>
-                </div>
+                <?php include '../../public/assets/layout/flooter.php'; ?>
 
-            <?php else: ?>
-                <div class="text-center no-results" data-aos="fade-in">
-                    <h1>Campaña no encontrada</h1>
-                    <p>Lo sentimos, la campaña que buscas no existe o ha sido eliminada.</p>
-                    <a href="<?= BASE_URL ?>/modules/campanas/controller.php" class="hm-btn btn-primary uppercase mt-30">
-                        <i class="las la-arrow-left"></i> Ver todas las Campañas
-                    </a>
-                </div>
-            <?php endif; ?>
-        </div>
+            </div>
+        </main>
     </div>
 
-    <?php include '../../public/assets/layout/flooter.php'; ?>
     <script src="../../public/assets/js/tienda_online.js"></script>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
