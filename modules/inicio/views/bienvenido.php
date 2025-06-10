@@ -15,8 +15,7 @@ if (!isset($_SESSION['usuario'])) {
     <meta charset="UTF-8">
     <title>Simulador Ganadero - Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>    
@@ -77,7 +76,7 @@ if (!isset($_SESSION['usuario'])) {
         color: white;
         padding: 5px 10px;
         border: none;
-        cursor: pointer;
+        cursor: pointer; 
         margin-top: 10px;
     }
 
