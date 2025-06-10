@@ -28,11 +28,68 @@ if (!isset($_SESSION['usuario'])) {
       <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">
 
           <div class="flex justify-between items-center mb-8">
-              <h2 class="text-2xl font-bold">Bienvenido, <?php echo htmlspecialchars($_SESSION['nombre']); ?> 👋</h2>
-              <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                  🔔 Notificaciones
-              </button>
-          </div>
+    <h2 class="text-2xl font-bold">Bienvenido, <?php echo htmlspecialchars($_SESSION['nombre']); ?> 👋</h2>
+    <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="showNotifications()">
+        🔔 Notificaciones
+    </button>
+</div>
+
+<!-- Modal para mostrar las notificaciones -->
+<div id="notificationModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h2>Notificaciones</h2>
+        <ul id="notificationList"></ul>
+        <button class="close-btn" onclick="closeModal()">Cerrar</button>
+    </div>
+</div>
+
+<style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .close-btn {
+        background: red;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .bg-green-600 {
+        background: #16a34a;
+    }
+
+    .hover\:bg-green-700:hover {
+        background: #15803d;
+    }
+
+    .notification-btn {
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+</style>
 
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               <div class="bg-white p-6 rounded-lg shadow text-center">
