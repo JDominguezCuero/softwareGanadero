@@ -75,7 +75,7 @@
                                 </form>
                             </aside>
 
-                            <main class="main-content" data-aos="fade-left">
+                            <main style="margin-top: auto; padding: 5px;" class="main-content" data-aos="fade-left">
 
                                 <?php if (!empty($productos_por_categoria_en_listado)): ?>
                                     <?php foreach ($productos_por_categoria_en_listado as $nombre_categoria => $productos): ?>
@@ -84,9 +84,6 @@
                                                 <h2><?= htmlspecialchars($nombre_categoria) ?></h2>
                                                 <div class="products-grid">
                                                     <?php renderProductItems($productos, true); ?>
-                                                </div>
-                                                <div class="text-center mt-30">
-                                                    <a href="productos_controller.php?categoria=<?= htmlspecialchars($productos[0]['id_categoria'] ?? '') ?>&buscar=<?= htmlspecialchars($filtro_busqueda ?? '') ?>&precio_min=<?= htmlspecialchars($filtro_precio_min ?? '') ?>&precio_max=<?= htmlspecialchars($filtro_precio_max ?? '') ?>&ordenar_por=<?= htmlspecialchars($ordenar_por ?? '') ?>" class="hm-btn btn-primary uppercase">Ver todos en <?= htmlspecialchars($nombre_categoria) ?></a>
                                                 </div>
                                             </div>
                                         <?php endif; ?>

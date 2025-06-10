@@ -396,11 +396,11 @@ img {
     background: var(--color-fondo);
 }
 
-.container {
+/* .container {
     width: 1122px;
     padding: 0 15px;
     margin: 0 auto;
-}
+} */
 
 @media screen and (min-width: 1px) {
     .container {
@@ -1918,6 +1918,7 @@ body.dark-mode .notification-btn:hover {
     border-radius: 4px;
     margin-bottom: 5px;
     box-sizing: border-box;
+    color: #9d9393;
 }
 
 .filters-sidebar button[type="submit"] {
@@ -1939,7 +1940,8 @@ body.dark-mode .notification-btn:hover {
 }
 
 .main-content {
-    flex-grow: 1;
+    flex: 1;
+    min-width: 0;
 }
 
 .category-section {
