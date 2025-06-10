@@ -205,12 +205,11 @@ require_once(__DIR__ . '../../../../config/config.php');
                 include '../../public/assets/layout/sidebar.php';
             }
         ?>
-        <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">   
+        <main id="mainContent" class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">   
             
             <div class="hm-wrapper">
 
                 <?php include '../../public/assets/layout/header.php'; ?>
-                <button class="dark-toggle" onclick="toggleDarkMode()">Modo Oscuro</button>
 
                 <div class="hm-page-block">
                      <div class="container">

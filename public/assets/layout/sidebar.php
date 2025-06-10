@@ -22,36 +22,41 @@
     </div>
     <div id="userProfile" class="text-center <?= $userProfileHiddenClass ?>">
         <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="w-20 h-20 rounded-full mx-auto mb-2">
-        <h4 class="text-lg font-semibold"><?php echo htmlspecialchars($_SESSION['nombre']); ?></h4>
+        <h4 class="text-lg font-semibold" style="color:white;"><?php echo htmlspecialchars($_SESSION['nombre']); ?></h4>
         <p class="text-sm text-gray-300">@<?php echo htmlspecialchars($_SESSION['usuario']); ?></p>
-        <button class="bg-green-700 mt-4 px-4 py-2 rounded hover:bg-green-800">Editar</button>
+        <button class="bg-green-700 mt-4 px-4 py-2 rounded hover:bg-green-800" style="color:white;">Editar</button>
     </div>
 
     <nav class="mt-10 space-y-4">
-        <a href="<?= BASE_URL ?>/public/index_controller.php" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded">
+        <a href="<?= BASE_URL ?>/public/index_controller.php" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
             <i data-lucide="home"></i>
             <span id="textInicio" class="<?= $textHiddenClass ?>">Inicio</span>
         </a>
-        <a href="<?= BASE_URL ?>/modules/productos/controller.php?accion=listar" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded">
+        <a href="<?= BASE_URL ?>/modules/productos/controller.php?accion=listar" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
             <i data-lucide="store"></i>
             <span id="textProducto" class="<?= $textHiddenClass ?>">Productos</span>
         </a>
-        <a href="<?= BASE_URL ?>/modules/inventario/controller.php?accion=listar" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded">
+        <a href="<?= BASE_URL ?>/modules/inventario/controller.php?accion=listar" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
             <i data-lucide="box"></i>
             <span id="textInventario" class="<?= $textHiddenClass ?>">Inventario</span>
         </a>
-        <a href="<?= BASE_URL ?>/modules/simulador/views/menuPrincipal.php" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded">
+        <a href="<?= BASE_URL ?>/modules/simulador/views/menuPrincipal.php" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
             <i data-lucide="activity"></i>
             <span id="textSimulacion" class="<?= $textHiddenClass ?>">Simulación</span>
         </a>
-        <a href="<?= BASE_URL ?>/modules/simulador/views/menuPrincipal.php" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded">
-            <i data-lucide="user"></i>
-            <span id="textPerfil" class="<?= $textHiddenClass ?>">Administrar Usuarios</span>
-        </a>
+        
+        <?php
+            if (isset($_SESSION['usuario']) && $_SESSION['rol'] == 1) {
+            echo '<a href="<?= BASE_URL ?>/modules/simulador/views/menuPrincipal.php" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
+                    <i data-lucide="user"></i>
+                    <span id="textPerfil" class="<?= $textHiddenClass ?>">Administrar Usuarios</span>
+                </a>';
+            }
+        ?>
     </nav>
 
     <div class="mt-auto pt-4">
-        <a href="<?= BASE_URL ?>/modules/inicio/controller.php?accion=logout" class="flex items-center space-x-2 hover:bg-red-700 p-2 rounded bg-red-600">
+        <a href="<?= BASE_URL ?>/modules/inicio/controller.php?accion=logout" class="flex items-center space-x-2 hover:bg-red-700 p-2 rounded bg-red-600" style="color:white;">
             <i data-lucide="log-out"></i>
             <span id="textCerrarSesion" class="<?= $textHiddenClass ?>">Cerrar Sesión</span>
         </a>

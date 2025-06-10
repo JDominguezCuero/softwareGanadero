@@ -24,15 +24,25 @@ switch ($accion) {
                  $usuario = obtenerUsuarioPorCorreo($correo);
 
                 if ($usuario && password_verify($contrasena, $usuario['contrasena_usuario'])) {
-                    // Inicio de sesión exitoso
-                    $_SESSION['usuario'] = $usuario['nombre_usuario'];
-                    $_SESSION['nombre'] = $usuario['nombreCompleto'];
-                    $_SESSION['id_usuario'] = $usuario['id_usuario'];
-                    $_SESSION['correo_usuario'] = $usuario['correo_usuario'];
-                    $_SESSION['rol'] = $usuario['id_rol'];
 
-                    header("Location: ../../public/index_controller.php");
-                    exit;
+                    if ($usuario['estado'] == 'Activo'){
+                        // Inicio de sesión exitoso
+                        $_SESSION['usuario'] = $usuario['nombre_usuario'];
+                        $_SESSION['nombre'] = $usuario['nombreCompleto'];
+                        $_SESSION['id_usuario'] = $usuario['id_usuario'];
+                        $_SESSION['correo_usuario'] = $usuario['correo_usuario'];
+                        $_SESSION['rol'] = $usuario['id_rol'];
+
+                        header("Location: ../../public/index_controller.php");
+                        exit;
+
+                    } else{
+                        // Usuario no encontrado o contraseña incorrecta
+                        $mensjError = "El usuario no se encuentra activo, por favor contactese con el administrador";
+                        throw new Exception($mensjError);
+                        exit;    
+                    }
+                    
                 } else {
                     // Usuario no encontrado o contraseña incorrecta
                     $mensjError = "Usuario o contraseña incorrecta";
