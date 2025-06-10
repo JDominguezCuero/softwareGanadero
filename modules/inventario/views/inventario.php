@@ -50,7 +50,7 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
     <div class="flex min-h-screen w-full">
         <?php include '../../public/assets/layout/sidebar.php'; ?>
     
-        <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">
+        <main id="mainContent" class="p-6 flex-1 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">
             <div class="flex items-center justify-between mb-6">
                 <h1 class="text-2xl font-bold text-gray-800">Inventario de Alimentos</h1>
                 <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarAlimento">

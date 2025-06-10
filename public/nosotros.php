@@ -1,13 +1,8 @@
 <?php
-// Puedes mantener la lógica del contador si quieres, o eliminarla si solo es para la tienda principal
-// $file = "assets/counter.txt";
-// if (!file_exists($file)) {
-//     file_put_contents($file, 0);
-// }
-// $count = (int)file_get_contents($file);
-// $count++;
-// file_put_contents($file, $count);
-// $countStr = str_pad($count, 3, '0', STR_PAD_LEFT);
+if (session_status() === PHP_SESSION_NONE) { 
+    session_start();
+}
+require_once(__DIR__ . '/../config/config.php');
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +37,7 @@
                 include 'assets/layout/sidebar.php';
             }
         ?>    
-        <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;"> 
+        <main id="mainContent" class="p-6 flex-1 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;"> 
     
             <div class="hm-wrapper">
 
@@ -122,10 +117,10 @@
                         </div>
                     </div>
                 </section>        
+                <?php include 'assets/layout/flooter.php'; ?>
             </div>
         </main>
     </div>
-    <?php include 'assets/layout/flooter.php'; ?>
 
     <script src="https://www.powr.io/powr.js?platform=html"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

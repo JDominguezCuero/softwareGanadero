@@ -27,12 +27,13 @@
                 include 'assets/layout/sidebar.php';
             }
         ?>
-        <main class="flex-1 p-6 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">   
+            
+        <?php include 'assets/layout/header.php'; ?>
+        
+        <main id="mainContent" class="p-6 flex-1 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">   
             
             <div class="hm-wrapper">
-                <?php include 'assets/layout/header.php'; ?>
-                <button class="dark-toggle" onclick="toggleDarkMode()">Modo Oscuro</button>
-            
+                            
                 <header>
                     <div class="carousel">
                         <img src="assets/images/index1.png" alt="Ganadería 1">

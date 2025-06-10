@@ -13,6 +13,12 @@ require_once(__DIR__ . '../../../../config/config.php');
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/principal.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>    
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/estilos.css">
     <style>
         /* Estilos básicos para la cuadrícula de campañas */
         .campaigns-grid {
@@ -128,34 +134,48 @@ require_once(__DIR__ . '../../../../config/config.php');
         }
     </style>
 </head>
-<body>
-    <button class="dark-toggle" onclick="toggleDarkMode()">Modo Oscuro</button>
-    <?php include '../../public/assets/layout/header.php'; ?>        
-    
-    <div class="hm-page-block">
-        <div class="container">
-            <div class="header-title" data-aos="fade-up">
-                <h1>Campañas y Eventos Agropecuarios</h1>
-                <p>Encuentra mercados campesinos, ferias y reuniones en tu comunidad.</p>
-                <?php if (isset($_SESSION['user_id'])): // Suponiendo que usas 'user_id' para saber si el usuario está logueado ?>
-                    <a href="crear_campana.php" class="hm-btn btn-primary uppercase mt-30">Crear Nueva Campaña</a>
-                <?php endif; ?>
-            </div>
+<body class="min-h-screen flex bg-gray-100">
+    <div class="flex min-h-screen w-full">
+        <?php
+            if (isset($_SESSION['usuario'])) {
+                include '../../public/assets/layout/sidebar.php';
+            }
+        ?>
+        <main id="mainContent" class="p-6 flex-1 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">   
+            
+            <div class="hm-wrapper">
 
-            <div class="main-content">
-                <?php
-                // Asegúrate de que $campanas_listado viene del controlador
-                if (isset($campanas_listado) && !empty($campanas_listado)) {
-                    renderCampanaItems($campanas_listado);
-                } else {
-                    echo '<p class="no-results">Actualmente no hay campañas activas. ¡Sé el primero en publicar una!</p>';
-                }
-                ?>
+                <?php include '../../public/assets/layout/header.php'; ?>        
+                
+                <div class="hm-page-block">
+                    <div class="container">
+                        <div class="header-title" data-aos="fade-up">
+                            <h1>Campañas y Eventos Agropecuarios</h1>
+                            <p>Encuentra mercados campesinos, ferias y reuniones en tu comunidad.</p>
+                            <?php if (isset($_SESSION['user_id'])): // Suponiendo que usas 'user_id' para saber si el usuario está logueado ?>
+                                <a href="crear_campana.php" class="hm-btn btn-primary uppercase mt-30">Crear Nueva Campaña</a>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="main-content">
+                            <?php
+                            // Asegúrate de que $campanas_listado viene del controlador
+                            if (isset($campanas_listado) && !empty($campanas_listado)) {
+                                renderCampanaItems($campanas_listado);
+                            } else {
+                                echo '<p class="no-results">Actualmente no hay campañas activas. ¡Sé el primero en publicar una!</p>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                
+                <?php include '../../public/assets/layout/flooter.php'; ?>
+
             </div>
-        </div>
+        </main>
     </div>
-    
-    <?php include '../../public/assets/layout/flooter.php'; ?>
+
     <script src="../../public/assets/js/tienda_online.js"></script>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
