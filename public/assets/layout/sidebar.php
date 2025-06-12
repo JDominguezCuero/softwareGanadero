@@ -47,7 +47,7 @@
         
         <?php
             if (isset($_SESSION['usuario']) && $_SESSION['rol'] == 1) {
-            echo '<a href="<?= BASE_URL ?>/modules/simulador/views/menuPrincipal.php" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
+            echo '<a href="'. BASE_URL . '/modules/auth/controller.php?accion=listar" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
                     <i data-lucide="user"></i>
                     <span id="textPerfil" class="<?= $textHiddenClass ?>">Administrar Usuarios</span>
                 </a>';

@@ -8,12 +8,23 @@ require '../../public/assets/lib/PHPMailer/src/PHPMailer.php';
 require '../../public/assets/lib/PHPMailer/src/SMTP.php';
 require '../../public/assets/lib/PHPMailer/src/Exception.php';
 
+const UPLOAD_DIR = __DIR__ . '/../../modules/auth/perfiles/';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 $accion = $_GET['accion'] ?? '';
 
 switch ($accion) {
+    case 'listar':
+            $usuarios = obtenerUsuario($conexion);
+            $roles = obtenerRoles($conexion);
+
+            $msg = $_GET['msg'] ?? null;
+
+            include(__DIR__ . '/views/gestionUsuario.php');
+        break;
+
     case 'login':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try{
@@ -103,9 +114,95 @@ switch ($accion) {
         } else {
             include 'views/autenticacion.php';
         }
-        break;
+    break;
 
-        case 'restablecer':
+    case 'agregar':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $mensjError = '';
+
+                // Captura de datos del formulario
+                $nombre = $_POST['nombreCompleto'] ?? '';
+                $usuario = $_POST['nombre_usuario'] ?? '';
+                $correo = $_POST['correo_usuario'] ?? '';
+                $telefono = $_POST['telefono_usuario'] ?? '';
+                $rol_id = $_POST['rol_id'] ?? '';
+                $direccion = $_POST['direccion_usuario'] ?? '';
+                $estado = $_POST['estado'] ?? '';
+                $contrasena = $_POST['contrasena'] ?? '';
+                $imagen_url = ''; // Inicializar imagen_url
+
+                // Validaciones básicas
+                if (!camposNoVacios([$nombre, $usuario, $correo, $telefono, $rol_id, $direccion, $estado, $contrasena])) {
+                    $mensjError = "Todos los campos son obligatorios.";
+                    throw new Exception($mensjError);
+                }
+                if (!validarEmail($correo)) {
+                    $mensjError = "Correo electrónico no válido.";
+                    throw new Exception($mensjError);
+                }
+                if (!validarPassword($contrasena)) {
+                    $mensjError = "La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
+                    throw new Exception($mensjError);
+                }
+                if (obtenerUsuarioPorCorreo($correo)) {
+                    $mensjError = "El correo electrónico ya está registrado.";
+                    throw new Exception($mensjError);
+                }
+
+                // Lógica de carga de imagen
+                if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                    $fileTmpPath = $_FILES['imagen']['tmp_name'];
+                    $fileName = $_FILES['imagen']['name'];
+                    $fileSize = $_FILES['imagen']['size'];
+                    $fileType = $_FILES['imagen']['type'];
+                    $fileNameCmps = explode(".", $fileName);
+                    $fileExtension = strtolower(end($fileNameCmps));
+
+                    // Validar extensiones permitidas
+                    $allowedfileExtensions = ['jpg', 'gif', 'png', 'jpeg'];
+                    if (in_array($fileExtension, $allowedfileExtensions)) {
+                        // Generar un nombre único para el archivo
+                        $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                        $destPath = UPLOAD_DIR . $newFileName;
+
+                        if (move_uploaded_file($fileTmpPath, $destPath)) {
+                            // Ruta relativa o URL pública de la imagen para guardar en la BD
+                            $imagen_url = BASE_URL . '/modules/auth/perfiles/' . $newFileName;
+                        } else {
+                            $mensjError = "Error al mover el archivo subido.";
+                        }
+                    } else {
+                        $mensjError = "Tipo de archivo de imagen no permitido.";
+                    }
+                }
+
+                if (!empty($mensjError)) {
+                    header("Location: controller.php?accion=listar&inv=1&error=" . urlencode($mensjError));
+                    exit;
+                }
+
+                // Registrar el usuario
+                if (agregarUsuario($conexion, $nombre, $usuario, $correo, $contrasena, $direccion, $estado, $imagen_url, $rol_id, $telefono)) {
+                     $roles = obtenerRoles($conexion);   
+                    header("Location: controller.php?accion=listar&msg=" . urlencode("Usuario registrado correctamente."));
+                    exit;
+                } else {
+                    throw new Exception("Error al registrar el usuario en la base de datos.");
+                }
+
+            } catch (Exception $e) {
+                header("Location: controller.php?accion=listar&inv=1&error=" . urlencode($e->getMessage()));
+                exit;
+            }
+        } else {
+            header("Location: controller.php?accion=listar&inv=1&error=" . urlencode("Método no permitido."));
+            exit;
+        }
+    break;
+
+
+    case 'restablecer':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $token = $_POST['token'] ?? '';

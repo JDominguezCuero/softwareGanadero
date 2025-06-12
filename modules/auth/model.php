@@ -12,6 +12,38 @@ function obtenerUsuarioPorCorreo($correo) {
     return $stmt->fetch(); // Devuelve false si no encuentra
 }
 
+/**
+ * Obtiene todos los alimentos del inventario.
+ * @param PDO $conexion La conexión a la base de datos (PDO).
+ * @return array Un array de alimentos.
+ */
+function obtenerUsuario($conexion) {
+    $sql = "SELECT
+                u.id_usuario,
+                u.nombreCompleto,
+                u.nombre_usuario,
+                u.correo_usuario,
+                u.direccion_usuario,
+                u.estado,
+                u.contrasena_usuario,
+                u.telefono_usuario,
+                u.id_rol,
+                u.imagen_url_Usuario,
+                r.nombre_rol,   
+                r.descripcion
+            FROM
+                usuarios u
+            LEFT JOIN
+                roles r ON u.id_rol = r.id_rol
+            ORDER BY
+                u.nombreCompleto ASC";
+    $stmt = $conexion->query($sql);
+    if (!$stmt) {
+        throw new Exception("Error al obtener inventario de alimentos: " . implode(":", $conexion->errorInfo()));
+    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function registrarUsuario($nombreCompleto, $correo, $usuario, $contrasena, $idRol = 3, $estado = 'Activo') {
     global $conexion;
 
@@ -27,6 +59,41 @@ function registrarUsuario($nombreCompleto, $correo, $usuario, $contrasena, $idRo
         ':idRol' => $idRol,
         ':estado' => $estado
     ]);
+}
+
+function agregarUsuario($conexion, $nombre, $usuario, $correo, $contrasena, $direccion, $estado, $imagen_url, $rol_id, $telefono) {
+
+    $sql = "INSERT INTO usuarios (nombreCompleto, nombre_usuario, correo_usuario, contrasena_usuario, direccion_usuario, estado, imagen_url_Usuario, id_rol, telefono_usuario)
+            VALUES (:nombreCompleto, :nombreUsuario, :correo, :contrasena, :direccion, :estado, :imagenUrl, :idRol, :telefono)";
+    
+    $stmt = $conexion->prepare($sql);
+    return $stmt->execute([
+        ':nombreCompleto' => $nombre,
+        ':nombreUsuario' => $usuario,
+        ':correo' => $correo,
+        ':contrasena' => password_hash($contrasena, PASSWORD_DEFAULT),
+        ':direccion' => $direccion,
+        ':estado' => $estado,
+        ':imagenUrl' => $imagen_url,
+        ':idRol' => $rol_id,
+        ':telefono' => $telefono
+    ]);
+}
+
+
+/**
+ * Obtiene todas las categorías de productos.
+ * @param PDO $conexion Objeto de conexión a la base de datos.
+ * @return array Lista de categorías.
+ */
+function obtenerRoles(PDO $conexion): array {
+    try {
+        $stmt = $conexion->query("SELECT id_rol, nombre_rol FROM roles ORDER BY nombre_rol ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Error al obtener los roles: " . $e->getMessage());
+        return [];
+    }
 }
 
 function actualizarContrasena($correo, $nuevaContrasena) {

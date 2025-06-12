@@ -84,7 +84,7 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
                                     <?php endif; ?>
                                 </td>
                                 <td class="py-2 px-4 text-center"><?= htmlspecialchars($item['nombre_producto']) ?></td>
-                                <td class="py-2 px-4 text-center">$<?= number_format($item['precio_unitario'], 2) ?></td>
+                                <td class="py-2 px-4 text-center">$ <?= number_format($item['precio_unitario'], 2) ?></td>
                                 <td class="py-2 px-4 text-center"><?= htmlspecialchars($item['cantidad']) ?></td>
                                 <td class="py-2 px-4 text-center"><?= htmlspecialchars($item['nombre_categoria'] ?? 'Sin Categoría') ?></td>
                                 <td class="py-2 px-4 text-center"><?= ($item['estado_oferta'] == 1) ? 'Sí' : 'No' ?></td>
