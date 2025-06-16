@@ -1,3 +1,15 @@
+<?php
+
+if (isset($_GET['login']) && $_GET['login'] == 'error' && isset($_GET['reason'])) {
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            showModal('🤖 Mensaje del Sistema', 'Sesión del usuario cerrada', 'error');
+        });
+    </script>";
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -181,6 +193,8 @@
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="assets/js/tienda_online.js"></script>
     <script src="assets/js/product_modal.js"></script> </body>
+    
+    <?php include '../../modules/auth/layout/mensajesModal.php'; ?>
 
     <script>
         AOS.init({

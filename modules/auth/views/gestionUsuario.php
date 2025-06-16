@@ -2,7 +2,7 @@
 require_once(__DIR__ . '../../../../config/config.php');
 
 if (!isset($_SESSION['usuario'])) {
-    header("Location: ../../../public/index_controller.php?login=error&reason=nologin");
+    header("Location: ".BASE_URL."/public/index_controller.php?login=error&reason=nologin");
     exit;
 }
 
@@ -35,7 +35,7 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>    
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/estilos.css">
 </head>
 
@@ -43,24 +43,24 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
 
     <div class="flex min-h-screen w-full">
         <?php include '../../public/assets/layout/sidebar.php'; ?>
-    
+
         <main id="mainContent" class="p-6 flex-1 overflow-y-auto transition-all duration-300 h-full" style="margin: auto;">
             <div class="hm-wrapper">
                 <div class="flex items-center justify-between mb-6">
                     <h1 class="text-2xl font-bold text-gray-800">Gestión de Usuarios
-                        
+
                     </h1>
                     <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario">
                         Agregar Nuevo Usuario
                     </button>
                 </div>
-                
+
                 <div style="position: relative;">
                     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar producto..." title="Escribe un nombre" style="padding-left: 35px;">
                     <i data-lucide="search" style="position: absolute; left: 8px; top: 40%; transform: translateY(-50%); width: 16px; height: 16px; color: gray;"></i>
                 </div>
 
-                <div class="bg-white shadow-md rounded-lg overflow-hidden mt-4">
+                <div class="bg-white shadow-md rounded-lg mt-4" style="overflow-x: auto;">
                     <table id="myTable" class="min-w-full border border-gray-200 text-sm">
                         <thead class="bg-green-700 text-white">
                             <tr>
@@ -110,7 +110,8 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
                                                 data-direccion="<?= htmlspecialchars($item['direccion_usuario']) ?>"
                                                 data-telefono="<?= htmlspecialchars($item['telefono_usuario']) ?>"
                                                 data-estado="<?= htmlspecialchars($item['estado']) ?>"
-                                                data-nombre="<?= htmlspecialchars($item['nombre_rol']) ?>">                                        
+                                                data-rol="<?= htmlspecialchars($item['id_rol']) ?>"
+                                                data-nombreRol="<?= htmlspecialchars($item['nombre_rol']) ?>">
                                             </i>
                                             <span class="mx-1 text-gray-400">|</span>
                                             <a href="<?= BASE_URL ?>/modules/auth/controller.php?accion=eliminar&id=<?= $item['id_usuario'] ?>"
@@ -133,21 +134,26 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
                     </table>
 
                 </div>
-                
+
                 <div style="margin-top: 30px;">
                     <button class="btn btn-secondary" style="background-color: grey">
                         Exportar Excel
-                    </button>           
+                    </button>
                 </div>
 
             </div>
-        </main>        
+        </main>
     </div>
 
     <?php include __DIR__ . '/../layout/registrar_usuario.php'; ?>
+
+    <!-- INICIO Modal EditarUsuario -->
     <?php include __DIR__ . '/../layout/editar_usuario.php'; ?>
-    
-    <?php include '../../modules/auth/layout/mensajesModal.php'; ?>
+    <!-- FIN Modal EditarUsuario -->
+
+    <!-- INICIO Modal Mensaje -->
+    <?php include __DIR__ . '/../layout/mensajesModal.php'; ?>
+    <!-- FIN Modal Mensaje -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>

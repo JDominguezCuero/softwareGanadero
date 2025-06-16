@@ -10,7 +10,7 @@
             </div>
 
             <div class="modal-body">
-                <form action="<?= BASE_URL ?>/modules/usuarios/controller.php?accion=editar" method="POST" id="formEditarUsuario" enctype="multipart/form-data">
+                <form action="<?= BASE_URL ?>/modules/auth/controller.php?accion=editar" method="POST" id="formEditarUsuario" enctype="multipart/form-data">
                     <input type="hidden" name="id_usuario" id="editar_id_usuario">
                     <input type="hidden" name="imagen_url_actual" id="editar_imagen_url_actual">
 
@@ -32,6 +32,23 @@
                                 <label for="editar_contrasena">Cambiar Contraseña (opcional):</label>
                                 <input type="password" class="form-control" name="contrasena" id="editar_contrasena" placeholder="Nueva contraseña (dejar en blanco para mantener la actual)">
                             </div>
+                            <div class="form-group">
+                                <label for="editar_rol_id">Rol:</label>
+                                <select class="form-control" name="rol_id" id="editar_rol_id" required>
+                                    <option value="0">Selecciona un rol</option>
+                                    <?php
+                                    if (isset($roles) && is_array($roles)) {
+                                        foreach ($roles as $rol) {
+                                            $selected = ''; 
+                                            if (isset($item['id_rol']) && $item['id_rol'] == $rol['id_rol']) {
+                                                $selected = 'selected';
+                                            }
+                                            echo '<option value="' . htmlspecialchars($rol['id_rol']) . '" ' . $selected . '>' . htmlspecialchars($rol['nombre_rol']) . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>                            
                         </div>
 
                         <div class="col-md-6">
@@ -44,19 +61,20 @@
                                 <input type="text" class="form-control" name="telefono_usuario" id="editar_telefono_usuario" placeholder="Teléfono" required>
                             </div>
                             <div class="form-group">
-                                <label>Imagen Actual:</label><br>
-                                <img id="imagen_preview_usuario" src="" alt="Imagen actual" style="max-width: 150px; height: auto; margin-bottom: 10px; display: block;">
-                                <label for="editar_imagen_usuario">Cargar Nueva Imagen:</label>
-                                <input type="file" class="form-control-file" name="imagen" id="editar_imagen_usuario" accept="image/*">
-                                <small class="form-text text-muted">Deja en blanco para mantener la imagen actual.</small>
-                            </div>
-                            <div class="form-group">
                                 <label for="editar_estado_usuario">Estado:</label>
                                 <select class="form-control" name="estado" id="editar_estado_usuario" required>
                                     <option value="0">Selecciona un estado</option>
                                     <option value="1">Activo</option>
                                     <option value="2">Inactivo</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Imagen Actual:</label><br>
+                                <img id="imagen_preview_usuario" src="" alt="Imagen actual" style="max-width: 150px; height: auto; margin-bottom: 10px; display: block;">
+                                <label for="editar_imagen_usuario">Cargar Nueva Imagen:</label>
+                                <input type="file" class="form-control-file" name="imagen" id="editar_imagen_usuario" accept="image/*">
+                                <small class="form-text text-muted">Deja en blanco para mantener la imagen actual.</small>
+                            </div>                            
                         </div>
                     </div>
 
@@ -83,6 +101,7 @@
             var direccion = button.data('direccion');
             var telefono = button.data('telefono');
             var estado = button.data('estado');
+            var rol = button.data('rol');
             var imagen_url = button.data('imagen_url');
 
             var modal = $(this);
@@ -92,9 +111,20 @@
             modal.find('#editar_correo_usuario').val(correo);
             modal.find('#editar_direccion_usuario').val(direccion);
             modal.find('#editar_telefono_usuario').val(telefono);
-            modal.find('#editar_estado_usuario').val(estado);
+            modal.find('#editar_rol_id').val(button.data('rol'));
             modal.find('#editar_imagen_url_actual').val(imagen_url);
+            
+            var estadoValorNumerico;
+            if (estado === 'Activo') {
+                estadoValorNumerico = '1';
+            } else if (estado === 'Inactivo') {
+                estadoValorNumerico = '2'; 
+            } else {
+                estadoValorNumerico = '0';
+            }
 
+            modal.find('#editar_estado_usuario').val(estadoValorNumerico);
+            
             var imgPreview = modal.find('#imagen_preview_usuario');
             if (imagen_url) {
                 imgPreview.attr('src', imagen_url).show();

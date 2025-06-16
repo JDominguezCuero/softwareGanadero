@@ -294,7 +294,7 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id_rol`, `nombre_rol`, `descripcion`) VALUES
 (1, 'Administrador', 'Acceso total al sistema'),
 (2, 'Empleado', 'Acceso limitado para gestionar ventas y productos'),
-(3, 'Veterinario', 'Acceso a la gestión de salud animal');
+(3, 'Usuario', 'Acceso a la gestión general de inventarios, simulador y productos');
 
 -- --------------------------------------------------------
 
@@ -430,8 +430,9 @@ CREATE TABLE `usuarios` (
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_ultimo_acceso` timestamp NULL DEFAULT NULL,
   `id_rol` int(11) DEFAULT NULL,
+  `imagen_url_Usuario` VARCHAR(255) DEFAULT NULL,
   `nombreCompleto` varchar(255) DEFAULT NULL,
-  `telefono_usuario` int(11) DEFAULT NULL,
+  `telefono_usuario` VARCHAR(15) DEFAULT NULL,
   `token_expiracion` datetime DEFAULT NULL,
   `token_recuperacion` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -444,7 +445,7 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `correo_usuario`, `contr
 (1, 'JoseD', 'josedominguez.121398@gmail.com', '$2y$10$jqggiIAtb4r0rmIy3hCC1us0PDdkoOdYUqyRiWO9A4ZNXyxb1dvl.', NULL, NULL, '2025-06-03 02:54:18', NULL, 1, 'Jose Dominguez Cuero', NULL, NULL, NULL),
 (2, 'admin', 'admin@example.com', 'hashed_password_admin', NULL, 'Activo', '2025-06-03 03:04:54', NULL, 1, 'Admin General', 123456789, NULL, NULL),
 (3, 'empleado1', 'empleado1@example.com', 'hashed_password_empleado', NULL, 'Activo', '2025-06-03 03:04:54', NULL, 2, 'Juan Pérez', 987654321, NULL, NULL),
-(4, 'veterinario1', 'veterinario1@example.com', 'hashed_password_veterinario', NULL, 'Activo', '2025-06-03 03:04:54', NULL, 3, 'Dr. Ana Gómez', 555112233, NULL, NULL);
+(4, 'usuario', 'usuario@example.com', 'hashed_password_veterinario', NULL, 'Activo', '2025-06-03 03:04:54', NULL, 3, 'Dr. Ana Gómez', 555112233, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -612,7 +613,7 @@ ALTER TABLE `tratamientos`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`),
-  ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
+  -- ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
   ADD UNIQUE KEY `correo_usuario` (`correo_usuario`);
 
 --
