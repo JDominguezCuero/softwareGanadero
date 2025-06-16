@@ -152,7 +152,7 @@ CREATE TABLE `inventarioalimentos` (
   `id_alimento` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `cantidad` decimal(10,2) NOT NULL,
-  `unidad_medida` enum('Kg') DEFAULT NULL,
+  `unidad_medida` varchar(255) DEFAULT NULL,
   `fecha_ingreso` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
