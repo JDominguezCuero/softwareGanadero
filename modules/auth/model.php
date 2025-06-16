@@ -44,11 +44,11 @@ function obtenerUsuario($conexion) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function registrarUsuario($nombreCompleto, $correo, $usuario, $contrasena, $idRol = 3, $estado = 'Activo') {
+function registrarUsuario($nombreCompleto, $correo, $usuario, $contrasena, $idRol = 3, $estado = 'Activo', $imagen_url) {
     global $conexion;
 
-    $sql = "INSERT INTO usuarios (nombreCompleto, correo_usuario, nombre_usuario, contrasena_usuario, id_rol)
-            VALUES (:nombreCompleto, :correo, :usuario, :contrasena, :idRol, :estado)";
+    $sql = "INSERT INTO usuarios (nombreCompleto, correo_usuario, nombre_usuario, contrasena_usuario, id_rol, )
+            VALUES (:nombreCompleto, :correo, :usuario, :contrasena, :idRol, :estado, :imagenUrl)";
     
     $stmt = $conexion->prepare($sql);
     return $stmt->execute([
@@ -57,7 +57,8 @@ function registrarUsuario($nombreCompleto, $correo, $usuario, $contrasena, $idRo
         ':usuario' => $usuario,
         ':contrasena' => password_hash($contrasena, PASSWORD_DEFAULT),
         ':idRol' => $idRol,
-        ':estado' => $estado
+        ':estado' => $estado,
+        ':imagenUrl' => $imagen_url
     ]);
 }
 

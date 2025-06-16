@@ -79,7 +79,8 @@ switch ($accion) {
                 $nombre = $_POST['nombreCompleto'] ?? '';
                 $correo = $_POST['correoElectronico'] ?? '';
                 $usuario = $_POST['usuario'] ?? '';
-                $contrasena = $_POST['contrasena'] ?? '';                
+                $contrasena = $_POST['contrasena'] ?? '';   
+                $imagen_url = '/../../modules/auth/perfiles/profileDefault.png';            
 
                 // Validaciones reutilizando funciones
                 if (!camposNoVacios([$nombre, $correo, $usuario, $contrasena])) {
@@ -183,9 +184,14 @@ switch ($accion) {
                     exit;
                 }
 
+                if (empty($imagen_url)) {
+                    $imagen_url = BASE_URL . '/modules/auth/perfiles/profileDefault.png';
+                }
+
                 // Registrar el usuario
                 if (agregarUsuario($conexion, $nombre, $usuario, $correo, $contrasena, $direccion, $estado, $imagen_url, $rol_id, $telefono)) {
-                     $roles = obtenerRoles($conexion);  
+                    $_SESSION['url_Usuario'] = $imagen_url; 
+                    $roles = obtenerRoles($conexion);  
                      $mensaje =  "Usuario registrado correctamente.";
                     header("Location: controller.php?accion=listar&msg=" . urlencode($mensaje));
                     exit;
@@ -257,12 +263,17 @@ switch ($accion) {
                     }
                 }
 
+                if (empty($imagen_url)) {
+                    $imagen_url = BASE_URL . '/modules/auth/perfiles/profileDefault.png';
+                }
+
                 // Ejecutar la actualización del usuario
                 $resultado = actualizarUsuario($conexion, $id, $nombre, $usuario, $correo, $direccion, $estado, $imagen_url, $rol_id, $telefono, 
                     $contrasena // Si es vacío, la función decide si mantener la actual
                 );
 
                 if ($resultado) {
+                    $_SESSION['url_Usuario'] = $imagen_url; 
                     $mensaje = "Usuario actualizado correctamente.";
                     header("Location: controller.php?accion=listar&msg=" . urlencode($mensaje));
                     exit;

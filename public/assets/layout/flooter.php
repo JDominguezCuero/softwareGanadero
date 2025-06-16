@@ -1,4 +1,6 @@
-<a class="whatsapp" href="https://wa.me/573206339397" target="_blank" title="Escríbenos por WhatsApp">💬</a>
+<a class="whatsapp" href="https://wa.me/573206339397" target="_blank" title="Escríbenos por WhatsApp">
+    ​🤖
+</a>
 
  <footer class="bg-gray-800 text-white py-4 mt-6">
             
