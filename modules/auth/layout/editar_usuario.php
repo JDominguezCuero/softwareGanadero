@@ -92,6 +92,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Rellenar los campos al abrir el modal
         $('#modalEditarUsuario').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var id = button.data('id');
@@ -102,6 +103,7 @@
             var telefono = button.data('telefono');
             var estado = button.data('estado');
             var rol = button.data('rol');
+            var password = button.data('contraseñaUser');
             var imagen_url = button.data('imagen_url');
 
             var modal = $(this);
@@ -111,20 +113,16 @@
             modal.find('#editar_correo_usuario').val(correo);
             modal.find('#editar_direccion_usuario').val(direccion);
             modal.find('#editar_telefono_usuario').val(telefono);
-            modal.find('#editar_rol_id').val(button.data('rol'));
+            modal.find('#editar_rol_id').val(rol);
+            modal.find('#editar_contrasena').val(password);
             modal.find('#editar_imagen_url_actual').val(imagen_url);
-            
-            var estadoValorNumerico;
-            if (estado === 'Activo') {
-                estadoValorNumerico = '1';
-            } else if (estado === 'Inactivo') {
-                estadoValorNumerico = '2'; 
-            } else {
-                estadoValorNumerico = '0';
-            }
+
+            var estadoValorNumerico = '0';
+            if (estado === 'Activo') estadoValorNumerico = '1';
+            else if (estado === 'Inactivo') estadoValorNumerico = '2';
 
             modal.find('#editar_estado_usuario').val(estadoValorNumerico);
-            
+
             var imgPreview = modal.find('#imagen_preview_usuario');
             if (imagen_url) {
                 imgPreview.attr('src', imagen_url).show();
@@ -132,5 +130,54 @@
                 imgPreview.hide();
             }
         });
+
+        // Validación del formulario
+        const formEditar = document.getElementById('formEditarUsuario');
+        if (formEditar) {
+            formEditar.addEventListener('submit', function (e) {
+                const nombre = document.getElementById('editar_nombreCompleto').value.trim();
+                const usuario = document.getElementById('editar_nombre_usuario').value.trim();
+                const correo = document.getElementById('editar_correo_usuario').value.trim();
+                const telefono = document.getElementById('editar_telefono_usuario').value.trim();
+                const direccion = document.getElementById('editar_direccion_usuario').value.trim();
+                const estado = document.getElementById('editar_estado_usuario').value;
+                const rol = document.getElementById('editar_rol_id').value;
+                const contrasena = document.getElementById('editar_contrasena').value;
+
+                let errores = [];
+
+                if (nombre === '') errores.push('El nombre completo es obligatorio.');
+                if (usuario === '') errores.push('El nombre de usuario es obligatorio.');
+                if (correo === '') {
+                    errores.push('El correo electrónico es obligatorio.');
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+                    errores.push('El correo electrónico no tiene un formato válido.');
+                }
+                if (telefono === '') {
+                    errores.push('El teléfono es obligatorio.');
+                } else if (!/^\d{7,}$/.test(telefono)) {
+                    errores.push('El teléfono debe tener al menos 7 dígitos.');
+                }
+                if (direccion === '') errores.push('La dirección es obligatoria.');
+                if (estado !== '1' && estado !== '2') {
+                    errores.push('Selecciona un estado válido.');
+                }
+                if (contrasena !== '' && !validarPassword(contrasena)) {
+                    errores.push('La contraseña debe tener al menos 5 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial.');
+                }
+                if (rol === '') errores.push('Selecciona un rol válido.');
+
+                if (errores.length > 0) {
+                    e.preventDefault(); // Evita el envío
+                    alert('Corrige los siguientes errores:\n\n' + errores.join('\n'));
+                }
+
+                function validarPassword(contra) {
+                    const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{5,}$/;
+                    return regex.test(contra);
+                }
+            });
+        }
+
     });
 </script>

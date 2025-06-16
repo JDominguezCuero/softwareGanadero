@@ -80,3 +80,59 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('formRegistroUsuario');
+
+        form.addEventListener('submit', function (e) {
+            const nombre = document.getElementById('nombreCompleto').value.trim();
+            const usuario = document.getElementById('nombre_usuario').value.trim();
+            const correo = document.getElementById('correo_usuario').value.trim();
+            const telefono = document.getElementById('telefono_usuario').value.trim();
+            const direccion = document.getElementById('direccion_usuario').value.trim();
+            const estado = document.getElementById('estado').value;
+            const contrasena = document.getElementById('contrasena').value;
+            const rol = document.getElementById('rol_id').value;
+
+            let errores = [];
+
+            if (nombre === '') errores.push('El nombre completo es obligatorio.');
+            if (usuario === '') errores.push('El nombre de usuario es obligatorio.');
+
+            if (correo === '') {
+                errores.push('El correo electrónico es obligatorio.');
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+                errores.push('El correo electrónico no tiene un formato válido.');
+            }
+
+            if (telefono === '') {
+                errores.push('El teléfono es obligatorio.');
+            } else if (!/^\d{10,}$/.test(telefono)) {
+                errores.push('El teléfono debe tener al menos 10 dígitos numéricos.');
+            }
+
+            if (direccion === '') errores.push('La dirección es obligatoria.');
+
+            if (estado !== 'Activo' && estado !== 'Inactivo') {
+                errores.push('Selecciona un estado válido.');
+            }
+
+            if (contrasena !== '' && !validarPassword(contrasena)) {
+                errores.push('La contraseña debe tener al menos 5 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial.');
+            }
+
+            if (rol === '') errores.push('Selecciona un rol válido.');
+
+            if (errores.length > 0) {
+                e.preventDefault(); // Evita el envío del formulario
+                alert('Corrige los siguientes errores:\n\n' + errores.join('\n'));
+            }
+
+            function validarPassword(password) {
+                const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{5,}$/;
+                return regex.test(password);
+            }
+        });
+    });
+</script>
+

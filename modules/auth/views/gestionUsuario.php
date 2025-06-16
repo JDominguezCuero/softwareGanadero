@@ -111,6 +111,7 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
                                                 data-telefono="<?= htmlspecialchars($item['telefono_usuario']) ?>"
                                                 data-estado="<?= htmlspecialchars($item['estado']) ?>"
                                                 data-rol="<?= htmlspecialchars($item['id_rol']) ?>"
+                                                data-contraseñaUser="<?= htmlspecialchars($item['contrasena_usuario']) ?>"
                                                 data-nombreRol="<?= htmlspecialchars($item['nombre_rol']) ?>">
                                             </i>
                                             <span class="mx-1 text-gray-400">|</span>

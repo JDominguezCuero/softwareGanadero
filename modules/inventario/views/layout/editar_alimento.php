@@ -22,12 +22,12 @@
                         <input type="number" class="form-control" name="cantidad" id="editar_cantidad" placeholder="Cantidad" min="0" step="1" required>
                     </div>
                     <div class="form-group">
-                        <label for="editar_unidad_medida">Unidad de Medida:</label>
-                        <input type="text" class="form-control" name="unidad_medida" id="editar_unidad_medida" placeholder="ej. kg, litros, unidades" required>
+                        <label for="editar_unidadMedida">Unidad de Medida:</label>
+                        <input type="text" class="form-control" name="unidad_medida" id="editar_unidadMedida" placeholder="ej. kg, litros, unidades" required>
                     </div>
                     <div class="form-group">
-                        <label for="editar_fecha_ingreso">Fecha de Ingreso:</label>
-                        <input type="date" class="form-control" name="fecha_ingreso" id="editar_fecha_ingreso" required>
+                        <label for="editar_fechaIngreso">Fecha de Ingreso:</label>
+                        <input type="date" class="form-control" name="fecha_ingreso" id="editar_fechaIngreso" required>
                     </div>
                 </form>
             </div>
