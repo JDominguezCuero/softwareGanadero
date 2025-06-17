@@ -6,7 +6,7 @@ function validarEmail($email) {
 }
 
 function validarPassword($password) {
-    $regex = "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/";
+    $regex = "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{5,}$/";
     return preg_match($regex, $password);
 }
 

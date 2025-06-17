@@ -21,9 +21,9 @@
         </button>
     </div>
     <div id="userProfile" class="text-center <?= $userProfileHiddenClass ?>">
-        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="w-20 h-20 rounded-full mx-auto mb-2">
-        <h4 class="text-lg font-semibold" style="color:white;"><?php echo htmlspecialchars($_SESSION['nombre']); ?></h4>
-        <p class="text-sm text-gray-300">@<?php echo htmlspecialchars($_SESSION['usuario']); ?></p>
+        <img src="<?php echo htmlspecialchars($_SESSION['url_Usuario'] ?? ''); ?>" class="w-20 h-20 rounded-full mx-auto mb-2">
+        <h4 class="text-lg font-semibold" style="color:white;"><?php echo htmlspecialchars($_SESSION['nombre'] ?? ''); ?></h4>
+        <p class="text-sm text-gray-300">@<?php echo htmlspecialchars($_SESSION['usuario'] ?? ''); ?></p>
         <button class="bg-green-700 mt-4 px-4 py-2 rounded hover:bg-green-800" style="color:white;">Editar</button>
     </div>
 
@@ -47,7 +47,7 @@
         
         <?php
             if (isset($_SESSION['usuario']) && $_SESSION['rol'] == 1) {
-            echo '<a href="<?= BASE_URL ?>/modules/simulador/views/menuPrincipal.php" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
+            echo '<a href="'. BASE_URL . '/modules/auth/controller.php?accion=listar" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
                     <i data-lucide="user"></i>
                     <span id="textPerfil" class="<?= $textHiddenClass ?>">Administrar Usuarios</span>
                 </a>';

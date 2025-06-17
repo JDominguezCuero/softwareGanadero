@@ -8,12 +8,23 @@ require '../../public/assets/lib/PHPMailer/src/PHPMailer.php';
 require '../../public/assets/lib/PHPMailer/src/SMTP.php';
 require '../../public/assets/lib/PHPMailer/src/Exception.php';
 
+const UPLOAD_DIR = __DIR__ . '/../../modules/auth/perfiles/';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 $accion = $_GET['accion'] ?? '';
 
 switch ($accion) {
+    case 'listar':
+            $usuarios = obtenerUsuario($conexion);
+            $roles = obtenerRoles($conexion);
+
+            $msg = $_GET['msg'] ?? null;
+
+            include(__DIR__ . '/views/gestionUsuario.php');
+        break;
+
     case 'login':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try{
@@ -32,6 +43,7 @@ switch ($accion) {
                         $_SESSION['id_usuario'] = $usuario['id_usuario'];
                         $_SESSION['correo_usuario'] = $usuario['correo_usuario'];
                         $_SESSION['rol'] = $usuario['id_rol'];
+                        $_SESSION['url_Usuario'] = $usuario['imagen_url_Usuario'];
 
                         header("Location: ../../public/index_controller.php");
                         exit;
@@ -67,7 +79,8 @@ switch ($accion) {
                 $nombre = $_POST['nombreCompleto'] ?? '';
                 $correo = $_POST['correoElectronico'] ?? '';
                 $usuario = $_POST['usuario'] ?? '';
-                $contrasena = $_POST['contrasena'] ?? '';                
+                $contrasena = $_POST['contrasena'] ?? '';   
+                $imagen_url = '/../../modules/auth/perfiles/profileDefault.png';            
 
                 // Validaciones reutilizando funciones
                 if (!camposNoVacios([$nombre, $correo, $usuario, $contrasena])) {
@@ -88,7 +101,7 @@ switch ($accion) {
                 }
 
                 // Registrar
-                if (registrarUsuario($nombre, $correo, $usuario, $contrasena)) {
+                if (registrarUsuario($nombre, $correo, $usuario, $contrasena, $imagen_ur)) {
                     header("Location: views/autenticacion.php?success=1");
                     exit;
                 } else {
@@ -103,9 +116,211 @@ switch ($accion) {
         } else {
             include 'views/autenticacion.php';
         }
-        break;
+    break;
 
-        case 'restablecer':
+    case 'agregar':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $mensjError = '';
+
+                // Captura de datos del formulario
+                $nombre = $_POST['nombreCompleto'] ?? '';
+                $usuario = $_POST['nombre_usuario'] ?? '';
+                $correo = $_POST['correo_usuario'] ?? '';
+                $telefono = $_POST['telefono_usuario'] ?? '';
+                $rol_id = $_POST['rol_id'] ?? '';
+                $direccion = $_POST['direccion_usuario'] ?? '';
+                $estado = $_POST['estado'] ?? '';
+                $contrasena = $_POST['contrasena'] ?? '';
+                $imagen_url = ''; // Inicializar imagen_url
+
+                // Validaciones básicas
+                if (!camposNoVacios([$nombre, $usuario, $correo, $telefono, $rol_id, $direccion, $estado, $contrasena])) {
+                    $mensjError = "Todos los campos son obligatorios.";
+                    throw new Exception($mensjError);
+                }
+                if (!validarEmail($correo)) {
+                    $mensjError = "Correo electrónico no válido.";
+                    throw new Exception($mensjError);
+                }
+                if (!validarPassword($contrasena)) {
+                    $mensjError = "La contraseña debe tener mínimo 5 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
+                    throw new Exception($mensjError);
+                }
+                if (obtenerUsuarioPorCorreo($correo)) {
+                    $mensjError = "El correo electrónico ya está registrado.";
+                    throw new Exception($mensjError);
+                }
+
+                // Lógica de carga de imagen
+                if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                    $fileTmpPath = $_FILES['imagen']['tmp_name'];
+                    $fileName = $_FILES['imagen']['name'];
+                    $fileSize = $_FILES['imagen']['size'];
+                    $fileType = $_FILES['imagen']['type'];
+                    $fileNameCmps = explode(".", $fileName);
+                    $fileExtension = strtolower(end($fileNameCmps));
+
+                    // Validar extensiones permitidas
+                    $allowedfileExtensions = ['jpg', 'gif', 'png', 'jpeg'];
+                    if (in_array($fileExtension, $allowedfileExtensions)) {
+                        // Generar un nombre único para el archivo
+                        $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                        $destPath = UPLOAD_DIR . $newFileName;
+
+                        if (move_uploaded_file($fileTmpPath, $destPath)) {
+                            // Ruta relativa o URL pública de la imagen para guardar en la BD
+                            $imagen_url = BASE_URL . '/modules/auth/perfiles/' . $newFileName;
+                        } else {
+                            $mensjError = "Error al mover el archivo subido.";
+                        }
+                    } else {
+                        $mensjError = "Tipo de archivo de imagen no permitido.";
+                    }
+                }
+
+                if (!empty($mensjError)) {
+                    header("Location: controller.php?accion=listar&inv=1&error=" . urlencode($mensjError));
+                    exit;
+                }
+
+                if (empty($imagen_url)) {
+                    $imagen_url = BASE_URL . '/modules/auth/perfiles/profileDefault.png';
+                }
+
+                // Registrar el usuario
+                if (agregarUsuario($conexion, $nombre, $usuario, $correo, $contrasena, $direccion, $estado, $imagen_url, $rol_id, $telefono)) {
+                    $_SESSION['url_Usuario'] = $imagen_url; 
+                    $roles = obtenerRoles($conexion);  
+                     $mensaje =  "Usuario registrado correctamente.";
+                    header("Location: controller.php?accion=listar&msg=" . urlencode($mensaje));
+                    exit;
+                } else {
+                    throw new Exception("Error al registrar el usuario en la base de datos.");
+                }
+
+            } catch (Exception $e) {
+                header("Location: controller.php?accion=listar&inv=1&error=" . urlencode($e->getMessage()));
+                exit;
+            }
+        } else {
+            header("Location: controller.php?accion=listar&inv=1&error=" . urlencode("Método no permitido."));
+            exit;
+        }
+    break;
+
+    case 'editar':
+        $id = $_POST['id_usuario'] ?? $_GET['id_usuario'] ?? null;
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
+            try {
+                $mensjError = '';
+
+                // Captura de datos del formulario
+                $nombre = $_POST['nombreCompleto'] ?? '';
+                $usuario = $_POST['nombre_usuario'] ?? '';
+                $correo = $_POST['correo_usuario'] ?? '';
+                $telefono = $_POST['telefono_usuario'] ?? '';
+                $rol_id = $_POST['rol_id'] ?? ''; // si lo estás usando
+                $direccion = $_POST['direccion_usuario'] ?? '';
+                $estado = $_POST['estado'] ?? '';
+                $contrasena = $_POST['contrasena'] ?? '';
+                $imagen_url = $_POST['imagen_url_actual'] ?? '';
+
+                // Validación básica
+                if (!camposNoVacios([$nombre, $usuario, $correo, $telefono, $direccion, $estado])) {
+                    throw new Exception("Todos los campos son obligatorios.");
+                }
+
+                if (!validarEmail($correo)) {
+                    throw new Exception("Correo electrónico no válido.");
+                }
+
+                // Validación de contraseña si se quiere cambiar
+                if (!empty($contrasena) && !validarPassword($contrasena)) {
+                    throw new Exception("La contraseña debe tener mínimo 5 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
+                }
+
+                // Procesar nueva imagen (si se cargó)
+                if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                    $fileTmpPath = $_FILES['imagen']['tmp_name'];
+                    $fileName = $_FILES['imagen']['name'];
+                    $fileNameCmps = explode(".", $fileName);
+                    $fileExtension = strtolower(end($fileNameCmps));
+
+                    $allowedfileExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                    if (in_array($fileExtension, $allowedfileExtensions)) {
+                        $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                        $destPath = UPLOAD_DIR . $newFileName;
+
+                        if (move_uploaded_file($fileTmpPath, $destPath)) {
+                            $imagen_url = BASE_URL . '/modules/auth/perfiles/' . $newFileName;
+                        } else {
+                            throw new Exception("Error al mover la nueva imagen.");
+                        }
+                    } else {
+                        throw new Exception("Tipo de archivo no permitido para la imagen.");
+                    }
+                }
+
+                if (empty($imagen_url)) {
+                    $imagen_url = BASE_URL . '/modules/auth/perfiles/profileDefault.png';
+                }
+
+                // Ejecutar la actualización del usuario
+                $resultado = actualizarUsuario($conexion, $id, $nombre, $usuario, $correo, $direccion, $estado, $imagen_url, $rol_id, $telefono, 
+                    $contrasena // Si es vacío, la función decide si mantener la actual
+                );
+
+                if ($resultado) {
+                    $_SESSION['url_Usuario'] = $imagen_url; 
+                    $mensaje = "Usuario actualizado correctamente.";
+                    header("Location: controller.php?accion=listar&msg=" . urlencode($mensaje));
+                    exit;
+                } else {
+                    throw new Exception("Error al actualizar el usuario en la base de datos.");
+                }
+
+            } catch (Exception $e) {
+                header("Location: controller.php?accion=listar&inv=1&error=" . urlencode($e->getMessage()));
+                exit;
+            }
+
+        } else if ($id) {
+            $item = obtenerUsuarioPorId($conexion, $id);
+            $roles = obtenerRoles($conexion);
+            include __DIR__ . '/views/usuarios.php';
+        } else {
+            $mensjError = "ID de usuario no proporcionado.";
+            header("Location: controller.php?accion=listar&inv=1&error=" . urlencode($mensjError));
+            exit;
+        }
+    break;
+
+    case 'eliminar':
+        global $conexion;
+
+        if (isset($_GET['id'])) {
+            $id = intval($_GET['id']);
+            $resultado = eliminarUsuario($conexion, $id);
+            if ($resultado) {
+                $mensaje = "Usuario eliminado correctamente.";
+                header("Location: controller.php?accion=listar&msg=" . urlencode($mensaje));
+                exit;
+            } else {
+                $mensjError = "Error al eliminar el usuario.";
+            }
+        } else {
+            $mensjError = "ID del usuario no proporcionado para eliminar.";
+        }
+
+        if (!empty($mensjError)) {
+            header("Location: controller.php?accion=listar&inv=1&error=" . urlencode($mensjError));
+            exit;
+        }
+    break;
+
+    case 'restablecer':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $token = $_POST['token'] ?? '';

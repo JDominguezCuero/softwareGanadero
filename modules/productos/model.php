@@ -141,6 +141,7 @@ function crearProducto($conexion, $nombre, $descripcion, $precio, $stock, $image
     $stmt->bindValue(':estado_oferta', $estado_oferta, PDO::PARAM_INT);
     $stmt->bindValue(':precio_anterior', $precio_anterior);
     $stmt->bindValue(':id_usuario', $id_usuario);
+    
     return $stmt->execute();
 }
 

@@ -152,7 +152,7 @@ CREATE TABLE `inventarioalimentos` (
   `id_alimento` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `cantidad` decimal(10,2) NOT NULL,
-  `unidad_medida` enum('Kg') DEFAULT NULL,
+  `unidad_medida` varchar(255) DEFAULT NULL,
   `fecha_ingreso` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -294,7 +294,7 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id_rol`, `nombre_rol`, `descripcion`) VALUES
 (1, 'Administrador', 'Acceso total al sistema'),
 (2, 'Empleado', 'Acceso limitado para gestionar ventas y productos'),
-(3, 'Veterinario', 'Acceso a la gestión de salud animal');
+(3, 'Usuario', 'Acceso a la gestión general de inventarios, simulador y productos');
 
 -- --------------------------------------------------------
 
@@ -430,8 +430,9 @@ CREATE TABLE `usuarios` (
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_ultimo_acceso` timestamp NULL DEFAULT NULL,
   `id_rol` int(11) DEFAULT NULL,
+  `imagen_url_Usuario` VARCHAR(255) DEFAULT NULL,
   `nombreCompleto` varchar(255) DEFAULT NULL,
-  `telefono_usuario` int(11) DEFAULT NULL,
+  `telefono_usuario` VARCHAR(15) DEFAULT NULL,
   `token_expiracion` datetime DEFAULT NULL,
   `token_recuperacion` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -613,7 +614,7 @@ ALTER TABLE `tratamientos`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`),
-  ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
+  -- ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
   ADD UNIQUE KEY `correo_usuario` (`correo_usuario`);
 
 --

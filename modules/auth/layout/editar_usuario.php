@@ -1,0 +1,183 @@
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalEditarUsuarioLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarUsuarioLabel">Editar Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="<?= BASE_URL ?>/modules/auth/controller.php?accion=editar" method="POST" id="formEditarUsuario" enctype="multipart/form-data">
+                    <input type="hidden" name="id_usuario" id="editar_id_usuario">
+                    <input type="hidden" name="imagen_url_actual" id="editar_imagen_url_actual">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="editar_nombreCompleto">Nombre Completo:</label>
+                                <input type="text" class="form-control" name="nombreCompleto" id="editar_nombreCompleto" placeholder="Nombre completo del usuario" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editar_nombre_usuario">Nombre de Usuario:</label>
+                                <input type="text" class="form-control" name="nombre_usuario" id="editar_nombre_usuario" placeholder="Nombre de usuario" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editar_correo_usuario">Correo Electrónico:</label>
+                                <input type="email" class="form-control" name="correo_usuario" id="editar_correo_usuario" placeholder="Correo electrónico" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editar_contrasena">Cambiar Contraseña (opcional):</label>
+                                <input type="password" class="form-control" name="contrasena" id="editar_contrasena" placeholder="Nueva contraseña (dejar en blanco para mantener la actual)">
+                            </div>
+                            <div class="form-group">
+                                <label for="editar_rol_id">Rol:</label>
+                                <select class="form-control" name="rol_id" id="editar_rol_id" required>
+                                    <option value="0">Selecciona un rol</option>
+                                    <?php
+                                    if (isset($roles) && is_array($roles)) {
+                                        foreach ($roles as $rol) {
+                                            $selected = ''; 
+                                            if (isset($item['id_rol']) && $item['id_rol'] == $rol['id_rol']) {
+                                                $selected = 'selected';
+                                            }
+                                            echo '<option value="' . htmlspecialchars($rol['id_rol']) . '" ' . $selected . '>' . htmlspecialchars($rol['nombre_rol']) . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>                            
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="editar_direccion_usuario">Dirección:</label>
+                                <input type="text" class="form-control" name="direccion_usuario" id="editar_direccion_usuario" placeholder="Dirección del usuario" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editar_telefono_usuario">Teléfono:</label>
+                                <input type="text" class="form-control" name="telefono_usuario" id="editar_telefono_usuario" placeholder="Teléfono" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editar_estado_usuario">Estado:</label>
+                                <select class="form-control" name="estado" id="editar_estado_usuario" required>
+                                    <option value="0">Selecciona un estado</option>
+                                    <option value="1">Activo</option>
+                                    <option value="2">Inactivo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Imagen Actual:</label><br>
+                                <img id="imagen_preview_usuario" src="" alt="Imagen actual" style="max-width: 150px; height: auto; margin-bottom: 10px; display: block;">
+                                <label for="editar_imagen_usuario">Cargar Nueva Imagen:</label>
+                                <input type="file" class="form-control-file" name="imagen" id="editar_imagen_usuario" accept="image/*">
+                                <small class="form-text text-muted">Deja en blanco para mantener la imagen actual.</small>
+                            </div>                            
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-success" form="formEditarUsuario">Guardar Cambios</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Rellenar los campos al abrir el modal
+        $('#modalEditarUsuario').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var nombre = button.data('nombre');
+            var nombreUsuario = button.data('nombreusuario');
+            var correo = button.data('correo');
+            var direccion = button.data('direccion');
+            var telefono = button.data('telefono');
+            var estado = button.data('estado');
+            var rol = button.data('rol');
+            var password = button.data('contraseñaUser');
+            var imagen_url = button.data('imagen_url');
+
+            var modal = $(this);
+            modal.find('#editar_id_usuario').val(id);
+            modal.find('#editar_nombreCompleto').val(nombre);
+            modal.find('#editar_nombre_usuario').val(nombreUsuario);
+            modal.find('#editar_correo_usuario').val(correo);
+            modal.find('#editar_direccion_usuario').val(direccion);
+            modal.find('#editar_telefono_usuario').val(telefono);
+            modal.find('#editar_rol_id').val(rol);
+            modal.find('#editar_contrasena').val(password);
+            modal.find('#editar_imagen_url_actual').val(imagen_url);
+
+            var estadoValorNumerico = '0';
+            if (estado === 'Activo') estadoValorNumerico = '1';
+            else if (estado === 'Inactivo') estadoValorNumerico = '2';
+
+            modal.find('#editar_estado_usuario').val(estadoValorNumerico);
+
+            var imgPreview = modal.find('#imagen_preview_usuario');
+            if (imagen_url) {
+                imgPreview.attr('src', imagen_url).show();
+            } else {
+                imgPreview.hide();
+            }
+        });
+
+        // Validación del formulario
+        const formEditar = document.getElementById('formEditarUsuario');
+        if (formEditar) {
+            formEditar.addEventListener('submit', function (e) {
+                const nombre = document.getElementById('editar_nombreCompleto').value.trim();
+                const usuario = document.getElementById('editar_nombre_usuario').value.trim();
+                const correo = document.getElementById('editar_correo_usuario').value.trim();
+                const telefono = document.getElementById('editar_telefono_usuario').value.trim();
+                const direccion = document.getElementById('editar_direccion_usuario').value.trim();
+                const estado = document.getElementById('editar_estado_usuario').value;
+                const rol = document.getElementById('editar_rol_id').value;
+                const contrasena = document.getElementById('editar_contrasena').value;
+
+                let errores = [];
+
+                if (nombre === '') errores.push('El nombre completo es obligatorio.');
+                if (usuario === '') errores.push('El nombre de usuario es obligatorio.');
+                if (correo === '') {
+                    errores.push('El correo electrónico es obligatorio.');
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+                    errores.push('El correo electrónico no tiene un formato válido.');
+                }
+                if (telefono === '') {
+                    errores.push('El teléfono es obligatorio.');
+                } else if (!/^\d{7,}$/.test(telefono)) {
+                    errores.push('El teléfono debe tener al menos 7 dígitos.');
+                }
+                if (direccion === '') errores.push('La dirección es obligatoria.');
+                if (estado !== '1' && estado !== '2') {
+                    errores.push('Selecciona un estado válido.');
+                }
+                if (contrasena !== '' && !validarPassword(contrasena)) {
+                    errores.push('La contraseña debe tener al menos 5 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial.');
+                }
+                if (rol === '') errores.push('Selecciona un rol válido.');
+
+                if (errores.length > 0) {
+                    e.preventDefault(); // Evita el envío
+                    alert('Corrige los siguientes errores:\n\n' + errores.join('\n'));
+                }
+
+                function validarPassword(contra) {
+                    const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{5,}$/;
+                    return regex.test(contra);
+                }
+            });
+        }
+
+    });
+</script>

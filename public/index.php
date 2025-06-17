@@ -1,3 +1,9 @@
+<?php
+
+require_once(__DIR__ . '../../config/config.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -178,11 +184,29 @@
         </div>
     </div>
 
+    <?php include '../modules/auth/layout/mensajesModal.php'; ?>
+
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="assets/js/tienda_online.js"></script>
     <script src="assets/js/product_modal.js"></script> </body>
 
-    <script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+     <?php
+
+        if (isset($_GET['login']) && $_GET['login'] == 'error' ) {
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    showModal('🤖 Mensaje del Sistema', 'Sesión del usuario caducada!', 'error');
+                });
+            </script>";
+        }
+
+     ?>
+
+    <script>        
         AOS.init({
             duration: 1200,
         });
