@@ -44,7 +44,7 @@ function obtenerUsuario($conexion) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function registrarUsuario($nombreCompleto, $correo, $usuario, $contrasena, $idRol = 3, $estado = 'Activo', $imagen_url) {
+function registrarUsuario($nombreCompleto, $correo, $usuario, $contrasena, $imagen_url, $idRol = 3, $estado = 'Activo') {
     global $conexion;
 
     $sql = "INSERT INTO usuarios (nombreCompleto, correo_usuario, nombre_usuario, contrasena_usuario, id_rol, )
@@ -100,6 +100,7 @@ function eliminarUsuario($conexion, $id) {
     $stmtUsuarioDelete->bindValue(':id', $id, PDO::PARAM_INT);
     return $stmtUsuarioDelete->execute();
 }
+
 function agregarUsuario($conexion, $nombre, $usuario, $correo, $contrasena, $direccion, $estado, $imagen_url, $rol_id, $telefono) {
 
     $sql = "INSERT INTO usuarios (nombreCompleto, nombre_usuario, correo_usuario, contrasena_usuario, direccion_usuario, estado, imagen_url_Usuario, id_rol, telefono_usuario)

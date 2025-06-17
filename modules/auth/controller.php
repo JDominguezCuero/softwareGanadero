@@ -101,7 +101,7 @@ switch ($accion) {
                 }
 
                 // Registrar
-                if (registrarUsuario($nombre, $correo, $usuario, $contrasena)) {
+                if (registrarUsuario($nombre, $correo, $usuario, $contrasena, $imagen_ur)) {
                     header("Location: views/autenticacion.php?success=1");
                     exit;
                 } else {

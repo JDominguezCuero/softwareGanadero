@@ -302,6 +302,35 @@ body.dark-mode .product-detail-loading {
     flex-direction: column;
 }
 
+body.dark-mode .chatbot-body{
+    flex-grow: 1; /* Ocupa el espacio restante */
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #5a5b5c;
+    display: flex;
+    flex-direction: column;
+    color: rgb(8, 8, 8);
+}
+
+body.dark-mode .chatbot-options{
+    padding: 10px;
+    background-color: #5a5b5c;
+    border-top: 1px solid #979899;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+body.dark-mode .chat-input-container{
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    border-top: 1px solid #5a5b5c;
+    background-color: #5a5b5c;
+    align-items: center;
+    color: black;
+}
+
 .message {
     padding: 8px 12px;
     margin-bottom: 8px;
@@ -368,6 +397,34 @@ body.dark-mode .product-detail-loading {
     border-top: 1px solid #eee;
     background-color: #f9f9f9;
     align-items: center;
+}
+
+/* Estilos para el input de tipo archivo (file) */
+.chat-file-input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    line-height: normal;
+    /* -webkit-appearance: none; */
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+}
+
+.chat-file-input::-webkit-file-upload-button {
+    padding: 6px 10px;
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    margin-right: 10px;
 }
 
 .chat-text-input:focus {
