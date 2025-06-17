@@ -46,7 +46,7 @@ if (!$isUserLoggedIn) {
                         </a>
                     </div>
                     
-                    <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center -mt-1" onclick="toggleDarkMode()">
+                    <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center -mt-2" onclick="toggleDarkMode()">
                         <i class="las la-moon text-3xl text-gray-800 dark:text-gray-200"></i>
                     </button>
 

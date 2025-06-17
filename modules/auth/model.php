@@ -12,11 +12,11 @@ function obtenerUsuarioPorCorreo($correo) {
     return $stmt->fetch(); // Devuelve false si no encuentra
 }
 
-function registrarUsuario($nombreCompleto, $correo, $usuario, $contrasena, $idRol = 1) {
+function registrarUsuario($nombreCompleto, $correo, $usuario, $contrasena, $idRol = 3, $estado = 'Activo') {
     global $conexion;
 
     $sql = "INSERT INTO usuarios (nombreCompleto, correo_usuario, nombre_usuario, contrasena_usuario, id_rol)
-            VALUES (:nombreCompleto, :correo, :usuario, :contrasena, :idRol)";
+            VALUES (:nombreCompleto, :correo, :usuario, :contrasena, :idRol, :estado)";
     
     $stmt = $conexion->prepare($sql);
     return $stmt->execute([
@@ -24,7 +24,8 @@ function registrarUsuario($nombreCompleto, $correo, $usuario, $contrasena, $idRo
         ':correo' => $correo,
         ':usuario' => $usuario,
         ':contrasena' => password_hash($contrasena, PASSWORD_DEFAULT),
-        ':idRol' => $idRol
+        ':idRol' => $idRol,
+        ':estado' => $estado
     ]);
 }
 

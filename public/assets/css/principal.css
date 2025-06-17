@@ -1763,7 +1763,8 @@ body.dark-mode .notification-btn:hover {
 }
 
 .view-all-btn:hover {
-    background-color: #0056b3;
+    background-color: #023f81;
+    color: white;
 }
 
 .view-all-btn i {
