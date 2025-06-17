@@ -218,16 +218,16 @@ body.dark-mode .product-detail-loading {
 
 .bot-tooltip-text {
     visibility: hidden;
-    width: 150px;
+    width: 200px;
     background-color: #555;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 7px 0;
     position: absolute;
     z-index: 1001;
     top: 50%;
-    right: 110%;
+    right: 130%;
     transform: translateY(-50%);
     white-space: nowrap;    
     opacity: 0;
@@ -256,7 +256,7 @@ body.dark-mode .product-detail-loading {
     bottom: 90px; /* Encima del icono del bot */
     right: 20px;
     width: 350px; /* Ancho de la burbuja del chat */
-    height: 450px; /* Alto de la burbuja del chat */
+    height: 550px; /* Alto de la burbuja del chat */
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);

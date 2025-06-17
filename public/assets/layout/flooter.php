@@ -2,7 +2,7 @@
     <a class="bot-activator" href="#">
         🤖
     </a>
-    <span class="bot-tooltip-text">Chatea con Claudia! </span>
+    <span class="bot-tooltip-text">Chatea con Santos!</span>
 </div>
 
 <div class="chatbot-floating-container" id="chatbot-floating-container">

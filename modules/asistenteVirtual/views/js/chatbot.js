@@ -469,10 +469,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startBotConversation() {
-        let welcomeMessage = "Hola, soy Carlos, tu asistente virtual. ¿En qué puedo ayudarte hoy?";
+        let welcomeMessage = "Hola, soy Santos 🤖, tu asistente virtual. ¿En qué puedo ayudarte hoy?";
 
         if (isUserLoggedIn && userName) {
-            welcomeMessage = `¡Hola 👋, <strong> ${userName}! </strong> Soy Carlos, tu asistente virtual. ¿En qué puedo ayudarte hoy?`;
+            welcomeMessage = `¡Hola 👋, <strong> ${userName}! </strong> Soy Santos 🤖, tu asistente virtual. ¿En qué puedo ayudarte hoy?`;
         }
 
         const flow = conversationFlows[currentFlowState];
