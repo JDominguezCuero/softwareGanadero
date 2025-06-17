@@ -444,7 +444,8 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `correo_usuario`, `contr
 (1, 'JoseD', 'josedominguez.121398@gmail.com', '$2y$10$jqggiIAtb4r0rmIy3hCC1us0PDdkoOdYUqyRiWO9A4ZNXyxb1dvl.', NULL, NULL, '2025-06-03 02:54:18', NULL, 1, 'Jose Dominguez Cuero', NULL, NULL, NULL),
 (2, 'admin', 'admin@example.com', 'hashed_password_admin', NULL, 'Activo', '2025-06-03 03:04:54', NULL, 1, 'Admin General', 123456789, NULL, NULL),
 (3, 'empleado1', 'empleado1@example.com', 'hashed_password_empleado', NULL, 'Activo', '2025-06-03 03:04:54', NULL, 2, 'Juan Pérez', 987654321, NULL, NULL),
-(4, 'veterinario1', 'veterinario1@example.com', 'hashed_password_veterinario', NULL, 'Activo', '2025-06-03 03:04:54', NULL, 3, 'Dr. Ana Gómez', 555112233, NULL, NULL);
+(4, 'veterinario1', 'veterinario1@example.com', 'hashed_password_veterinario', NULL, 'Activo', '2025-06-03 03:04:54', NULL, 3, 'Dr. Ana Gómez', 555112233, NULL, NULL),
+(5, 'Juan Santos', 'jdsp.1011@gmail.com', '$2y$10$LyF6yKTx/6jMFHA8OIKpkuSwuhLURmbPjI0Jw8taiKuy4wIQK8EeW.', NULL, NULL, '2025-06-16 21:26:40', NULL, 1, 'Juan David Santos Patiño', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 

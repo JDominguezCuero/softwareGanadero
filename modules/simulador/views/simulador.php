@@ -142,7 +142,7 @@ if (isset($_SESSION['respuesta'])) {
     <button id="toggle-music" title="Pausar música 🎵">🔇</button>
     <a href="views/menuPrincipal.php" class="btvolver1">← Volver al Menu Principal</a>
     <a href="views/configuracion.php" class="btvolver1">← Volver a Configuraciones</a>
-    <a href="<?= BASE_URL ?>/modules/inicio/controller.php?accion=listarAnimales" class="btvolver2">🚪 Salir</a>
+    <a href="<?= BASE_URL ?>/public/index_controller.php" class="btvolver2">🚪 Salir</a>
   </div>
   </div>
 
