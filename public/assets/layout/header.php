@@ -1,6 +1,10 @@
 <?php
 require_once(__DIR__ . '../../../../config/config.php');
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $isUserLoggedIn = isset($_SESSION['usuario']);
 
 $headerClasses = "hm-header fixed top-0 z-40 transition-all duration-300";
@@ -55,14 +59,39 @@ if (!$isUserLoggedIn) {
                     </button> -->
 
 
-                    <?php
-                        if (isset($_SESSION['usuario'])) {
-                        echo '<button class="notification-btn" onclick="showNotifications()">
-                                <i class="fas fa-bell text-lg"></i>
-                                <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">3</span>
-                            </button>';
-                        }
-                    ?>
+                    <!-- Botón de campana -->
+<?php if (isset($_SESSION['usuario'])): ?>
+    <button class="notification-btn relative" onclick="showNotifications()">
+        <i class="fas fa-bell text-lg"></i>
+        <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">3</span>
+    </button>
+<?php endif; ?>
+
+<!-- Panel de Notificaciones -->
+<div id="notifications-panel" class="absolute right-5 top-14 bg-white rounded shadow-md w-80 z-50 hidden">
+    <div class="p-3 border-b font-bold text-green-800">Notificaciones</div>
+    <div id="notifications-container" class="p-3 max-h-80 overflow-y-auto">
+        <!-- Aquí se cargan dinámicamente -->
+    </div>
+</div>
+<script src="/LoginADSO/public/assets/js/notificaciones.js"></script>
+
+<div id="toast-notificacion" style="
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #16a34a;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    z-index: 9999;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+">
+    ¡Notificación enviada al vendedor!
+</div>
+
                     
                     <div class="icon-menu">
                         <button type="button"><i class="fas fa-bars"></i></button>

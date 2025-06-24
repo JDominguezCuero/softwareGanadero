@@ -71,7 +71,16 @@ function renderProductItems(array $products, bool $show_old_price = false): void
                 <?php else: ?>
                     <p class="seller-info">Vendedor no disponible</p>
                 <?php endif; ?>
-                <a href="añadir_carrito.php?id=<?= $id_producto ?>" class="hm-btn btn-primary uppercase">AGREGAR AL CARRITO</a>
+                <a  
+    id="<?= $id_producto ?>" 
+    class="hm-btn btn-primary uppercase" 
+    data-id-vendedor="<?= $id_usuario_vendedor ?>" 
+    data-nombre-vendedor="<?= $nombre_usuario ?>" 
+    data-id-producto="<?= $id_producto ?>">
+    Contactar Con El Vendedor </a>
+
+
+
             </div>
         </div>
         <?php
