@@ -47,7 +47,7 @@ function obtenerUsuario($conexion) {
 function registrarUsuario($nombreCompleto, $correo, $usuario, $contrasena, $imagen_url, $idRol = 3, $estado = 'Activo') {
     global $conexion;
 
-    $sql = "INSERT INTO usuarios (nombreCompleto, correo_usuario, nombre_usuario, contrasena_usuario, id_rol, )
+    $sql = "INSERT INTO usuarios (nombreCompleto, correo_usuario, nombre_usuario, contrasena_usuario, id_rol, estado, imagen_url_Usuario)
             VALUES (:nombreCompleto, :correo, :usuario, :contrasena, :idRol, :estado, :imagenUrl)";
     
     $stmt = $conexion->prepare($sql);
