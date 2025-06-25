@@ -1,73 +1,50 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const botonesContactar = document.querySelectorAll('.hm-btn');
+document.addEventListener("DOMContentLoaded", function () {
+    const botones = document.querySelectorAll(".contactar-vendedor");
 
-    botonesContactar.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const idProducto = btn.getAttribute('id');
-            const receptorId = btn.getAttribute('data-id-vendedor');
+    botones.forEach(boton => {
+        boton.addEventListener("click", function () {
+            const idProducto = this.dataset.idProducto;
+            const idVendedor = this.dataset.idVendedor;
 
-            fetch('/LoginADSO/public/includes/notificaciones/enviar.php', {
+            fetch('/LoginADSO/public/includes/notificaciones/enviar_notificacion.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    receptor_id: receptorId,
-                    id_producto: idProducto, // <- agregado
-                    mensaje: `Un usuario quiere contactarte por el producto ID ${idProducto}`
+                    id_producto: idProducto,
+                    id_vendedor: idVendedor
                 })
             })
-            .then(response => {
-                if (!response.ok) throw new Error("No se pudo contactar con el servidor.");
-                return response.json();
-            })
+            .then(res => res.json())
             .then(data => {
-                if (data.status === 'ok') {
-                    mostrarToast("¡Notificación enviada al vendedor!");
+                if (data.status === "success") {
+                    actualizarNotificaciones();
                 } else {
-                    mostrarToast("Error al enviar la notificación: " + data.message, true);
+                    alert("Error: " + data.message);
                 }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                mostrarToast("Error al enviar la notificación.", true);
             });
         });
     });
-});
 
-function mostrarToast(mensaje, error = false) {
-    const toast = document.getElementById("toast-notificacion");
-    toast.textContent = mensaje;
-    toast.style.backgroundColor = error ? "#dc2626" : "#16a34a";
-    toast.style.display = "block";
+    function actualizarNotificaciones() {
+        fetch('/LoginADSO/public/includes/notificaciones/obtener_notificaciones.php')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById("notifications-container");
+                const panel = document.getElementById("notifications-panel");
+                container.innerHTML = "";
 
-    setTimeout(() => {
-        toast.style.display = "none";
-    }, 3000);
-}
+                if (data.length === 0) {
+                    container.innerHTML = "<p class='text-gray-500'>No hay notificaciones nuevas.</p>";
+                } else {
+                    data.forEach(noti => {
+                        const div = document.createElement("div");
+                        div.classList.add("mb-2", "p-2", "rounded", "bg-gray-100");
+                        div.textContent = noti.mensaje;
+                        container.appendChild(div);
+                    });
+                }
 
-// Mostrar notificaciones al hacer clic en la campana
-function showNotifications() {
-    const panel = document.getElementById("notifications-panel");
-    panel.classList.toggle("hidden");
-
-    fetch('/LoginADSO/public/includes/notificaciones/listar.php')
-        .then(res => res.json())
-        .then(notificaciones => {
-            const container = document.getElementById("notifications-container");
-            container.innerHTML = '';
-
-            if (notificaciones.length === 0) {
-                container.innerHTML = '<p>No tienes notificaciones.</p>';
-                return;
-            }
-
-            notificaciones.forEach(noti => {
-                const div = document.createElement("div");
-                div.className = "bg-white shadow rounded p-3 mb-2";
-                div.innerHTML = `<p>${noti.mensaje}</p><small class="text-gray-500">${noti.fecha}</small>`;
-                container.appendChild(div);
+                panel.classList.remove("hidden");
             });
-        });
-}
+    }
+});

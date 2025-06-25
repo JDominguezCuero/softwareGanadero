@@ -63,7 +63,7 @@ if (!$isUserLoggedIn) {
 <?php if (isset($_SESSION['usuario'])): ?>
     <button class="notification-btn relative" onclick="showNotifications()">
         <i class="fas fa-bell text-lg"></i>
-        <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">3</span>
+        <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center"></span>
     </button>
 <?php endif; ?>
 
