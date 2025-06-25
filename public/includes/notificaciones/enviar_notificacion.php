@@ -12,7 +12,7 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 $id_emisor = $_SESSION['id_usuario'];
 $nombre_emisor = $_SESSION['nombre']; // Cambia si usas otro campo
-$id_receptor = 1;
+$id_receptor = $data['id_vendedor'];
 $id_producto = $data['id_producto'];
 
 $mensaje = "$nombre_emisor está interesado en tu producto (ID: $id_producto).";

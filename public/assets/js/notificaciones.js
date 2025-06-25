@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const botones = document.querySelectorAll(".contactar-vendedor");
 
-    botones.forEach(boton => {
+        botones.forEach(boton => {
         boton.addEventListener("click", function () {
             const idProducto = this.dataset.idProducto;
             const idVendedor = this.dataset.idVendedor;
@@ -14,16 +14,28 @@ document.addEventListener("DOMContentLoaded", function () {
                     id_vendedor: idVendedor
                 })
             })
-            .then(res => res.json())
+            .then(async res => {
+                // Validar tipo de respuesta antes de parsear
+                const contentType = res.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    throw new Error("Respuesta del servidor no es JSON");
+                }
+                return res.json();
+            })
             .then(data => {
-                if (data.status === "success") {
-                    actualizarNotificaciones();
+                if (data.success) {
+                    actualizarNotificaciones(); // o tu función para actualizar UI
                 } else {
                     alert("Error: " + data.message);
                 }
+            })
+            .catch(error => {
+                console.error("Error en la solicitud:", error);
+                alert("Hubo un problema al contactar al vendedor.");
             });
         });
     });
+
 
     function actualizarNotificaciones() {
         fetch('/LoginADSO/public/includes/notificaciones/obtener_notificaciones.php')

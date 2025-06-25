@@ -121,3 +121,5 @@ function insertarNotificacion($conexion, $id_usuario_receptor, $id_emisor, $id_p
 
 
 }
+
+?>

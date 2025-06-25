@@ -1,4 +1,8 @@
 <?php
+header('Content-Type: application/json');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 require_once(__DIR__ . '/model.php');
 require_once __DIR__ . '/../../config/config.php';
@@ -25,14 +29,22 @@ try {
         case 'insertar':
             header('Content-Type: application/json');
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $data = json_decode(file_get_contents('php://input'), true);
-                $id_usuario_receptor = $data['ids'] ?? [];
-                $id_emisor = $_SESSION['id_usuario'];
-                $id_producto = $data['id_producto'];
+                $raw_post_data = file_get_contents('php://input');
+                $data = json_decode($raw_post_data, true);
 
-                if (!empty($id_usuario_receptor) && is_array($id_usuario_receptor)) {
+                // *** AÑADE ESTAS LÍNEAS PARA DEPURAR ***
+                error_log("Raw POST Data: " . $raw_post_data);
+                error_log("Decoded JSON Data: " . print_r($data, true));
+                // *** FIN DE LAS LÍNEAS DE DEPURACIÓN ***
+
+                $id_usuario_receptor = $data['id_vendedor'] ?? null; 
+                $id_producto = $data['id_producto'] ?? null;
+
+                $id_emisor = $_SESSION['id_usuario'];
+
+                if (!empty($id_usuario_receptor)) {
                     if (insertarNotificacion($conexion, $id_usuario_receptor, $id_emisor, $id_producto)) {
-                        echo json_encode(['success' => true, 'message' => 'Notificaciones marcadas como leídas.']);
+                        echo json_encode(['success' => true, 'message' => 'Notificacion enviada.']);
                     } else {
                         echo json_encode(['success' => false, 'message' => 'Fallo al marcar notificaciones como leídas.']);
                     }
