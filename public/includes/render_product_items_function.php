@@ -72,14 +72,11 @@ function renderProductItems(array $products, bool $show_old_price = false): void
                     <p class="seller-info">Vendedor no disponible</p>
                 <?php endif; ?>
                 <a  
-    class="hm-btn btn-primary uppercase contactar-vendedor" 
-    data-id-vendedor="<?= $id_usuario_vendedor ?>" 
-    data-id-producto="<?= $id_producto ?>">
-    Contactar Con El Vendedor
-</a>
-
-
-
+                   class="hm-btn btn-primary uppercase contactar-vendedor" 
+                   data-id-vendedor="<?= $id_usuario_vendedor ?>" 
+                   data-id-producto="<?= $id_producto ?>">
+                   Contactar Con El Vendedor
+                </a>
 
             </div>
         </div>

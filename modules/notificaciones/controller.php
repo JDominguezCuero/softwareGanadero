@@ -23,10 +23,28 @@ try {
         break;
 
         case 'insertar':
-            $notificaciones = insertarNotificacion($conexion, $current_user_id);
-            $msg = $_GET['msg'] ?? null; 
+            header('Content-Type: application/json');
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $data = json_decode(file_get_contents('php://input'), true);
+                $id_usuario_receptor = $data['ids'] ?? [];
+                $id_emisor = $_SESSION['id_usuario'];
+                $id_producto = $data['id_producto'];
 
-            include(__DIR__ . '/views/notificacion.php');
+                if (!empty($id_usuario_receptor) && is_array($id_usuario_receptor)) {
+                    if (insertarNotificacion($conexion, $id_usuario_receptor, $id_emisor, $id_producto)) {
+                        echo json_encode(['success' => true, 'message' => 'Notificaciones marcadas como leídas.']);
+                    } else {
+                        echo json_encode(['success' => false, 'message' => 'Fallo al marcar notificaciones como leídas.']);
+                    }
+
+
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'IDs de notificación no válidos.']);
+                }
+
+            } else {
+            echo json_encode(['success' => false, 'message' => 'Método no permitido para marcar como leído.']);
+            }
         break;
 
         case 'marcarComoLeido':

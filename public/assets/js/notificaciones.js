@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const idProducto = this.dataset.idProducto;
             const idVendedor = this.dataset.idVendedor;
 
-            fetch('/LoginADSO/public/includes/notificaciones/enviar_notificacion.php', {
+            fetch('/LoginADSO/modules/notificaciones/controller.php?accion=insertar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

@@ -105,3 +105,19 @@ function eliminarTodasNotificacionesUsuario($conexion, $id_usuario_receptor) {
     return $stmt->execute();
 }
 
+
+function insertarNotificacion($conexion, $id_usuario_receptor, $id_emisor, $id_producto){
+    $sql = $conexion->prepare("
+    INSERT INTO notificaciones (id_usuario_emisor, id_usuario_receptor, mensaje, leido, id_producto) 
+    VALUES (:id_emisor, :id_receptor, 'Esta interesado en tu producto', 0, :id_producto)");
+    if (!$sql) {
+        throw new Exception("Error al preparar la consulta para eliminar todas las notificaciones: " . implode(":", $conexion->errorInfo()));
+    }    
+    $sql->bindValue(':id_emisor', $id_emisor);
+    $sql->bindValue(':id_receptor', $id_usuario_receptor);
+    $sql->bindValue(':id_producto', $id_producto);
+
+    return $sql->execute();
+
+
+}
