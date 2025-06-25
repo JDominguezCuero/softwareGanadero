@@ -31,6 +31,10 @@
         <a href="<?= BASE_URL ?>/public/index_controller.php" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
             <i data-lucide="home"></i>
             <span id="textInicio" class="<?= $textHiddenClass ?>">Inicio</span>
+        </a>        
+        <a href="<?= BASE_URL ?>/modules/notificaciones/controller.php?accion=listar" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
+            <i data-lucide="bell-dot"></i>
+            <span id="textNotificacion" class="<?= $textHiddenClass ?>">Notificaciones</span>
         </a>
         <a href="<?= BASE_URL ?>/modules/productos/controller.php?accion=listar" class="flex items-center space-x-2 hover:bg-green-800 p-2 rounded" style="color:white;">
             <i data-lucide="store"></i>
@@ -44,6 +48,7 @@
             <i data-lucide="activity"></i>
             <span id="textSimulacion" class="<?= $textHiddenClass ?>">Simulación</span>
         </a>
+        
         
         <?php
             if (isset($_SESSION['usuario']) && $_SESSION['rol'] == 1) {
@@ -71,7 +76,7 @@
         const sidebar = document.getElementById('sidebar');
         const toggleBtn = document.getElementById('toggleBtn'); 
         const userProfile = document.getElementById('userProfile'); 
-        const texts = ['textInicio', 'textProducto', 'textInventario', 'textSimulacion', 'textPerfil', 'textCerrarSesion'];
+        const texts = ['textInicio', 'textProducto', 'textInventario', 'textSimulacion', 'textPerfil', 'textCerrarSesion', 'textNotificacion'];
         
         const mainContent = document.getElementById('mainContent');
         const mainHeader = document.getElementById('mainHeader'); // Este es el que nos da problemas si no está
