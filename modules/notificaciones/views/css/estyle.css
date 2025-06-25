@@ -1,0 +1,212 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f8f0; /* Tono verde muy claro */
+    color: #333;
+}
+
+.notifications-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 1px solid #c8e6c9; /* Borde verde suave */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.notifications-list {
+    flex: 0 0 350px; /* Ancho fijo para la lista */
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+    background-color: #f9fff9; /* Verde claro para la lista */
+    overflow-y: auto; /* Scroll si hay muchas notificaciones */
+}
+
+.notifications-list h2 {
+    color: #2e7d32; /* Verde oscuro */
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #a5d6a7; /* Línea verde */
+    padding-bottom: 10px;
+}
+
+.notifications-actions {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.notifications-actions button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #66bb6a; /* Verde medio */
+    color: white;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+}
+
+.notifications-actions button:hover:not(:disabled) {
+    background-color: #4caf50; /* Verde más oscuro al pasar el ratón */
+}
+
+.notifications-actions button:disabled {
+    background-color: #bdbdbd;
+    cursor: not-allowed;
+}
+
+.no-notifications {
+    text-align: center;
+    color: #666;
+    padding: 20px 0;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s, border-left 0.2s;
+    position: relative;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item:hover {
+    background-color: #e8f5e9; /* Verde muy suave al pasar el ratón */
+}
+
+.notification-item.selected {
+    background-color: #dcedc8; /* Verde claro si está seleccionado */
+    border-left: 5px solid #81c784; /* Borde verde para selección */
+}
+
+.notification-item.unread {
+    font-weight: bold;
+    background-color: #f1f8e9; /* Fondo más claro para no leídas */
+}
+
+.notification-item.active {
+    background-color: #c8e6c9; /* Verde ligeramente más oscuro si está activa (abierta) */
+    border-left: 5px solid #388e3c;
+}
+
+.notification-checkbox {
+    margin-right: 10px;
+}
+
+.notification-content {
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.notification-title {
+    display: block;
+    font-size: 1.1em;
+    color: #388e3c; /* Verde oscuro para el título */
+}
+
+.notification-date {
+    font-size: 0.8em;
+    color: #757575;
+    float: right;
+    margin-left: 10px;
+}
+
+.notification-preview {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.delete-single-btn {
+    background-color: #ff8a65; /* Naranja rojizo para eliminar */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 0.8em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    margin-left: 10px;
+    flex-shrink: 0; /* Evita que se encoja */
+    opacity: 0; /* Oculto por defecto */
+    visibility: hidden; /* Oculto por defecto */
+}
+
+.notification-item:hover .delete-single-btn {
+    opacity: 1; /* Visible al pasar el ratón */
+    visibility: visible;
+}
+
+.delete-single-btn:hover {
+    background-color: #ff5722; /* Naranja más oscuro al pasar el ratón */
+}
+
+.notification-detail {
+    flex: 1; /* Ocupa el espacio restante */
+    padding: 20px;
+    background-color: #f0fdf0; /* Verde muy claro para el detalle */
+    display: flex;
+    flex-direction: column;
+}
+
+.notification-detail h2 {
+    color: #2e7d32;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #a5d6a7;
+    padding-bottom: 10px;
+}
+
+#detailContent {
+    flex-grow: 1;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#detailContent.no-selection {
+    text-align: center;
+    color: #777;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+#detailContent h3 {
+    color: #388e3c;
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+#detailContent p {
+    line-height: 1.6;
+    color: #444;
+}
+
+#detailContent .detail-date {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 15px;
+    display: block;
+}
