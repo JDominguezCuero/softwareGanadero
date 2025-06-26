@@ -30,9 +30,6 @@ if (isset($_GET['product_id']) && is_numeric($_GET['product_id'])) {
         $producto = obtenerProductoPorId($conexion, $id_producto_modal);
 
         if ($producto) {
-            // Preparamos los datos para la respuesta JSON.
-            // Los campos 'stock', 'nombre_vendedor', 'email_vendedor', 'telefono_vendedor',
-            // 'direccion_vendedor' ahora se obtienen directamente del array $producto.
             $response = [
                 'id_producto' => $producto['id_producto'],
                 'nombre_producto' => $producto['nombre_producto'],
@@ -41,11 +38,11 @@ if (isset($_GET['product_id']) && is_numeric($_GET['product_id'])) {
                 'stock' => $producto['stock'], // Asegúrate que tu model alias 'cantidad' AS 'stock'
                 'imagen_url' => $producto['imagen_url'],
                 'nombre_categoria' => $producto['nombre_categoria'], 
-                // Información del Vendedor, obtenida directamente del JOIN
-                'nombre_vendedor' => $producto['nombre_usuario'] ?? 'N/A', 
+                'nombre_vendedor' => $producto['nombre_usuario'] ?? 'N/A',
+                'id_usuario' => $producto['id_user'] ?? 'N/A',  
                 'email_vendedor' => $producto['correo_usuario'] ?? 'N/A',
                 'telefono_vendedor' => $producto['telefono_usuario'] ?? 'N/A',
-                'direccion_vendedor' => $producto['direccion_usuario'] ?? 'N/A', // Solo si la tienes en tu tabla Usuarios
+                'direccion_vendedor' => $producto['direccion_usuario'] ?? 'N/A' // Solo si la tienes en tu tabla Usuarios
             ];
 
         } else {

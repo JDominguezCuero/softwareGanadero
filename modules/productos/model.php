@@ -28,7 +28,7 @@ function obtenerProductos($conexion) {
             LEFT JOIN
                 CategoriasProducto cp ON p.categoria_id = cp.id_categoria
             LEFT JOIN
-                Usuarios u ON p.id_usuario = u.id_usuario  -- ¡Añade este JOIN!
+                Usuarios u ON p.id_usuario = u.id_usuario
             ORDER BY
                 p.nombre_producto ASC";
     $stmt = $conexion->query($sql);
@@ -75,25 +75,26 @@ function obtenerProductoPorId(PDO $conexion, int $id): ?array {
         SELECT
             p.id_producto,
             p.nombre_producto,
-            p.descripcion_producto,   -- Nombre de tu columna de descripción completa
-            p.precio_unitario,        -- Nombre de tu columna de precio
-            p.cantidad AS stock,      -- Nombre de tu columna de cantidad, aliased as 'stock' for JS
+            p.descripcion_producto,
+            p.precio_unitario,
+            p.cantidad AS stock,
             p.imagen_url,
-            p.id_usuario,             -- ¡El ID del usuario/vendedor sigue siendo importante aquí!
+            p.id_usuario,
             cp.nombre_categoria,
             p.estado_oferta,
             p.precio_anterior,
-            p.fecha_publicacion,      -- Asegúrate de incluir la fecha de publicación si la necesitas
-            u.nombre_usuario,         -- Datos del Vendedor
+            p.fecha_publicacion,
+            u.id_usuario as id_user,
+            u.nombre_usuario,
             u.telefono_usuario,
             u.correo_usuario,
-            u.direccion_usuario       -- Si tienes esta columna en tu tabla Usuarios
+            u.direccion_usuario
         FROM
             ProductosGanaderos p
         LEFT JOIN
             CategoriasProducto cp ON p.categoria_id = cp.id_categoria
         LEFT JOIN
-            Usuarios u ON p.id_usuario = u.id_usuario -- ¡Aquí está el JOIN a la tabla de Usuarios!
+            Usuarios u ON p.id_usuario = u.id_usuario
         WHERE
             p.id_producto = :id_producto
     ");
@@ -443,6 +444,7 @@ function obtenerTodosLosProductosConFiltros(
             p.imagen_url,
             p.estado_oferta,
             p.fecha_publicacion,
+            u.id_usuario,
             u.nombre_usuario,
             u.telefono_usuario,
             u.correo_usuario,

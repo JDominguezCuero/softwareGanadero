@@ -210,3 +210,153 @@ body {
     margin-bottom: 15px;
     display: block;
 }
+
+/* modules/notificaciones/views/css/estyle.css (o tu archivo CSS principal para notificaciones) */
+
+/* Contenedor general del detalle para usar flexbox */
+.notification-detail #detailContent {
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente por defecto */
+    gap: 15px; /* Espacio entre secciones */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: 100%; /* Asegura que ocupe el espacio disponible */
+    overflow-y: auto; /* Permite scroll si el contenido es muy largo */
+}
+
+/* Estilo para la cabecera del producto */
+.notification-detail #detailContent h3 {
+    font-size: 1.5rem; /* Ajusta el tamaño del título del producto */
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.notification-detail #detailContent .detail-date {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 15px;
+    display: block; /* Asegura que ocupe su propia línea */
+}
+
+/* Contenedor para la imagen y la información principal del producto */
+.product-info-section {
+    display: flex; /* Permite que la imagen y el texto estén en la misma línea */
+    align-items: flex-start; /* Alinea los elementos en la parte superior */
+    gap: 20px; /* Espacio entre la imagen y el texto */
+    margin-bottom: 15px;
+}
+
+.product-info-section .product-image {
+    width: 150px; /* Tamaño más pequeño para la imagen */
+    height: 150px; /* Hace la imagen cuadrada */
+    object-fit: cover; /* Recorta la imagen para que encaje sin distorsionarse */
+    border-radius: 8px; /* Bordes ligeramente redondeados */
+    flex-shrink: 0; /* Evita que la imagen se encoja */
+}
+
+.product-details-text {
+    flex-grow: 1; /* Permite que el texto ocupe el espacio restante */
+}
+
+.product-details-text p {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.product-details-text p strong {
+    color: #555;
+}
+
+/* Separador visual */
+.separator {
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+/* Estilo para la sección del interesado */
+.interested-party-info h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.interested-party-info p {
+    margin-bottom: 5px;
+}
+
+.interested-party-info a {
+    color: #007bff; /* Color de enlace */
+    text-decoration: none;
+}
+
+.interested-party-info a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para cuando no hay selección */
+#detailContent.no-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #777;
+    font-size: 1.1em;
+}
+
+/* Media Queries para ajustar en pantallas más pequeñas si es necesario */
+@media (max-width: 768px) {
+    .product-info-section {
+        flex-direction: column; /* Apila imagen y texto en pantallas pequeñas */
+        align-items: center;
+    }
+    .product-info-section .product-image {
+        width: 100%; /* La imagen ocupa todo el ancho */
+        max-width: 200px; /* Pero con un máximo */
+        height: auto; /* Mantiene la proporción */
+    }
+}
+
+.quick-reply-section {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px; /* Espacio superior para separarla */
+}
+
+.quick-reply-section h4 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.quick-reply-section .form-control { /* Para el select */
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95em;
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+}
+
+.quick-reply-section .btn-primary { /* Para el botón */
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.quick-reply-section .btn-primary:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.quick-reply-section .btn-primary:hover:not(:disabled) {
+    background-color: #0056b3;
+}

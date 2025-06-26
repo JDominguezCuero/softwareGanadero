@@ -20,14 +20,21 @@ function obtenerNotificacionesPorUsuario($conexion, $id_usuario_receptor) {
             n.mensaje,
             n.leido,
             n.fecha,
+            n.tipo_notificacion,
             pg.nombre_producto,
             pg.descripcion_producto,
             pg.imagen_url,
-            pg.precio_unitario
+            pg.precio_unitario,
+            u.id_usuario AS id_usuario_vendedor,
+            u.nombreCompleto AS emisor_nombre,
+            u.correo_usuario AS emisor_correo,
+            u.telefono_usuario AS emisor_telefono
         FROM
             notificaciones n
         LEFT JOIN
             productosganaderos pg ON n.id_producto = pg.id_producto
+        LEFT JOIN
+            usuarios u ON n.id_usuario_emisor = u.id_usuario 
         WHERE
             n.id_usuario_receptor = :id_usuario_receptor
         ORDER BY
@@ -106,20 +113,22 @@ function eliminarTodasNotificacionesUsuario($conexion, $id_usuario_receptor) {
 }
 
 
-function insertarNotificacion($conexion, $id_usuario_receptor, $id_emisor, $id_producto){
-    $sql = $conexion->prepare("
-    INSERT INTO notificaciones (id_usuario_emisor, id_usuario_receptor, mensaje, leido, id_producto) 
-    VALUES (:id_emisor, :id_receptor, 'Esta interesado en tu producto', 0, :id_producto)");
-    if (!$sql) {
-        throw new Exception("Error al preparar la consulta para eliminar todas las notificaciones: " . implode(":", $conexion->errorInfo()));
-    }    
-    $sql->bindValue(':id_emisor', $id_emisor);
-    $sql->bindValue(':id_receptor', $id_usuario_receptor);
-    $sql->bindValue(':id_producto', $id_producto);
-
-    return $sql->execute();
-
-
+function insertarNotificacion($conexion, $id_usuario_receptor, $id_emisor, $id_producto, $mensaje, $tipo_notificacion = 'interes') { // AÑADIDO: $tipo_notificacion
+    try {
+        $sql = "INSERT INTO notificaciones (id_usuario_receptor, id_usuario_emisor, id_producto, mensaje, fecha, tipo_notificacion) 
+                VALUES (:id_usuario_receptor, :id_usuario_emisor, :id_producto, :mensaje, NOW(), :tipo_notificacion)"; // MODIFICADO
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindValue(':id_usuario_receptor', $id_usuario_receptor, PDO::PARAM_INT);
+        $stmt->bindValue(':id_usuario_emisor', $id_emisor, PDO::PARAM_INT);
+        $stmt->bindValue(':id_producto', $id_producto, PDO::PARAM_INT);
+        $stmt->bindValue(':mensaje', $mensaje, PDO::PARAM_STR);
+        $stmt->bindValue(':tipo_notificacion', $tipo_notificacion, PDO::PARAM_STR); // AÑADIDO
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        error_log("Error al insertar notificación: " . $e->getMessage());
+        return false;
+    }
 }
+
 
 ?>

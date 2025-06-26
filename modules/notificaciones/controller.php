@@ -1,63 +1,87 @@
 <?php
-header('Content-Type: application/json');
+session_start();
+
+error_log("--------------------------------------------------");
+error_log("DEBUG: Peticion al controlador de notificaciones iniciada.");
+
+$requestMethod = $_SERVER['REQUEST_METHOD'] ?? 'N/A';
+error_log("DEBUG: Metodo de solicitud: " . $requestMethod);
+
+$accion = $_GET['accion'] ?? 'N/A';
+error_log("DEBUG: Accion solicitada: " . $accion);
+
+// Captura el cuerpo crudo de la petición POST (JSON)
+$request_body_raw = file_get_contents('php://input');
+error_log("DEBUG: Cuerpo de la peticion POST (RAW): " . ($request_body_raw ? $request_body_raw : "[VACIO]"));
+
+// Decodifica el JSON
+$data = json_decode($request_body_raw, true); // <--- Asegúrate de usar $data aquí, como tu código original
+error_log("DEBUG: Datos decodificados (JSON): " . print_r($data, true));
+
+// Si json_decode falla, puedes añadir más logs
+if (json_last_error() !== JSON_ERROR_NONE) {
+    error_log("DEBUG: ERROR JSON_DECODE: " . json_last_error_msg());
+}
+
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-session_start();
+
+
 require_once(__DIR__ . '/model.php');
 require_once __DIR__ . '/../../config/config.php';
+
+// Incluir PHPMailer (ajusta estas rutas si son diferentes)
+require __DIR__ . '/../../public/assets/lib/PHPMailer/src/PHPMailer.php';
+require __DIR__ . '/../../public/assets/lib/PHPMailer/src/SMTP.php';
+require __DIR__ . '/../../public/assets/lib/PHPMailer/src/Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['id_usuario'])) {
     header("Location: ../../public/index_controller.php?login=error&reason=nologin");
     exit;
 }
 
-$current_user_id = $_SESSION['id_usuario']; // ID del usuario logueado
-
+$current_user_id = $_SESSION['id_usuario'];
 $accion = $_GET['accion'] ?? $_POST['accion'] ?? 'listar';
-$mensjError = ""; // Para mensajes de error que se puedan pasar a la vista
+$mensjError = "";
+
+// $conexion ya debería estar disponible aquí por el require_once de database.php
 
 try {
     switch ($accion) {
         case 'listar':
             $notificaciones = obtenerNotificacionesPorUsuario($conexion, $current_user_id);
             $msg = $_GET['msg'] ?? null; 
-
             include(__DIR__ . '/views/notificacion.php');
-        break;
+            break;
 
         case 'insertar':
             header('Content-Type: application/json');
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $raw_post_data = file_get_contents('php://input');
-                $data = json_decode($raw_post_data, true);
-
-                // *** AÑADE ESTAS LÍNEAS PARA DEPURAR ***
-                error_log("Raw POST Data: " . $raw_post_data);
-                error_log("Decoded JSON Data: " . print_r($data, true));
-                // *** FIN DE LAS LÍNEAS DE DEPURACIÓN ***
+                $data = json_decode(file_get_contents('php://input'), true);
 
                 $id_usuario_receptor = $data['id_vendedor'] ?? null; 
                 $id_producto = $data['id_producto'] ?? null;
-
+                $mensaje_comprador = $data['mensaje'] ?? "Estoy interesado en tu producto.";
                 $id_emisor = $_SESSION['id_usuario'];
 
-                if (!empty($id_usuario_receptor)) {
-                    if (insertarNotificacion($conexion, $id_usuario_receptor, $id_emisor, $id_producto)) {
-                        echo json_encode(['success' => true, 'message' => 'Notificacion enviada.']);
+                if (!empty($id_usuario_receptor) && !empty($id_producto) && !empty($id_emisor)) {
+                    if (insertarNotificacion($conexion, $id_usuario_receptor, $id_emisor, $id_producto, $mensaje_comprador, 'interes')) {
+                        echo json_encode(['success' => true, 'message' => 'Notificación de interés enviada.']);
                     } else {
-                        echo json_encode(['success' => false, 'message' => 'Fallo al marcar notificaciones como leídas.']);
+                        echo json_encode(['success' => false, 'message' => 'Fallo al enviar la notificación de interés.']);
                     }
-
-
                 } else {
-                    echo json_encode(['success' => false, 'message' => 'IDs de notificación no válidos.']);
+                    echo json_encode(['success' => false, 'message' => 'Datos incompletos para enviar notificación de interés.']);
                 }
-
             } else {
-            echo json_encode(['success' => false, 'message' => 'Método no permitido para marcar como leído.']);
+                echo json_encode(['success' => false, 'message' => 'Método no permitido para insertar.']);
             }
-        break;
+            break;
 
         case 'marcarComoLeido':
             header('Content-Type: application/json');
@@ -112,6 +136,110 @@ try {
             }
             break;
 
+        case 'enviarRespuestaRapida':
+            header('Content-Type: application/json');
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $data = json_decode(file_get_contents('php://input'), true);
+                
+                $destinatarioEmail = filter_var($data['destinatarioEmail'] ?? '', FILTER_SANITIZE_EMAIL);
+                $destinatarioNombre = htmlspecialchars($data['destinatarioNombre'] ?? 'Interesado');
+                $destinatarioId = $data['destinatarioId'] ?? null;
+                $destinatarioTelefono = htmlspecialchars($data['destinatarioTelefono'] ?? '');
+                $mensajeRespuesta = htmlspecialchars($data['mensaje'] ?? '');
+                $nombreProducto = htmlspecialchars($data['nombreProducto'] ?? 'nuestro producto');
+                $idProducto = $data['idProducto'] ?? null;
+
+                $vendedorInfo = obtenerDatosUsuario($conexion, $current_user_id);
+                $nombreVendedor = htmlspecialchars($vendedorInfo['nombreCompleto'] ?? 'El Vendedor');
+                $correoVendedor = htmlspecialchars($vendedorInfo['correo_usuario'] ?? 'noreply@tudominio.com');
+
+                if (empty($destinatarioEmail) || empty($mensajeRespuesta) || !filter_var($destinatarioEmail, FILTER_VALIDATE_EMAIL) || empty($destinatarioId) || empty($idProducto)) {
+                    echo json_encode(['success' => false, 'message' => 'Datos incompletos o inválidos para enviar respuesta.']);
+                    break;
+                }
+
+                $asuntoEmail = "Respuesta de {$nombreVendedor} sobre tu interés en {$nombreProducto}";
+                $cuerpoCorreoHTML = "
+                    <html>
+                    <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 0; }
+                        .container { background-color: #fff; border-radius: 8px; padding: 30px; margin: 20px auto; max-width: 600px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: left; }
+                        .header { text-align: center; margin-bottom: 20px; }
+                        .header img { width: 150px; margin-bottom: 10px; }
+                        .message-box { background-color: #f0f8ff; border-left: 5px solid #007bff; padding: 15px; margin: 20px 0; font-style: italic; }
+                        .footer { font-size: 12px; color: #777; margin-top: 30px; text-align: center; }
+                        .product-info { background-color: #e9ecef; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+                    </style>
+                    </head>
+                    <body>
+                    <div class='container'>
+                        <div class='header'>
+                            <img src='" . BASE_URL . "/public/assets/images/email6.png' alt='Logo' style='max-width: 200px;'>
+                            <h2>¡Respuesta de {$nombreVendedor}!</h2>
+                        </div>
+                        <p>Hola <strong>{$destinatarioNombre}</strong>,</p>
+                        <p>El vendedor <strong>{$nombreVendedor}</strong> ha respondido a tu interés sobre el producto <strong>'{$nombreProducto}'</strong>:</p>
+                        
+                        <div class='message-box'>
+                            <p>{$mensajeRespuesta}</p>
+                        </div>
+
+                        <div class='product-info'>
+                            <p><strong>Producto:</strong> {$nombreProducto}</p>
+                            <p>Puedes ver más detalles del producto <a href='" . BASE_URL . "/modules/productos/views/detalle_producto.php?id={$idProducto}'>aquí</a>.</p>
+                        </div>
+                        
+                        <p>Saludos cordiales,</p>
+                        <p>El equipo de Ganaderos.</p>
+
+                        <div class='footer'>
+                            <p>© " . date('Y') . " PROGAN - Todos los derechos reservados</p>
+                        </div>
+                    </div>
+                    </body>
+                    </html>";
+
+                $all_success = true;
+                $messages = [];
+
+                $emailSent = sendEmailPHPMailer($destinatarioEmail, $destinatarioNombre, $asuntoEmail, $cuerpoCorreoHTML, $correoVendedor, $nombreVendedor);
+                if ($emailSent) {
+                    $messages[] = 'Correo enviado.';
+                } else {
+                    $all_success = false;
+                    $messages[] = 'Fallo al enviar el correo.';
+                }
+
+                $mensajeNotificacionInterna = "Respuesta de {$nombreVendedor} sobre '{$nombreProducto}': \"{$mensajeRespuesta}\"";
+                $notificacionInternaCreada = insertarNotificacion($conexion, $destinatarioId, $current_user_id, $idProducto, $mensajeNotificacionInterna, 'respuesta');
+
+                if ($notificacionInternaCreada) {
+                    $messages[] = 'Notificación interna para el comprador creada.';
+                } else {
+                    $all_success = false;
+                    $messages[] = 'Fallo al crear notificación interna para el comprador.';
+                }
+
+                if (!empty($destinatarioTelefono) && isValidPhoneNumber($destinatarioTelefono)) {
+                    $sms_message = "Respuesta de {$nombreVendedor} sobre '{$nombreProducto}': \"{$mensajeRespuesta}\". Revisa tus notificaciones en la app.";
+                    $smsSent = sendSMS($destinatarioTelefono, $sms_message);
+                    if ($smsSent) {
+                        $messages[] = 'SMS enviado.';
+                    } else {
+                        $messages[] = 'Fallo al enviar SMS.';
+                    }
+                } else {
+                    $messages[] = 'No se envió SMS (teléfono inválido o vacío).';
+                }
+
+                echo json_encode(['success' => $all_success, 'message' => implode(' ', $messages)]);
+
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Método no permitido para enviar respuesta.']);
+            }
+            break;
+
         default:
             header("Location: controller.php?accion=listar");
             exit;
@@ -125,13 +253,63 @@ try {
         echo json_encode(['success' => false, 'message' => 'Ocurrió un error interno del servidor: ' . $e->getMessage()]);
     } else {
         $mensajeUsuario = "Ocurrió un error inesperado en el servidor. Contacte al administrador.";
-        if (strpos($e->getMessage(), 'Unknown column') !== false || strpos($e->getMessage(), 'Base table or view not found') !== false) {
-            $mensajeUsuario = "Hubo un problema con la base de datos. Verifica la estructura.";
-        }
         header("Location: controller.php?accion=listar&error=" . urlencode($mensajeUsuario));
     }
     exit;
 }
 
-$conexion = null;
+// --- Funciones auxiliares ---
+
+function sendEmailPHPMailer($toEmail, $toName, $subject, $bodyHtml, $fromEmail, $fromName) {
+    $mail = new PHPMailer(true);
+    
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'jsdmngzc@gmail.com';
+        $mail->Password = 'uhcj wqsm ntvy ixxr'; // Tu App password de Gmail
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = 465;
+
+        $mail->setFrom($fromEmail, $fromName);
+        $mail->addAddress($toEmail, $toName);
+
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = $bodyHtml;
+        $mail->CharSet = 'UTF-8';
+        $mail->AltBody = strip_tags($bodyHtml); 
+
+        $mail->send();
+        return true;
+
+    } catch (Exception $e) {
+        error_log("Error al enviar correo (PHPMailer): " . $mail->ErrorInfo . " | Detalles: " . $e->getMessage());
+        return false;
+    }
+}
+
+function sendSMS($phoneNumber, $message) {
+    // ESTO ES UN PLACEHOLDER. NECESITAS IMPLEMENTARLO CON UNA API DE TERCEROS (Ej. Twilio)
+    // Para depuración, simula el éxito:
+    error_log("SMS SIMULADO: Enviado a $phoneNumber con mensaje: \"$message\"");
+    return true; 
+}
+
+function isValidPhoneNumber($phone) {
+    // Validación básica, ajusta según tus necesidades
+    return preg_match('/^\+?\d{7,15}$/', $phone); 
+}
+
+// Función para obtener los datos de un usuario por su ID
+// ASEGÚRATE que esta función o una similar esté disponible (ej. en modules/auth/model.php)
+// Si está en otro archivo, ajusta el require_once correspondiente.
+function obtenerDatosUsuario($conexion, $id_usuario) {
+    $sql = "SELECT nombreCompleto, correo_usuario, telefono_usuario FROM usuarios WHERE id_usuario = :id_usuario LIMIT 1"; 
+    $stmt = $conexion->prepare($sql);
+    $stmt->bindValue(':id_usuario', $id_usuario, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 ?>

@@ -850,11 +850,13 @@ COMMIT;
 CREATE TABLE notificaciones (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario_emisor INT,
+    id_producto INT,
     id_usuario_receptor INT,
     mensaje TEXT NOT NULL,
     leido BOOLEAN DEFAULT 0,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario_emisor) REFERENCES usuarios(id_usuario),
+    }FOREIGN KEY (id_producto) REFERENCES productosganaderos(id_producto),
     FOREIGN KEY (id_usuario_receptor) REFERENCES usuarios(id_usuario)
 );
 

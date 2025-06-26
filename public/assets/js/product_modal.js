@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
             modalBodyContent.innerHTML = '<div class="product-detail-loading">Cargando detalles del producto...</div>';
             modal.style.display = 'flex'; // Hace que el modal sea visible (usando flex para el centrado CSS)
 
-            // 3. Realizar una petición AJAX para obtener los detalles del producto
-            // La URL apunta a tu `productos_controller.php` y le envía el ID del producto.
             fetch(`productos_controller.php?product_id=${productId}`) 
                 .then(response => {
                     // Verificar si la respuesta de la red fue exitosa (código 200 OK)

@@ -26,7 +26,8 @@ function renderProductItems(array $products, bool $show_old_price = false): void
         $precio_anterior = number_format($product['precio_anterior'] ?? 0, 2); // Puede ser 0 si no existe
         $imagen_url = htmlspecialchars($product['imagen_url'] ?? 'placeholder.jpg');
         $estado_oferta = (bool)($product['estado_oferta'] ?? false);
-
+        $id_usuario_vendedor = htmlspecialchars($product['id_usuario'] ?? ''); 
+        
         // Lógica para determinar si es "nuevo" basada en la fecha de publicación
         $es_nuevo = false;
         if (isset($product['fecha_publicacion'])) {
@@ -73,8 +74,8 @@ function renderProductItems(array $products, bool $show_old_price = false): void
                 <?php endif; ?>
                 <a  
                    class="hm-btn btn-primary uppercase contactar-vendedor" 
-                   data-idVendedor="<?= $id_usuario_vendedor ?>" 
-                   data-idProducto="<?= $id_producto ?>">
+                   data-id-vendedor="<?= $id_usuario_vendedor ?>" 
+                   data-id-producto="<?= $id_producto ?>">
                    Contactar Con El Vendedor
                 </a>
 
