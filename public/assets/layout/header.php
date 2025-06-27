@@ -72,25 +72,55 @@ if (!$isUserLoggedIn) {
     <div class="p-3 border-b font-bold text-green-800">Notificaciones</div>
     <div id="notifications-container" class="p-3 max-h-80 overflow-y-auto">
         <!-- Aquí se cargan dinámicamente -->
+         <div class="notifications-container">
+                <div class="notifications-list">
+                    <h2>Tus Notificaciones</h2>
+                    <div id="notificationListContent">
+                        <?php if (empty($obtener_notificaciones)): ?>
+                            <p class="no-notifications">No tienes notificaciones por el momento.</p>
+                        <?php else: ?>
+                            <?php foreach ($obtener_notificaciones as $notificacion): ?>
+                                <?php
+                                $leidoClass = $notificacion['leido'] ? 'read' : 'unread';
+                                $imagenProducto = !empty($notificacion['imagen_url']) ? htmlspecialchars($notificacion['imagen_url']) : 'placeholder.jpg'; // Imagen por defecto
+                                $nombreProducto = !empty($notificacion['nombre_producto']) ? htmlspecialchars($notificacion['nombre_producto']) : 'Producto Desconocido';
+                                $precioProducto = isset($notificacion['precio_unitario']) ? '$' . number_format($notificacion['precio_unitario'], 0, ',', '.') : 'N/A';
+                                $emisorNombre = htmlspecialchars($notificacion['emisor_nombre'] ?? 'Usuario Desconocido');
+                                $emisorCorreo = htmlspecialchars($notificacion['emisor_correo'] ?? 'N/A');
+                                $emisorTelefono = htmlspecialchars($notificacion['emisor_telefono'] ?? 'N/A');
+
+                                ?>
+                                <div class="notification-item <?= $leidoClass ?>"
+                                    data-id="<?= $notificacion['id_notificacion'] ?>"
+                                    data-mensaje="<?= htmlspecialchars($notificacion['mensaje']) ?>"
+                                    data-fecha="<?= $notificacion['fecha'] ?>"
+                                    data-producto-nombre="<?= $nombreProducto ?>"
+                                    data-producto-descripcion="<?= htmlspecialchars($notificacion['descripcion_producto'] ?? 'Sin descripción.') ?>"
+                                    data-producto-imagen="<?= $imagenProducto ?>"
+                                    data-producto-precio="<?= $precioProducto ?>"
+                                    data-producto-id="<?= $notificacion['id_producto'] ?? '' ?>"
+                                    data-id-usuario-emisor="<?= htmlspecialchars($notificacion['id_usuario_emisor'] ?? '') ?>"
+                                    data-emisor-nombre="<?= $emisorNombre ?>"
+                                    data-emisor-correo="<?= $emisorCorreo ?>"
+                                    data-emisor-telefono="<?= $emisorTelefono ?>"
+                                    data-tipo-notificacion="<?= htmlspecialchars($notificacion['tipo_notificacion'] ?? 'interes') ?>">
+                                    <input type="checkbox" class="notification-checkbox">
+                                    <div class="notification-content">
+                                        <span class="notification-title"><?= $nombreProducto ?> - Notificación</span>
+                                        <span class="notification-date"><?= date('d/m/Y H:i', strtotime($notificacion['fecha'])) ?></span>
+                                        <p class="notification-preview"><?= substr(htmlspecialchars($notificacion['mensaje']), 0, 70) ?>...</p>
+                                    </div>
+                                    <button class="delete-single-btn" data-id="<?= $notificacion['id_notificacion'] ?>">X</button>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
     </div>
 </div>
 <script src="/LoginADSO/public/assets/js/notificaciones.js"></script>
 
-<div id="toast-notificacion" style="
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #16a34a;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    z-index: 9999;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-">
-    ¡Notificación enviada al vendedor!
-</div>
+
 
                     
                     <div class="icon-menu">

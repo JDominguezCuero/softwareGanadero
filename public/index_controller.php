@@ -9,6 +9,7 @@ session_start();
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../modules/productos/model.php';
 require_once __DIR__ . '/includes/render_product_items_function.php';
+require_once __DIR__ . '/../modules/notificaciones/model.php';
 
 global $conexion;
 
@@ -73,8 +74,12 @@ try {
     }
     // --- FIN DEPURACIÓN CLAVE ---
 
+    $current_user_id = $_SESSION['id_usuario'];
+
 
     $todos_los_productos = obtenerProductos($conexion);
+
+    $obtener_notificaciones = obtenerNotificacionesPorUsuario($conexion, 8);
 
 } catch (Exception $e) {
     error_log("Error en index_controller.php al obtener datos: " . $e->getMessage());
