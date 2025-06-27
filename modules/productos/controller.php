@@ -25,7 +25,7 @@ try {
              $categorias = obtenerCategorias($conexion);
 
             include(__DIR__ . '/views/productos.php');
-            break;
+        break;
 
         case 'agregar':
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {

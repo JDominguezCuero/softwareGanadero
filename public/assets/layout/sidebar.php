@@ -24,7 +24,9 @@
         <img src="<?php echo htmlspecialchars($_SESSION['url_Usuario'] ?? ''); ?>" class="w-20 h-20 rounded-full mx-auto mb-2">
         <h4 class="text-lg font-semibold" style="color:white;"><?php echo htmlspecialchars($_SESSION['nombre'] ?? ''); ?></h4>
         <p class="text-sm text-gray-300">@<?php echo htmlspecialchars($_SESSION['usuario'] ?? ''); ?></p>
+        <a href="<?= BASE_URL ?>/modules/perfil/views/perfil.php">
         <button class="bg-green-700 mt-4 px-4 py-2 rounded hover:bg-green-800" style="color:white;">Editar</button>
+        </a>
     </div>
 
     <nav class="mt-10 space-y-4">
