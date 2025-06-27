@@ -855,8 +855,9 @@ CREATE TABLE notificaciones (
     mensaje TEXT NOT NULL,
     leido BOOLEAN DEFAULT 0,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tipo_notificacion VARCHAR(50) DEFAULT 'interes',
     FOREIGN KEY (id_usuario_emisor) REFERENCES usuarios(id_usuario),
-    }FOREIGN KEY (id_producto) REFERENCES productosganaderos(id_producto),
+    FOREIGN KEY (id_producto) REFERENCES productosganaderos(id_producto),
     FOREIGN KEY (id_usuario_receptor) REFERENCES usuarios(id_usuario)
 );
 
