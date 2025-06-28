@@ -417,7 +417,7 @@ switch ($accion) {
 
     default:
         include 'views/autenticacion.php'; // Mostrar formulario por defecto
-        break;
+    break;
 }
 
 function enviarCorreoRestablecimiento($correo, $token) {

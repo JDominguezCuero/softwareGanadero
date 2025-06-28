@@ -121,6 +121,44 @@ function agregarUsuario($conexion, $nombre, $usuario, $correo, $contrasena, $dir
 }
 
 /**
+ * Obtiene los datos de un usuario por su ID, incluyendo el rol asociado.
+ * @param PDO $conexion La conexión a la base de datos (PDO).
+ * @param int $userId El ID del usuario a buscar.
+ * @return array|false Los datos del usuario como un array asociativo, o false si no se encuentra.
+ */
+function obtenerUsuarioPorId($conexion, $userId) {
+    $sql = "SELECT
+                u.id_usuario,
+                u.nombreCompleto,
+                u.nombre_usuario,
+                u.correo_usuario,
+                u.direccion_usuario,
+                u.estado,
+                u.contrasena_usuario,
+                u.telefono_usuario,
+                u.id_rol,
+                u.imagen_url_Usuario,
+                r.nombre_rol,
+                r.descripcion
+            FROM
+                usuarios u
+            LEFT JOIN
+                roles r ON u.id_rol = r.id_rol
+            WHERE
+                u.id_usuario = ?";
+    
+    $stmt = $conexion->prepare($sql);
+    if (!$stmt) {
+        throw new Exception("Error al preparar la consulta obtenerUsuarioPorId: " . implode(":", $conexion->errorInfo()));
+    }
+    
+    $stmt->bindParam(1, $userId, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+/**
  * Actualiza un usuario en la base de datos.
  * @param PDO $conexion Conexión a la base de datos.
  * @param int $id ID del usuario.

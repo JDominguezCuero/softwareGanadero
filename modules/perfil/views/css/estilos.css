@@ -1,269 +1,187 @@
-/* perfil.css */
-
-/* --- Estilos Generales y Contenedor Principal --- */
-.profile-container {
-    max-width: 1000px; /* Aumenta el ancho máximo para usar más espacio */
-    margin: 40px auto; /* Centra el contenedor en la página */
-    padding: 40px; /* Aumenta el padding interno */
+/* --- Estilos generales para el main --- */
+#mainContent {
+    width: 100%;
+    margin: 40px;
+    margin: 40px auto; /* Centra el contenido y añade espacio arriba/abajo */
+    padding: 45px 85px;
     background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* Sombra más pronunciada pero suave */
-    display: flex;
-    flex-direction: column;
-    gap: 35px; /* Espaciado entre las secciones principales */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    font-family: 'Inter', sans-serif;
+    color: #333;
 }
 
-/* --- Encabezados de Sección --- */
-.profile-section-header {
-    margin-bottom: 25px; /* Espacio debajo del encabezado */
-    text-align: left; /* Alinea el texto a la izquierda como en la imagen */
-    border-bottom: 1px solid #e0e0e0; /* Línea separadora suave */
-    padding-bottom: 20px;
+/* --- Títulos y párrafos --- */
+h2, h3 {
+    color: #28a745; /* Un verde vibrante para los títulos */
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 1.75rem; /* Ajusta el tamaño de los h2 */
 }
 
-.profile-section-header h2 {
-    font-size: 2.5em; /* Tamaño de fuente más grande para el título principal */
-    color: #2c3e50; /* Un color más oscuro para el texto principal */
-    margin-bottom: 8px;
-    font-weight: 700;
+h3 {
+    font-size: 1.4rem; /* Ajusta el tamaño de los h3 */
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-top: 30px; /* Más espacio para los h3 */
 }
 
-.profile-section-header p {
-    font-size: 1.15em; /* Un poco más grande para la descripción */
-    color: #7f8c8d; /* Color de texto más suave */
+p {
+    color: #555;
+    margin-bottom: 20px;
     line-height: 1.6;
 }
 
-/* --- Sección de Carga de Foto de Perfil --- */
-.profile-picture-upload {
-    display: flex;
-    flex-direction: row; /* Cambia a fila para alinear imagen y texto horizontalmente */
-    align-items: center; /* Centra verticalmente los elementos */
-    gap: 30px; /* Espacio entre la imagen y el texto/botón */
-    padding: 30px;
-    background-color: #fcfcfc; /* Fondo ligeramente diferente */
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-}
-
-.profile-picture-upload img {
-    min-width: 150px; /* Asegura un tamaño mínimo */
-    min-height: 150px; /* Asegura un tamaño mínimo */
-    width: 150px; /* Tamaño fijo para la imagen */
-    height: 150px; /* Tamaño fijo para la imagen */
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid #ecf0f1; /* Borde más claro */
-    box-shadow: 0 0 18px rgba(0, 0, 0, 0.15); /* Sombra más suave */
-    transition: transform 0.3s ease;
-}
-
-.profile-picture-upload img:hover {
-    transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
-}
-
-.profile-picture-upload .upload-btn {
-    background-color: #3498db; /* Azul más vibrante */
-    color: #fff;
-    padding: 14px 30px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1.05em;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.profile-picture-upload .upload-btn:hover {
-    background-color: #2980b9;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
-}
-
-.profile-picture-upload small {
-    color: #95a5a6; /* Color de texto más tenue */
-    font-size: 0.9em;
-    margin-left: auto; /* Empuja el texto a la derecha si hay espacio */
-}
-
-/* --- Estilos de las Secciones del Formulario --- */
-.user-data-form {
+/* --- Sección de Foto de Perfil --- */
+.foto-perfil {
     display: flex;
     flex-direction: column;
-    gap: 35px; /* Espaciado entre cada form-section */
+    align-items: flex-start; /* Alinea los elementos a la izquierda */
+    gap: 15px;
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background-color: #f8f9fa;
 }
 
-.form-section {
-    background-color: #ffffff;
-    padding: 35px; /* Aumenta el padding */
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05); /* Sombra más sutil */
-    border: 1px solid #f0f0f0; /* Borde suave */
+.foto-perfil img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #28a745; /* Borde verde sutil para la imagen */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-section h3 {
-    font-size: 2em; /* Títulos de sección más grandes */
-    color: #34495e; /* Color oscuro */
-    margin-bottom: 18px;
+.foto-perfil button {
+    background-color: #28a745; /* Botón verde */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
     font-weight: 600;
-    border-bottom: 2px solid #ecf0f1; /* Línea separadora */
-    padding-bottom: 15px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
 }
 
-.form-section p {
-    font-size: 1.05em;
-    color: #7f8c8d;
-    margin-bottom: 28px;
+.foto-perfil button:hover {
+    background-color: #218838; /* Verde más oscuro al pasar el mouse */
+    transform: translateY(-2px); /* Efecto sutil al pasar el mouse */
+}
+
+.foto-perfil small {
+    color: #777;
+    font-size: 0.85rem;
+}
+
+/* --- Formulario General --- */
+.datos {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Espacio entre secciones del formulario */
+}
+
+.section {
+    padding-bottom: 20px;
 }
 
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px; /* Espaciado uniforme entre los campos */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Columnas responsivas */
+    gap: 20px; /* Espacio entre campos */
 }
 
-.form-input { /* Clase general para inputs y selects */
+.form-grid input[type="text"],
+.form-grid input[type="password"],
+.form-grid input[type="email"],
+.form-grid input[type="tel"],
+.form-grid input[type="url"],
+.form-grid select {
     width: 100%;
-    padding: 14px 18px;
-    border: 1px solid #dde1e6; /* Borde suave */
-    border-radius: 8px;
-    font-size: 1em;
-    color: #34495e;
-    background-color: #fcfdfe; /* Fondo muy claro */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    padding: 12px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #495057;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-input::placeholder {
-    color: #aeb6bf; /* Color de placeholder más suave */
-}
-
-.form-input:focus {
-    border-color: #3498db; /* Borde azul al enfocar */
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Sombra azul al enfocar */
-    background-color: #ffffff;
+.form-grid input[type="text"]:focus,
+.form-grid input[type="password"]:focus,
+.form-grid input[type="email"]:focus,
+.form-grid input[type="tel"]:focus,
+.form-grid input[type="url"]:focus,
+.form-grid select:focus {
+    border-color: #28a745; /* Borde verde al enfocar */
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25); /* Sombra verde */
     outline: none;
 }
 
+.form-grid select {
+    -webkit-appearance: none; /* Elimina el estilo predeterminado en WebKit */
+    -moz-appearance: none; /* Elimina el estilo predeterminado en Mozilla */
+    appearance: none; /* Elimina el estilo predeterminado */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e"); /* Flecha personalizada */
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 12px;
+    padding-right: 30px; /* Espacio para la flecha personalizada */
+}
+
+
 /* --- Botón de Guardar Cambios --- */
 .submit-btn {
-    display: block;
-    width: 100%;
-    max-width: 350px; /* Más ancho */
-    margin: 45px auto 25px auto; /* Más espacio arriba */
-    padding: 16px 35px; /* Más padding */
-    background-color: #27ae60; /* Verde más oscuro y elegante */
-    color: #fff;
+    align-self: flex-start; /* Alinea el botón a la izquierda */
+    background-color: #28aa46; /* Verde principal para el botón de guardar */
+    color: white;
+    padding: 12px 25px;
     border: none;
-    border-radius: 9px;
-    font-size: 1.2em; /* Más grande */
-    font-weight: 700;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.8px; /* Más espaciado entre letras */
-    box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2); /* Sombra sutil */
 }
 
 .submit-btn:hover {
-    background-color: #229a56;
-    transform: translateY(-4px); /* Efecto de "levantamiento" al pasar el ratón */
-    box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
+    background-color: #218838; /* Verde más oscuro al pasar el mouse */
+    transform: translateY(-3px); /* Efecto sutil de elevación */
+    box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3);
 }
 
-/* --- Responsividad --- */
-@media (max-width: 1024px) {
-    .profile-container {
-        max-width: 90%; /* Ajuste para pantallas medianas */
-        padding: 30px;
-    }
-    .profile-section-header h2 {
-        font-size: 2.2em;
-    }
-    .profile-picture-upload {
-        flex-direction: column; /* Vuelve a columna en pantallas más pequeñas */
-        text-align: center;
-        gap: 20px;
-    }
-    .profile-picture-upload img {
-        width: 120px;
-        height: 120px;
-    }
-    .profile-picture-upload small {
-        margin-left: 0; /* Centra el texto */
-    }
-    .form-section h3 {
-        font-size: 1.8em;
-    }
+.submit-btn:active {
+    transform: translateY(0); /* Vuelve a su posición original al hacer clic */
+    box-shadow: 0 2px 5px rgba(40, 167, 69, 0.2);
 }
 
+/* --- Ajustes para el contenedor principal de la página (flex min-h-screen) --- */
+body {
+    display: flex;
+    flex-direction: column; /* Asegura que el body use flexbox en columna */
+}
+
+.flex.min-h-screen.w-full {
+    flex-grow: 1; /* Permite que el contenedor principal crezca y ocupe el espacio disponible */
+}
+
+/* Media Queries para responsividad */
 @media (max-width: 768px) {
-    .profile-container {
-        padding: 25px;
-        margin: 25px auto;
-    }
-    .profile-section-header h2 {
-        font-size: 2em;
-    }
-    .profile-section-header p {
-        font-size: 1em;
-    }
-    .profile-picture-upload {
+    #mainContent {
         padding: 20px;
+        margin: 20px auto;
     }
-    .form-section {
-        padding: 25px;
-    }
-    .form-section h3 {
-        font-size: 1.6em;
-    }
-    .form-section p {
-        font-size: 0.95em;
-    }
+
     .form-grid {
         grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
-        gap: 20px;
     }
-    .form-input {
-        padding: 12px 15px;
-    }
+
     .submit-btn {
-        max-width: 90%;
-        padding: 14px 25px;
-        font-size: 1.1em;
+        width: 100%; /* El botón ocupa todo el ancho */
+        text-align: center;
     }
-}
-
-@media (max-width: 480px) {
-    .profile-container {
-        padding: 15px;
-        margin: 15px auto;
-    }
-    .profile-section-header h2 {
-        font-size: 1.7em;
-    }
-    .profile-picture-upload img {
-        width: 100px;
-        height: 100px;
-    }
-    .profile-picture-upload .upload-btn {
-        padding: 10px 20px;
-        font-size: 0.9em;
-    }
-    .form-section {
-        padding: 20px;
-    }
-    .form-section h3 {
-        font-size: 1.4em;
-    }
-}
-
-/* Estilos para el main content para que se ajuste mejor al sidebar */
-#mainContent {
-    margin-left: 0 !important; /* Elimina el margin auto que podría interferir */
-    padding-left: 30px; /* Ajusta el padding para que no se pegue al sidebar */
-    padding-right: 30px;
-    box-sizing: border-box; /* Incluye padding en el cálculo del ancho */
 }
