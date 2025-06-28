@@ -57,7 +57,17 @@ try {
             $notificaciones = obtenerNotificacionesPorUsuario($conexion, $current_user_id);
             $msg = $_GET['msg'] ?? null; 
             include(__DIR__ . '/views/notificacion.php');
-            break;
+        break;
+
+        case 'listarNotificaciones':
+            header('Content-Type: application/json'); 
+            if ($current_user_id) {
+                $notificaciones = obtenerNotificacionesPorUsuario($conexion, $current_user_id);
+                echo json_encode($notificaciones); 
+            } else {
+                echo json_encode([]);
+            }
+        break;
 
         case 'insertar':
             header('Content-Type: application/json');
@@ -121,7 +131,7 @@ try {
             } else {
                 echo json_encode(['success' => false, 'message' => 'Método no permitido para eliminar.']);
             }
-            break;
+        break;
 
         case 'eliminarTodas':
             header('Content-Type: application/json');

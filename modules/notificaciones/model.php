@@ -81,7 +81,7 @@ function marcarComoLeido($conexion, array $ids_notificaciones) {
  */
 function eliminarNotificaciones($conexion, array $ids_notificaciones) {
     if (empty($ids_notificaciones)) {
-        return true; // No hay IDs, no hay nada que hacer.
+        return true;
     }
     $placeholders = implode(',', array_fill(0, count($ids_notificaciones), '?'));
     $sql = "DELETE FROM notificaciones WHERE id IN ($placeholders)";
