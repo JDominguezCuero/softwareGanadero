@@ -22,8 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para manejar las solicitudes AJAX
     async function sendAjaxRequest(action, data, method = 'POST') {
-        // Asegúrate de que BASE_URL esté disponible globalmente. En tu vista PHP (notificacion.php)
-        // debes tener algo como: <script>const BASE_URL = '<?php echo BASE_URL; ?>';</script>
         if (typeof BASE_URL === 'undefined') {
             console.error("BASE_URL no está definido. Asegúrate de definirlo en tu HTML/PHP antes de cargar este script.");
             return { success: false, message: "Error de configuración: BASE_URL no definido." };
@@ -73,53 +71,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Manejar clics en los elementos de notificación para mostrar detalles
-    notificationListContent.addEventListener('click', async (event) => {
-        const item = event.target.closest('.notification-item');
-        if (item) {
-            // Evitar que el clic en el checkbox o botón de eliminar abra los detalles
-            if (event.target.classList.contains('notification-checkbox') || event.target.classList.contains('delete-single-btn')) {
-                return;
-            }
-
+    async function openNotificationDetail(notificationId) {
+        const targetNotification = document.querySelector(`.notification-item[data-id="${notificationId}"]`);
+        
+        if (targetNotification) {
             // Remover la clase 'active' de cualquier item previamente seleccionado
             document.querySelectorAll('.notification-item.active').forEach(activeItem => {
                 activeItem.classList.remove('active');
             });
-            // Añadir la clase 'active' al item clickeado
-            item.classList.add('active');
+            // Añadir la clase 'active' al item encontrado
+            targetNotification.classList.add('active');
 
             // Obtener los datos del item de la notificación usando dataset
-            const id = item.dataset.id;
-            const mensaje = item.dataset.mensaje;
-            const fecha = item.dataset.fecha;
-            const productoNombre = item.dataset.productoNombre;
-            const productoDescripcion = item.dataset.productoDescripcion;
-            const productoImagen = item.dataset.productoImagen;
-            const productoPrecio = item.dataset.productoPrecio;
-            const productoId = item.dataset.productoId; // ID del producto
-            const emisorId = item.dataset.idUsuarioEmisor; // ID del emisor original (comprador)
+            const id = targetNotification.dataset.id;
+            const mensaje = targetNotification.dataset.mensaje;
+            const fecha = targetNotification.dataset.fecha;
+            const productoNombre = targetNotification.dataset.productoNombre;
+            const productoDescripcion = targetNotification.dataset.productoDescripcion;
+            const productoImagen = targetNotification.dataset.productoImagen;
+            const productoPrecio = targetNotification.dataset.productoPrecio;
+            const productoId = targetNotification.dataset.productoId;
+            const emisorId = targetNotification.dataset.idUsuarioEmisor;
 
-            const emisorNombre = item.dataset.emisorNombre;
-            const emisorCorreo = item.dataset.emisorCorreo;
-            const emisorTelefono = item.dataset.emisorTelefono;
-            const tipoNotificacion = item.dataset.tipoNotificacion; // <-- ¡OBTENEMOS EL TIPO DE NOTIFICACIÓN!
+            const emisorNombre = targetNotification.dataset.emisorNombre;
+            const emisorCorreo = targetNotification.dataset.emisorCorreo;
+            const emisorTelefono = targetNotification.dataset.emisorTelefono;
+            const tipoNotificacion = targetNotification.dataset.tipoNotificacion;
 
             let messageLabel = '';
             let senderInfoLabel = '';
-            let quickReplySectionHTML = ''; // Variable para almacenar el HTML de la sección de respuesta rápida
+            let quickReplySectionHTML = '';
 
-            // Lógica para determinar las etiquetas y la visibilidad de la respuesta rápida
             if (tipoNotificacion === 'respuesta') {
-                // Si la notificación es una respuesta (vista por el comprador)
                 messageLabel = 'Mensaje del Vendedor:';
                 senderInfoLabel = 'Información del Vendedor:';
-                quickReplySectionHTML = ''; // No mostrar la sección de respuesta rápida
-            } else { // tipoNotificacion === 'interes' (o por defecto)
-                // Si la notificación es una consulta de interés (vista por el vendedor)
+                quickReplySectionHTML = '';
+            } else {
                 messageLabel = 'Mensaje del Comprador:';
                 senderInfoLabel = 'Información del Interesado:';
-                // Mostrar la sección de respuesta rápida
                 quickReplySectionHTML = `
                     <hr class="separator">
                     <div class="quick-reply-section">
@@ -138,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
-            // Limpiar y mostrar el contenido detallado
             detailContent.classList.remove('no-selection');
             detailContent.innerHTML = `
                 <h3>${productoNombre || 'Detalle de Notificación'}</h3>
@@ -166,8 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 ${quickReplySectionHTML} `;
 
-            // Obtener referencias a los nuevos elementos para la respuesta rápida
-            // ESTAS REFERENCIAS Y SUS EVENT LISTENERS SOLO DEBEN APLICARSE SI LA SECCIÓN SE MOSTRÓ
             const predefinedMessageSelect = document.getElementById('predefinedMessageSelect');
             const sendPredefinedMessageBtn = document.getElementById('sendPredefinedMessageBtn');
             const emisorIdTarget = document.getElementById('emisorIdTarget');
@@ -176,15 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const compradorNombreTarget = document.getElementById('compradorNombreTarget');
             const emisorTelefonoTarget = document.getElementById('emisorTelefonoTarget');
 
-            // Asegurarse de que todos los elementos existan antes de añadir event listeners
-            // Esto es crucial para que no intente añadir listeners a elementos que no existen
             if (predefinedMessageSelect && sendPredefinedMessageBtn && emisorIdTarget && productoIdTarget && emisorCorreoTarget && compradorNombreTarget && emisorTelefonoTarget) {
-                // Habilitar/deshabilitar el botón de enviar según la selección
                 predefinedMessageSelect.addEventListener('change', () => {
                     sendPredefinedMessageBtn.disabled = !predefinedMessageSelect.value;
                 });
 
-                // Manejar el clic en el botón de enviar mensaje predefinido
                 sendPredefinedMessageBtn.addEventListener('click', async () => {
                     const selectedMessage = predefinedMessageSelect.value;
                     const targetEmail = emisorCorreoTarget.value;
@@ -194,10 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const productId = productoIdTarget.value; 
                     const buyerPhone = emisorTelefonoTarget.value; 
 
-                    // Validar que los datos esenciales estén presentes
                     if (selectedMessage && targetEmail && buyerId && productId) {
-                        // Enviar la solicitud AJAX al controlador para enviar el correo,
-                        // crear la notificación interna y (opcionalmente) enviar SMS
                         const response = await sendAjaxRequest('enviarRespuestaRapida', {
                             destinatarioEmail: targetEmail,
                             destinatarioNombre: buyerName,
@@ -208,14 +187,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             idProducto: productId 
                         });
 
-                        // Manejar la respuesta del servidor
                         if (response.success) {
                             if (typeof showModal === 'function') {
                                 showModal('✅ Éxito', response.message, 'success'); 
                             } else {
                                 alert(response.message);
                             }
-                            // Resetear la selección y deshabilitar el botón
                             predefinedMessageSelect.value = "";
                             sendPredefinedMessageBtn.disabled = true;
                         } else {
@@ -226,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         }
                     } else {
-                        // Mensaje de advertencia si faltan datos
                         if (typeof showModal === 'function') {
                             showModal('⚠️ Advertencia', 'Por favor, selecciona un mensaje y asegúrate que todos los datos están presentes.', 'warning');
                         } else {
@@ -237,17 +213,92 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Marcar la notificación como leída si aún no lo está
-            if (item.classList.contains('unread')) {
+            if (targetNotification.classList.contains('unread')) {
                 const response = await sendAjaxRequest('marcarComoLeido', { ids: [id] });
                 if (response.success) {
-                    item.classList.remove('unread');
+                    targetNotification.classList.remove('unread');
                     console.log(`Notificación ${id} marcada como leída en la DB.`);
                 } else {
                     console.error('Fallo al marcar como leído:', response.message);
                 }
             }
-        } // Fin if (item)
-    }); // Fin addEventListener 'click'
+        } else {
+            console.warn(`No se encontró la notificación con ID ${notificationId} para abrir.`);
+        }
+    }
+    // --- FIN DE LA FUNCIÓN openNotificationDetail ---
+
+    // ====================================================================
+    // UNIFICACIÓN DE LISTENERS DE CLIC PARA notificationListContent
+    // ====================================================================
+
+    notificationListContent.addEventListener('click', async (event) => {
+        // Lógica para eliminar una sola notificación
+        if (event.target.classList.contains('delete-single-btn')) {
+            event.stopPropagation(); // Detener la propagación para evitar que el item padre sea clickeado
+            const button = event.target;
+            const id = button.dataset.id;
+            if (confirm('¿Estás seguro de que quieres eliminar esta notificación?')) {
+                const response = await sendAjaxRequest('eliminar', { ids: [id] });
+                if (response.success) {
+                    button.closest('.notification-item').remove();
+                    if (typeof showModal === 'function') {
+                        showModal('✅ Éxito', response.message, 'success');
+                    } else {
+                        alert(response.message);
+                    }
+                    updateDeleteSelectedButton();
+                    // Si se elimina la última notificación, mostrar el mensaje de "no notificaciones"
+                    if (notificationListContent.querySelectorAll('.notification-item').length === 0) {
+                        notificationListContent.innerHTML = '<p class="no-notifications">No tienes notificaciones por el momento.</p>';
+                        detailContent.innerHTML = '<p>Selecciona una notificación para ver los detalles.</p>';
+                        detailContent.classList.add('no-selection');
+                    } else {
+                        // Si se eliminó la notificación actualmente activa, limpiar el panel de detalles
+                        const activeItem = document.querySelector('.notification-item.active');
+                        if (!activeItem || activeItem.dataset.id === id) { 
+                            detailContent.innerHTML = '<p>Selecciona una notificación para ver los detalles.</p>';
+                            detailContent.classList.add('no-selection');
+                        }
+                    }
+                } else {
+                    if (typeof showModal === 'function') {
+                        showModal('❌ Error', response.message, 'error');
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                }
+            }
+            return; // Importante: Salir después de manejar el clic en el botón de eliminar
+        }
+
+        // Lógica para abrir el detalle de la notificación (si no fue el botón de eliminar)
+        const item = event.target.closest('.notification-item');
+        if (item) {
+            // Si el clic fue en el checkbox, simplemente retornamos sin abrir el detalle.
+            // La propagación no necesita ser detenida aquí ya que el 'change' event es el que importa.
+            if (event.target.classList.contains('notification-checkbox')) {
+                return; 
+            }
+            await openNotificationDetail(item.dataset.id);
+        }
+    });
+
+    // --- LÓGICA PARA ABRIR NOTIFICACIÓN DESDE URL AL CARGAR LA PÁGINA ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const notificationIdToOpen = urlParams.get('id');
+
+    if (notificationIdToOpen) {
+        setTimeout(() => {
+            const targetNotification = document.querySelector(`.notification-item[data-id="${notificationIdToOpen}"]`);
+            if (targetNotification) {
+                openNotificationDetail(notificationIdToOpen);
+            } else {
+                console.error("ERROR: No se encontró el elemento de la notificación con data-id:", notificationIdToOpen);
+            }
+        }, 300);
+    }
+    // --- FIN DE LA LÓGICA DE APERTURA POR URL ---
 
     // Event listeners para los botones de acción global
     selectAllBtn.addEventListener('click', () => {
@@ -273,7 +324,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert(response.message);
                     }
                     updateDeleteSelectedButton();
-                    // Si no hay más notificaciones, mostrar el mensaje "No tienes notificaciones"
                     if (notificationListContent.querySelectorAll('.notification-item').length === 0) {
                         notificationListContent.innerHTML = '<p class="no-notifications">No tienes notificaciones por el momento.</p>';
                         detailContent.innerHTML = '<p>Selecciona una notificación para ver los detalles.</p>';
@@ -323,46 +373,6 @@ document.addEventListener('DOMContentLoaded', () => {
     notificationListContent.addEventListener('change', (event) => {
         if (event.target.classList.contains('notification-checkbox')) {
             updateDeleteSelectedButton();
-        }
-    });
-
-    // Delegación de eventos para eliminar notificación individual
-    notificationListContent.addEventListener('click', async (event) => {
-        if (event.target.classList.contains('delete-single-btn')) {
-            const button = event.target;
-            const id = button.dataset.id;
-            if (confirm('¿Estás seguro de que quieres eliminar esta notificación?')) {
-                const response = await sendAjaxRequest('eliminar', { ids: [id] });
-                if (response.success) {
-                    // Remover el elemento del DOM
-                    button.closest('.notification-item').remove();
-                    if (typeof showModal === 'function') {
-                        showModal('✅ Éxito', response.message, 'success');
-                    } else {
-                        alert(response.message);
-                    }
-                    updateDeleteSelectedButton();
-                    // Si se elimina la última notificación, mostrar el mensaje de "no notificaciones"
-                    if (notificationListContent.querySelectorAll('.notification-item').length === 0) {
-                        notificationListContent.innerHTML = '<p class="no-notifications">No tienes notificaciones por el momento.</p>';
-                        detailContent.innerHTML = '<p>Selecciona una notificación para ver los detalles.</p>';
-                        detailContent.classList.add('no-selection');
-                    } else {
-                        // Si se eliminó la notificación actualmente activa, limpiar el panel de detalles
-                        const activeItem = document.querySelector('.notification-item.active');
-                        if (!activeItem || activeItem.dataset.id === id) { 
-                            detailContent.innerHTML = '<p>Selecciona una notificación para ver los detalles.</p>';
-                            detailContent.classList.add('no-selection');
-                        }
-                    }
-                } else {
-                    if (typeof showModal === 'function') {
-                        showModal('❌ Error', response.message, 'error');
-                    } else {
-                        alert('Error: ' + response.message);
-                    }
-                }
-            }
         }
     });
 

@@ -60,39 +60,39 @@ if (!$isUserLoggedIn) {
 
 
                     <!-- Botón de campana -->
-<?php if (isset($_SESSION['usuario'])): ?>
-    <button class="notification-btn relative" onclick="showNotifications()">
-        <i class="fas fa-bell text-lg"></i>
-        <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center"></span>
-    </button>
-<?php endif; ?>
+                    <?php if (isset($_SESSION['usuario'])): ?>
+                        <button class="notification-btn relative" onclick="showNotifications()">
+                            <i class="fas fa-bell text-lg"></i>
+                            <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center"></span>
+                        </button>
 
-<!-- Panel de Notificaciones -->
-<div id="notifications-panel" class="absolute right-5 top-14 bg-white rounded shadow-md w-80 z-50 hidden">
-    <div class="p-3 border-b font-bold text-green-800">Notificaciones</div>
-    <div id="notifications-container" class="p-3 max-h-80 overflow-y-auto">
-        <!-- Aquí se cargan dinámicamente -->
-    </div>
-</div>
-<script src="/LoginADSO/public/assets/js/notificaciones.js"></script>
+                        <!-- Panel de Notificaciones -->
+                        <div id="notifications-panel" class="absolute right-5 top-14 bg-white rounded shadow-md w-80 z-50 hidden">
+                            <div class="p-3 border-b font-bold text-green-800">Notificaciones</div>
+                            <div id="notifications-container" class="p-3 max-h-80 overflow-y-auto">
+                                <!-- Aquí se cargan dinámicamente -->
+                            </div>
+                        </div>
+                    <?php endif; ?>
 
-<div id="toast-notificacion" style="
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #16a34a;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    z-index: 9999;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-">
-    ¡Notificación enviada al vendedor!
-</div>
+                    <script src="/LoginADSO/public/assets/js/notificaciones.js"></script>
 
-                    
+                    <div id="toast-notificacion" style="
+                        display: none;
+                        position: fixed;
+                        bottom: 20px;
+                        right: 20px;
+                        background-color: #16a34a;
+                        color: white;
+                        padding: 12px 20px;
+                        border-radius: 8px;
+                        font-weight: bold;
+                        z-index: 9999;
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    ">
+                        ¡Notificación enviada al vendedor!
+                    </div>
+                                    
                     <div class="icon-menu">
                         <button type="button"><i class="fas fa-bars"></i></button>
                     </div>

@@ -41,6 +41,15 @@ if (isset($_GET['inv']) && $_GET['inv'] == 1 && isset($_GET['error'])) {
     <script src="https://unpkg.com/lucide@latest"></script>    
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/estilos.css">
 </head>
+<style>
+    img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    vertical-align: middle;
+    border-style: none;
+}
+</style>
 
 <body class="min-h-screen flex bg-gray-100">
 
