@@ -74,8 +74,6 @@ try {
     }
     // --- FIN DEPURACIÓN CLAVE ---
 
-    $current_user_id = $_SESSION['id_usuario'];
-
 
     $todos_los_productos = obtenerProductos($conexion);
 
